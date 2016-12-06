@@ -2,35 +2,36 @@
 
 set -f
 monitor=${1:-0}
-separator="\f0  |  \fr"
 
-herbstclient pad 0 16
+PANEL_DISPLAY="0"
+PANEL_FONT="Terminus:size=8"
+PANEL_HEIGHT=18
+
+DISPLAY_WIDTH=$(herbstclient monitor_rect $PANEL_DISPLAY | cut -d" " -f 3)
+PANEL_DIMENSIONS="${DISPLAY_WIDTH}x${PANEL_HEIGHT}"
+
+PANEL_BACKGROUND_COLOR="#282828"
+ACTIVE_TAG_BACKGROUND_COLOR="#383838"
+TEXT_DARK_COLOR="#B8B8B8"
+TEXT_LIGHT_COLOR="#E8E8E8"
+
+herbstclient pad $PANEL_DISPLAY $PANEL_HEIGHT
 {
-    while true ; do
-        date +'date_day %A %e.  '
-        date +'date_min %H:%M  '
-        sleep 1 || break
-    done > >(uniq_linebuffered) &
-    date_pid=$!
-
     herbstclient --idle
-
-    kill $date_pid
 } 2> /dev/null | {
-    TAGS=( $(herbstclient tag_status) )
-    date_day=""
-    date_min=""
-    visible=true
+    read -r TAGS <<< "$(herbstclient tag_status $PANEL_DISPLAY)"
 
-    while true ; do
+    while true; do
         echo -n "%{c}"
-        for i in "${TAGS[@]}" ; do
-            FORMAT_START=
-            FORMAT_END=
+
+        for i in ${TAGS}; do
+            ACTIVE_FORMAT_START=
+            ACTIVE_FORMAT_END=
+
             case ${i:0:1} in
                 '#') # current tag
-                    FORMAT_START='%{+u}'
-                    FORMAT_END='%{-u}'
+                    ACTIVE_FORMAT_START="%{B${ACTIVE_TAG_BACKGROUND_COLOR}}%{F${TEXT_LIGHT_COLOR}}"
+                    ACTIVE_FORMAT_END="%{F-}%{B-}"
                     ;;
                 '+') # active on other monitor
                     ;;
@@ -42,25 +43,16 @@ herbstclient pad 0 16
                     ;;
             esac
             TAG_NAME="`echo ${i:1} | tr '[:upper:]' '[:lower:]'`"
-            echo -n " $FORMAT_START$TAG_NAME$FORMAT_END "
+            echo -n "$ACTIVE_FORMAT_START  $TAG_NAME  $ACTIVE_FORMAT_END"
         done
-        # align right
-        echo
-        # wait for next event
-    read line || break
-        case "${cmd[0]}" in
-            tag*)
-                TAGS=( $(herbstclient tag_status) )
+
+        echo # a new line is required
+
+        read -r CMD ARGUMENTS || break
+        case "${CMD}" in
+            tag_changed)
+                read -r TAGS <<< "$(herbstclient tag_status)"
                 ;;
-            date_day)
-                date_day="${cmd[@]:1}"
-                ;;
-            date_min)
-                date_min="${cmd[@]:1}"
-                ;;
-            #player)
-                #song=$(get_mpd_song)
-                #;;
             quit_panel)
                 exit
                 ;;
@@ -68,6 +60,5 @@ herbstclient pad 0 16
                 exit
                 ;;
         esac
-    cmd=( $line )
     done
-} 2> /dev/null | lemonbar $1 -f "Terminus:size=8" -g 1920x16-0+1060 -p -B "#282828"
+} 2> /dev/null | lemonbar $1 -f "$PANEL_FONT" -g "$PANEL_DIMENSIONS" -p -B "$PANEL_BACKGROUND_COLOR" -F "$TEXT_DARK_COLOR"
