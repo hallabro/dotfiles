@@ -7,7 +7,6 @@ hc() {
 hc emit_hook reload
 
 xsetroot -solid '#585858'
-hc spawn xrdb -merge ~/.Xresources
 
 # remove all existing keybindings
 hc keyunbind --all
