@@ -1,0 +1,3 @@
+sys-kernel/gentoo-sources freedist
+sys-kernel/pf-sources freedist
+sys-kernel/linux-firmware freedist
