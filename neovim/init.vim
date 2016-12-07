@@ -69,7 +69,7 @@ let g:EasyMotion_do_mapping = 0
 
 map <Leader>s :w<CR>
 imap <F8> _<Esc>mzi<S-Right><C-o>b<C-o>g~iw<C-o>`z<Del>
-imap jj <Esc>
+imap jk <Esc>
 
 " tabs and spaces
 set tabstop=4
