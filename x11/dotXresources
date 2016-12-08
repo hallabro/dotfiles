@@ -1,0 +1,20 @@
+URxvt*font: xft:Terminus:size=9, \
+            xft:"DejaVu Sans Mono 10"
+URxvt*scrollBar: false
+URxvt*externalBorder: 0
+URxvt*internalBorder: 0
+URxvt*borerLess: true
+URxvt*borderColor: #181818
+URxvt*perl-lib: /usr/lib/urxvt/perl
+URxvt*perl-ext-common: default,clipboard,keyboard-select,matcher
+URxvt*keysym.M-s: perl:keyboard-select:search
+URxvt*keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*iso14755: False
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*matcher.button: 1
+
+Xft.dpi:96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintfull
