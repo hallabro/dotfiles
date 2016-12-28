@@ -324,6 +324,9 @@ you should place your code here."
     (setq interprogram-cut-function 'xclip-cut-function)
     (setq interprogram-paste-function 'xclip-paste-function)
    )
+   (global-linum-mode nil)
+   (linum-relative-toggle)
+   (indent-guide-global-mode)
   )
 )
 
