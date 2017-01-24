@@ -1,1 +1,1 @@
-media-sound/mpd opus ogg -network -ipv6 -tcpd
+media-sound/mpd opus ogg -network -ipv6 -tcpd -curl

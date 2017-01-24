@@ -1,3 +1,4 @@
 x11-libs/cairo X
 media-libs/libpng apng
 dev-lang/python sqlite
+www-client/firefox hwaccel

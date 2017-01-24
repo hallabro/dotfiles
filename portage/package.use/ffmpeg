@@ -1,2 +1,2 @@
-media-video/ffmpeg X libass
+media-video/ffmpeg X libass vpx
 x11-base/xorg-server xvfb
