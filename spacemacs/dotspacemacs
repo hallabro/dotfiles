@@ -10,16 +10,21 @@ values."
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
-     php
-     javascript
-     html
-     helm
      auto-completion
+     c-c++
      csv
      emacs-lisp
+     evil-snipe
      git
+     helm
+     html
+     javascript
+     latex
+     php
+     shell-scripts
      syntax-checking
      version-control
+     yaml
      )
    dotspacemacs-additional-packages '(ag)
    dotspacemacs-frozen-packages '()

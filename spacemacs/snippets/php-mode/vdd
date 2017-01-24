@@ -1,0 +1,4 @@
+#key: vdd
+#description: var_dump() + die
+# --
+var_dump(\$$1);die;
