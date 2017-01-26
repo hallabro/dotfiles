@@ -1,1 +1,1 @@
-mail-client/mutt gpg imap smtp
+mail-client/mutt gpg imap smtp gdbm -berkdb

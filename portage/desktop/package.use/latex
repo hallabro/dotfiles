@@ -1,1 +1,3 @@
 app-text/texlive X
+app-text/pandoc -https -network-uri
+dev-haskell/* -network-uri
