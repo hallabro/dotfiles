@@ -1,1 +1,1 @@
-media-video/mpv -dvd -dvdnav -encode -cdio
+media-video/mpv -dvd -dvdnav -encode -cdio -lua
