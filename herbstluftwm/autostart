@@ -18,6 +18,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvt
 hc keybind Mod4-p spawn dmenu_run -nf "#E8E8E8"
+hc keybind Mod4-r spawn scrot -u
 
 # focusing clients
 hc keybind $Mod-h focus left
