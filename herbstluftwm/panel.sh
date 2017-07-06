@@ -4,7 +4,7 @@ set -f
 monitor=${1:-0}
 
 PANEL_DISPLAY="0"
-PANEL_FONT="Terminus:size=8"
+PANEL_FONT="xos4 Terminus:size=8"
 PANEL_HEIGHT=18
 
 DISPLAY_WIDTH=$(herbstclient monitor_rect $PANEL_DISPLAY | cut -d" " -f 3)
