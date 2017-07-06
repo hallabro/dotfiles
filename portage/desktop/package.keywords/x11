@@ -1,3 +1,4 @@
 media-libs/mesa **
 sys-devel/llvm **
 x11-base/xorg-drivers **
+x11-libs/libdrm **

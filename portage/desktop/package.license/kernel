@@ -1,4 +1,4 @@
 sys-kernel/gentoo-sources freedist
 sys-kernel/pf-sources freedist
-sys-kernel/linux-firmware freedist
+sys-kernel/linux-firmware freedist linux-firmware no-source-code
 sys-kernel/ck-sources freedist

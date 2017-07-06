@@ -1,1 +1,1 @@
-dev-vcs/git -gpg -webdav -perl
+dev-vcs/git -gpg -webdav -perl -python
