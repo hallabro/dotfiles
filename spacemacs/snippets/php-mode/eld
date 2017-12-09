@@ -1,4 +1,0 @@
-#key: eld
-#description: error_log() + die
-# --
-error_log(print_r(\$$1, true));die;

@@ -1,4 +1,10 @@
 hallabro/dotfiles
 =================
 
-Personal configuration of herbstluftwm, neovim, gtk3 and zsh and other stuff.
+Personal configuration of bspwm, emacs, zsh and other stuff.
+
+Installation
+============
+
+Install each desired using `stow`.
+
