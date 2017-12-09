@@ -1,0 +1,2 @@
+net-misc/networkmanager -modemmanager
+net-wireless/wpa_supplicant dbus
