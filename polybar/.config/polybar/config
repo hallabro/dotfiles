@@ -8,11 +8,11 @@
 ;=====================================================
 
 [colors]
-background = #222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
+background = #181818
+background-alt = #282828
+foreground = #d8d8d8
+foreground-alt = #e8e8e8
+primary = #F7CA88
 secondary = #e60053
 alert = #bd2c40
 
@@ -28,24 +28,24 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 4
 line-color = #f00
 
-border-size = 4
+border-size = 8
 border-color = #00000000
 
-padding-left = 0
-padding-right = 2
+padding-left = 3
+padding-right = 3
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 3
+module-margin-right = 3
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = bspwm
 modules-center = 
-modules-right = xbacklight volume memory cpu wlan battery-0 battery-1 temperature date powermenu
+modules-right = xbacklight volume memory cpu wlan battery-0 battery-1 temperature date
 
 ;tray-position = right
 ;tray-padding = 2
@@ -142,7 +142,7 @@ label-urgent-padding = ${module/bspwm.label-urgent-padding}
 type = internal/xbacklight
 
 format = <label> <bar>
-label = BL
+label = brightness
 
 bar-width = 10
 bar-indicator = |
@@ -154,7 +154,7 @@ bar-fill-foreground = #9f78e1
 bar-empty = ─
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
-enable-scroll = true
+enable-scroll = false
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -165,38 +165,26 @@ card = intel_backlight
 type = internal/cpu
 interval = 2
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage:2%%
+format-underline = #AB4642
+label = cpu %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
-label = %percentage_used%%
+format-underline = #7CAFC2
+label = mem %percentage_used%%
 
 [module/wlan]
 type = custom/script
 interval = 60
 exec="nmcli d show wlp4s0 | grep 'GENERAL.CONNECTION' | awk '{ print $2 }'"
-format-prefix-foreground = ${colors.foreground}
+format-prefix-foreground = ${colors.foreground-alt}
 
-format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
 format-connected-underline = #9f78e1
 label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+format-disconnected = disconnected
 
 [module/eth]
 type = internal/network
@@ -224,7 +212,7 @@ time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+format-underline = #7CAFC2
 
 label = %date% %time%
 
@@ -232,20 +220,20 @@ label = %date% %time%
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL
+label-volume = volume
 label-volume-foreground = ${root.foreground}
 
 format-muted-foreground = ${colors.foreground-alt}
 label-muted = sound muted
 
 bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
+bar-volume-foreground-0 = #86C1B9
+bar-volume-foreground-1 = #86C1B9
+bar-volume-foreground-2 = #86C1B9
+bar-volume-foreground-3 = #86C1B9
+bar-volume-foreground-4 = #86C1B9
+bar-volume-foreground-5 = #86C1B9
+bar-volume-foreground-6 = #86C1B9
 bar-volume-gradient = false
 bar-volume-indicator = |
 bar-volume-indicator-font = 2
@@ -261,25 +249,14 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = bat0 <label-charging>
+format-charging-underline = #F7CA88
 
-format-discharging = <ramp-capacity> <label-discharging>
+format-discharging = bat0 <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-prefix-foreground = bat0 ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
 
 [module/battery-1]
 type = internal/battery
@@ -287,44 +264,28 @@ battery = BAT1
 adapter = AC
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+format-charging = bat1 <label-charging>
+format-charging-underline = #F7CA88
 
-format-discharging = <ramp-capacity> <label-discharging>
+format-discharging = bat1 <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
+format = <label>
+format-underline = #AB4642
+format-warn = <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature%
+label = temp %temperature%
 label-warn = %temperature%
 label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
 
 [module/powermenu]
 type = custom/menu
