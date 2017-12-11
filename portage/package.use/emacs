@@ -1,1 +1,2 @@
-app-editors/emacs libxml2
+app-editors/emacs libxml2 gtk X
+app-emacs/emacs-common-gentoo X
