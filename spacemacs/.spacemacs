@@ -105,4 +105,5 @@
   (setq powerline-default-separator 'nil)
   (setq-default evil-escape-key-sequence "jk")
   (global-auto-complete-mode)
+  (setq TeX-engine 'xetex)
 )
