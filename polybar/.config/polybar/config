@@ -8,8 +8,8 @@
 ;=====================================================
 
 [colors]
-background = #181818
-background-alt = #282828
+background = #00000000
+background-alt = #00000000
 foreground = #d8d8d8
 foreground-alt = #e8e8e8
 primary = #F7CA88
@@ -28,24 +28,25 @@ fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 4
+line-size = 2
 line-color = #f00
 
 border-size = 8
 border-color = #00000000
 
-padding-left = 3
-padding-right = 3
+padding-left = 2
+padding-right = 2
 
-module-margin-left = 3
-module-margin-right = 3
+module-margin-left = 2
+module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
+font-0 = Source Sans Pro:size=10;
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = FontAwesome:pixelsize=12;0
 
 modules-left = bspwm
 modules-center = 
-modules-right = xbacklight volume memory cpu wlan battery-0 battery-1 temperature date
+modules-right = xbacklight volume wlan cpu battery-0 battery-1 temperature date
 
 ;tray-position = right
 ;tray-padding = 2
@@ -104,87 +105,32 @@ label-empty = %index%
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 
-[module/i3]
-type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
-wrapping-scroll = false
-
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
-
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-
-; focused = Active workspace on focused monitor
-label-focused = %index%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
-label-focused-padding = ${module/bspwm.label-focused-padding}
-
-; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
-label-unfocused-padding = ${module/bspwm.label-occupied-padding}
-
-; visible = Active workspace on unfocused monitor
-label-visible = %index%
-label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
-
-; urgent = Workspace with urgency hint set
-label-urgent = %index%
-label-urgent-background = ${module/bspwm.label-urgent-background}
-label-urgent-padding = ${module/bspwm.label-urgent-padding}
-
 [module/xbacklight]
 type = internal/xbacklight
 
-format = <label> <bar>
-label = brightness
-
-bar-width = 5
-bar-indicator = |
-bar-indicator-foreground = #ff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
-enable-scroll = false
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
+format = <label>
+label =  %percentage%
 
 [module/cpu]
 type = internal/cpu
 interval = 2
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #AB4642
-label = cpu %percentage:2%%
+label = CPU %percentage:2%%
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #7CAFC2
-label = mem %percentage_used%%
+label = Mem %percentage_used%%
 
 [module/wlan]
 type = custom/script
 interval = 60
 exec="nmcli d show wlp4s0 | grep 'GENERAL.CONNECTION' | awk '{ print $2 }'"
 format-prefix-foreground = ${colors.foreground-alt}
-
-format-connected = <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-format-disconnected = disconnected
+label =  %output%
 
 [module/eth]
 type = internal/network
@@ -219,29 +165,12 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 
-format-volume = <label-volume> <bar-volume>
-label-volume = volume
+format-volume = <label-volume>
+label-volume =  %percentage%
 label-volume-foreground = ${root.foreground}
 
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 5
-bar-volume-foreground-0 = #86C1B9
-bar-volume-foreground-1 = #86C1B9
-bar-volume-foreground-2 = #86C1B9
-bar-volume-foreground-3 = #86C1B9
-bar-volume-foreground-4 = #86C1B9
-bar-volume-foreground-5 = #86C1B9
-bar-volume-foreground-6 = #86C1B9
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+label-muted = 
 
 [module/battery-0]
 type = internal/battery
@@ -249,13 +178,14 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = bat0 <label-charging>
+format-charging =  <label-charging>
 format-charging-underline = #F7CA88
 
-format-discharging = bat0 <label-discharging>
+format-discharging =  <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix-foreground = bat0 ${colors.foreground-alt}
+format-full =  <label-full>
+format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
 [module/battery-1]
@@ -264,12 +194,13 @@ battery = BAT1
 adapter = AC
 full-at = 98
 
-format-charging = bat1 <label-charging>
+format-charging =  <label-charging>
 format-charging-underline = #F7CA88
 
-format-discharging = bat1 <label-discharging>
+format-discharging =  <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
+format-full =  <label-full>
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
@@ -283,7 +214,7 @@ format-underline = #AB4642
 format-warn = <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = temp %temperature%
+label =  %temperature%
 label-warn = %temperature%
 label-warn-foreground = ${colors.secondary}
 
