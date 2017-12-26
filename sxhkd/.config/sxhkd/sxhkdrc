@@ -76,6 +76,9 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
+XF86ScreenSaver
+        i3lock
+
 XF86AudioRaiseVolume
 	amixer set Master playback 2dB+
 
@@ -92,4 +95,4 @@ XF86MonBrightnessDown
 	xbacklight -dec 10
 
 XF86Sleep
-	sudo s2ram
+	echo RELOADAGENT | gpg-connect-agent && ssh-add -D && i3lock && sudo s2ram
