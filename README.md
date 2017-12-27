@@ -9,11 +9,15 @@ Installation
 Install each desired package using `stow`.
 
 * Portage:
-    stow portage -t /etc/portage
+
+    `stow portage -t /etc/portage`
 
 
 Screenshots
 ===========
 
+### Dirty
 ![Dirty](dirty.png)
+
+### Clean
 ![Clean](clean.png)
