@@ -1,0 +1,2 @@
+# hack to workaround concatenating multiple USE="" in make.conf/
+*/* xinerama

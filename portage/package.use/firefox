@@ -1,3 +1,4 @@
 dev-lang/python sqlite
 media-libs/libpng apng
 x11-libs/cairo X
+www-client/firefox hwaccel -screenshot -pgo
