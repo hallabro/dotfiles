@@ -2,10 +2,10 @@
 
 sxhkd &
 
-# lemonbar
-polybar top &
 
 bspc monitor -d I II III IV
+
+MONITOR=`xrandr --listmonitors | cut -f6 -d' ' | sed '/^$/d' | head -n 1` polybar top &
 
 bspc config border_width 2
 bspc config window_gap 40
