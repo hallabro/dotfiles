@@ -127,6 +127,7 @@ label = Mem %percentage_used%%
 type = custom/script
 interval = 60
 exec="nmcli d show wlp4s0 | grep 'GENERAL.CONNECTION' | awk '{ print $2 }'"
+exec-if="ifconfig wlp4s0 "
 label =  %output%
 
 [module/eth]
