@@ -1,1 +1,2 @@
 sys-kernel/linux-firmware no-source-code linux-firmware
+sys-kernel/pf-sources linux-firmware

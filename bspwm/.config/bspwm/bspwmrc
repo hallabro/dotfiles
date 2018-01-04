@@ -1,13 +1,18 @@
-#! /bin/sh
-
+#! /bin/bash
 sxhkd &
 
+MONITORS=`xrandr --listmonitors | cut -f6 -d' ' | sed '/^$/d'`
+PRIMARY_MONITOR=`echo "$MONITORS" | head -n 1`
 
-bspc monitor -d I II III IV
+MONITOR=$PRIMARY_MONITOR polybar top &
+bspc monitor $PRIMARY_MONITOR -d I II III IV
 
-MONITOR=`xrandr --listmonitors | cut -f6 -d' ' | sed '/^$/d' | head -n 1` polybar top &
+if [[ 2 -eq `echo $MONITORS | wc -l` ]]; then
+    SECONDARY_MONITOR=`echo $MONITORS | tail -n 1`
+    bspc monitor $SECONDARY_MONITOR -d V VI VII IX
+fi
 
-bspc config border_width 2
+bspc config border_width 0
 bspc config window_gap 40
 
 bspc config split_ratio 0.52
@@ -18,6 +23,7 @@ bspc config click_to_focus true
 
 bspc rule -a Emacs state=tiled
 bspc rule -a Pinentry state=floating
+bspc rule -a Zathura state=tiled
 
 ~/.fehbg
 compton --config "$HOME/.config/compton.conf" -b
