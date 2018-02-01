@@ -1,4 +1,5 @@
-app-text/texlive science png xetex X
+app-text/texlive science png xetex X graphics
 app-text/texlive-core xetex
+media-libs/gd fontconfig
 media-libs/gd png jpeg
 media-libs/harfbuzz icu
