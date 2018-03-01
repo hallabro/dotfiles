@@ -24,7 +24,7 @@
      version-control
      yaml
      )
-   dotspacemacs-additional-packages '(ag evil-mc)
+   dotspacemacs-additional-packages '(evil-mc)
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '()
    dotspacemacs-install-packages 'used-only))
@@ -104,8 +104,9 @@
   (setq scroll-margin 5)
   (setq powerline-default-separator 'nil)
   (setq-default evil-escape-key-sequence "jk")
-  (global-auto-complete-mode)
   (setq TeX-engine 'xetex)
+  (setq yas-also-auto-indent-first-line t)
+  (global-auto-complete-mode)
 )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
