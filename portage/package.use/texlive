@@ -1,4 +1,4 @@
-app-text/texlive science png xetex X graphics
+app-text/texlive science png xetex X graphics L10N: sv
 app-text/texlive-core xetex
 dev-tex/latex2html png gif
 media-libs/gd fontconfig
