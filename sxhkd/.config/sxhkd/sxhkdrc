@@ -10,7 +10,7 @@ super + Return
 super + @space
 	rofi -show run
 
-# psas launcher
+# pass launcher
 super + p
 	~/.local/bin/rofi-pass
 
