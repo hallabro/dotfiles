@@ -1,0 +1,3 @@
+rofi.theme: /usr/share/rofi/themes/Adapta-Nokto.rasi
+rofi.lines: 5
+rofi.width: 25
