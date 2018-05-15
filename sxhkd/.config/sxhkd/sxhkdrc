@@ -38,10 +38,6 @@ super + g
 super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
-# set the node flags
-super + ctrl + {x,y,z}
-	bspc node -g {locked,sticky,private}
-
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
@@ -57,6 +53,14 @@ super + {grave,Tab}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# spawn next window in given direction
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+# cancel pre-selection
+super + ctrl + c
+    bspc node -p cancel
 
 XF86ScreenSaver
         i3lock
