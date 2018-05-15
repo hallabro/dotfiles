@@ -107,6 +107,7 @@
   (setq-default evil-escape-key-sequence "jk")
   (setq TeX-engine 'xetex)
   (setq yas-also-auto-indent-first-line t)
+  (setq-default helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
   (global-auto-complete-mode)
   (spaceline-toggle-minor-modes-off)
   (spaceline-toggle-major-mode-off)
