@@ -62,6 +62,10 @@ super + ctrl + {h,j,k,l}
 super + ctrl + c
     bspc node -p cancel
 
+# flip desktop
+super + r
+    bspc node @focused:/ --rotate 90
+
 XF86ScreenSaver
         i3lock
 
