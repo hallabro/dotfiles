@@ -1,9 +1,22 @@
 source ~/.config/neomutt/credentials
 
+auto_view text/html
+
+set charset = "utf-8"
+set include
+set attribution = "On %d %n wrote:"
+set date_format = "%F"
 set text_flowed = yes
+set sort_aux = reverse-last-date-received
+set sort_browser = "reverse-date"
+set fast_reply
+unset user_agent
+unset confirmappend
+
 set spoolfile = +Inbox
+set trash = +Trash
 set postponed = +Drafts
-set mailcap_path = ~/.mutt/mailcap
+set mailcap_path = ~/.config/neomutt/mailcap
 
 set sidebar_visible
 set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
@@ -24,4 +37,4 @@ bind index,pager \CP sidebar-prev
 bind index,pager \CN sidebar-next
 bind index,pager \CO sidebar-open
 
-mailboxes = +Inbox +Archive +Spam +Sent
+mailboxes = +Inbox +Archive +Spam +Sent +Trash
