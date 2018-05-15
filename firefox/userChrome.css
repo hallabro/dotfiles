@@ -27,3 +27,8 @@
 toolbarbutton {
     filter: grayscale(100%);
 }
+
+.tabbrowser-tab[fadein="true"]:not([pinned]) {
+    max-width: 160px !important;
+    min-width: 10px !important;
+}
