@@ -1,1 +1,1 @@
-mail-client/neomutt gpg gpgme -gdbm -lmdb -qdbm
+mail-client/neomutt gpg gpgme sasl -gdbm -lmdb -qdbm
