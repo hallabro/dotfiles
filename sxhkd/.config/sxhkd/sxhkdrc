@@ -1,7 +1,3 @@
-#
-# wm independent hotkeys
-#
-
 # terminal emulator
 super + Return
 	urxvt
@@ -56,15 +52,19 @@ super + {_,shift + }{1-9,0}
 
 # spawn next window in given direction
 super + ctrl + {h,j,k,l}
-    bspc node -p {west,south,north,east}
+	bspc node -p {west,south,north,east}
 
 # cancel pre-selection
 super + ctrl + c
-    bspc node -p cancel
+	bspc node -p cancel
 
 # flip desktop
 super + r
-    bspc node @focused:/ --rotate 90
+	bspc node @focused:/ --rotate 90
+
+# swap desktops
+super + alt + {1-5}
+	bspc desktop -s '^{1-9}'
 
 XF86ScreenSaver
         i3lock
