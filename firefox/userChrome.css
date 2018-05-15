@@ -1,0 +1,29 @@
+#TabsToolbar {
+    background-color: #282828 !important;
+}
+
+.tabbrowser-tab:not([visuallyselected="true"]) {
+    color: #e8e8e8 !important;
+}
+
+.tabbrowser-tab[visuallyselected="true"]{
+    color: #282828 !important;
+}
+
+.tabs-newtab-button,
+.tab-close-button,
+#PanelUI-menu-button,
+.urlbar-history-dropmarker,
+#page-action-buttons,
+#main-window :-moz-any(#back-button, #forward-button)
+{
+    display: none !important;
+}
+
+:root {
+  --toolbarbutton-border-radius: 0px !important;
+}
+
+toolbarbutton {
+    filter: grayscale(100%);
+}
