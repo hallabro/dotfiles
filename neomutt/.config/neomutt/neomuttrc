@@ -1,6 +1,7 @@
 source ~/.config/neomutt/credentials
 
 auto_view text/html
+alternative_order text/plain text/html
 
 set charset = "utf-8"
 set include
@@ -10,12 +11,15 @@ set text_flowed = yes
 set sort_aux = reverse-last-date-received
 set sort_browser = "reverse-date"
 set fast_reply
+set header_cache = ~/.cache/neomutt/headers
+set message_cachedir = ~/.cache/neomutt/headers
 unset user_agent
 unset confirmappend
 
 set spoolfile = +Inbox
 set trash = +Trash
 set postponed = +Drafts
+set record = +Sent
 set mailcap_path = ~/.config/neomutt/mailcap
 
 set sidebar_visible
