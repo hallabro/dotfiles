@@ -1,9 +1,18 @@
-source ~/.config/neomutt/imap
+source ~/.config/neomutt/credentials
 
 set text_flowed = yes
-set spoolfile = +INBOX
-
+set spoolfile = +Inbox
+set postponed = +Drafts
 set mailcap_path = ~/.mutt/mailcap
+
+set sidebar_visible
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+set mail_check_stats
+
+set imap_idle
+set imap_check_subscribed
+unset imap_passive
+unset imap_peek
 
 ignore *
 unignore from date subject to cc
@@ -11,12 +20,8 @@ unignore x-mailer
 unignore x-spam-status
 unignore x-spam-report
 
-set sidebar_visible
-set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
-set mail_check_stats
-
 bind index,pager \CP sidebar-prev
 bind index,pager \CN sidebar-next
 bind index,pager \CO sidebar-open
 
-mailboxes = +INBOX +ARCHIVE +SPAM
+mailboxes = +Inbox +Archive +Spam +Sent
