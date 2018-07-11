@@ -10,9 +10,9 @@
 [colors]
 background = #00000000
 background-alt = #00000000
-foreground = #d8d8d8
-foreground-alt = #e8e8e8
-primary = #F7CA88
+foreground = #181818
+foreground-alt = #585858
+primary = #585858
 secondary = #e60053
 alert = #bd2c40
 
@@ -21,7 +21,7 @@ enable-ipc = true
 monitor = ${env:MONITOR}
 width = 100%
 height = 22
-;offset-x = 1%
+offset-x = -2
 ;offset-y = 1%
 fixed-center = false
 
@@ -45,24 +45,8 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = FontAwesome:pixelsize=12;0
 
 modules-left = 
-modules-center = bspwm xbacklight volume wlan cpu battery-0 battery-1 temperature date
-modules-right =
-
-;tray-position = right
-;tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+modules-center =
+modules-right = bspwm xbacklight volume wlan cpu battery-0 battery-1 temperature date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
