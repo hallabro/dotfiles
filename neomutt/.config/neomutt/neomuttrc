@@ -12,7 +12,7 @@ set sort_aux = reverse-last-date-received
 set sort_browser = "reverse-date"
 set fast_reply
 set header_cache = ~/.cache/neomutt/headers
-set message_cachedir = ~/.cache/neomutt/headers
+set message_cachedir = ~/.cache/neomutt/messages
 unset user_agent
 unset confirmappend
 
