@@ -1,0 +1,3 @@
+# hack to workaround concatenating multiple USE="" in make.conf/
+*/* -alsa -gtk3 -gtk -truetype
+app-crypt/pinentry -gtk
