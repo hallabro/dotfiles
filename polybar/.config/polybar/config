@@ -10,9 +10,9 @@
 [colors]
 background = #00000000
 background-alt = #00000000
-foreground = #d8d8d8
-foreground-alt = #e8e8e8
-primary = #F7CA88
+foreground = #181818
+foreground-alt = #585858
+primary = #585858
 secondary = #e60053
 alert = #bd2c40
 
@@ -21,7 +21,7 @@ enable-ipc = true
 monitor = ${env:MONITOR}
 width = 100%
 height = 22
-;offset-x = 1%
+offset-x = -2
 ;offset-y = 1%
 fixed-center = false
 
@@ -41,28 +41,12 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = Source Sans Pro:size=10;
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = FontAwesome:pixelsize=12;0
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = 
-modules-center = bspwm xbacklight volume wlan cpu battery-0 battery-1 temperature date
-modules-right =
-
-;tray-position = right
-;tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+modules-center =
+modules-right = bspwm xbacklight volume wlan cpu battery-0 battery-1 temperature date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -124,11 +108,16 @@ format-underline = #7CAFC2
 label = Mem %percentage_used%%
 
 [module/wlan]
-type = custom/script
-interval = 60
-exec="nmcli d show wlp4s0 | grep 'GENERAL.CONNECTION' | awk '{ print $2 }'"
-exec-if="ifconfig wlp4s0"
-label =  %output%
+type = internal/network
+interval = 20
+format-connected = <ramp-signal>
+interface = wlp4s0
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
 
 [module/eth]
 type = internal/network
@@ -155,7 +144,7 @@ time-alt = %H:%M:%S
 label = %date% %time%
 
 [module/volume]
-type = internal/volume
+type = internal/alsa
 
 format-volume = <label-volume>
 label-volume =  %percentage%%
