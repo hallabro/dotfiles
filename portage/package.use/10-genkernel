@@ -1,3 +1,4 @@
 sys-apps/util-linux static-libs
 sys-kernel/genkernel-next cryptsetup plymouth
+sys-kernel/genkernel cryptsetup plymouth
 x11-libs/libdrm libkms
