@@ -1,2 +1,2 @@
-net-misc/networkmanager -modemmanager
+net-misc/networkmanager -modemmanager -ppp -wext
 net-wireless/wpa_supplicant dbus
