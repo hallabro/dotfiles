@@ -1,1 +1,2 @@
 sys-fs/udev -kmod
+sys-fs/eudev -kmod
