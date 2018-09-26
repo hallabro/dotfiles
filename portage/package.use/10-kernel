@@ -1,1 +1,2 @@
-sys-kernel/* symlink
+sys-kernel/pf-sources symlink
+sys-kernel/gentoo-sources experimental
