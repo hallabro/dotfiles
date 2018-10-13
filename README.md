@@ -10,7 +10,7 @@ Install each desired package using [stow](https://www.gnu.org/software/stow/).
 
 * bspwm, compton, neomutt, polybar, rofi, rofi-pass, spacemacs, ssh, sxhkd, zsh:
 
-`stow {bspwm,compton,neomutt,polybar,rofi,rofi-pass,spacemacs,ssh,sxhkd,zsh} -t ~`
+`stow {bspwm,compton,neomutt,polybar,rofi,rofi-pass,spacemacs,ssh,sxhkd,zsh} -t $HOME`
 
 * Portage:
 
