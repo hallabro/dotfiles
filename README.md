@@ -20,8 +20,8 @@ stow {bspwm,compton,neomutt,polybar,rofi,rofi-pass,spacemacs,ssh,sxhkd,zsh} -t $
 stow portage -t /etc/portage
 ```
 
-* SDDM, X11:
+* X11:
 
 ```bash
-stow {sddm,x11} -t /
+stow x11 -t /
 ```

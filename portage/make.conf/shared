@@ -1,5 +1,5 @@
 ACCEPT_KEYWORDS="~amd64"
-ACCEPT_LICENSE="-* @FREE freedist"
+ACCEPT_LICENSE="-* @FREE freedist WTFPL"
 CFLAGS="-O2 -pipe -march=native"
 CHOST="x86_64-pc-linux-gnu"
 CXXFLAGS="${CFLAGS}"
