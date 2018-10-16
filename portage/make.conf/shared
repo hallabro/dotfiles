@@ -9,6 +9,7 @@ FEATURES="ccache"
 GENTOO_MIRRORS="http://mirror.mdfnet.se/gentoo"
 GRUB_PLATFORMS="efi-64"
 PKGDIR="${PORTDIR}/packages"
+PORTAGE_GPG_KEY="B4C48F45F16E612B625004B802E221882616B4EB"
 PORTDIR="/usr/portage"
 RUBY_TARGETS="ruby23"
 USE="alsa gtk3 mmx sse sse2 sse3 threads truetype vim-syntax xft zsh-completion \
