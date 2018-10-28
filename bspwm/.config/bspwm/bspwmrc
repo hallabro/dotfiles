@@ -1,10 +1,9 @@
-#! /bin/bash
+#!/bin/bash
 sxhkd &
 
 MONITORS=`xrandr --listmonitors | cut -f6 -d' ' | sed '/^$/d'`
 PRIMARY_MONITOR=`echo "$MONITORS" | head -n 1`
 
-MONITOR=$PRIMARY_MONITOR polybar top &
 bspc monitor $PRIMARY_MONITOR -d I II III IV
 
 if [[ 2 -eq `echo $MONITORS | wc -l` ]]; then
@@ -25,5 +24,3 @@ bspc rule -a Emacs state=tiled
 
 ~/.fehbg
 compton --config "$HOME/.config/compton.conf" -b
-
-bspc config top_padding 36
