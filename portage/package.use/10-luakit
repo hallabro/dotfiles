@@ -1,0 +1,3 @@
+net-libs/webkit-gtk -geolocation
+www-client/luakit luajit
+dev-lua/luafilesystem luajit
