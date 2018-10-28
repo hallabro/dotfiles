@@ -22,8 +22,6 @@ bspc config gapless_monocle true
 bspc config click_to_focus true
 
 bspc rule -a Emacs state=tiled
-bspc rule -a Pinentry state=floating
-bspc rule -a Zathura state=tiled
 
 ~/.fehbg
 compton --config "$HOME/.config/compton.conf" -b
