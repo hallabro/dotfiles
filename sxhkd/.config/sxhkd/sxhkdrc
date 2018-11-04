@@ -6,6 +6,10 @@ super + Return
 super + @space
 	rofi -show run
 
+# script launcher
+super + i
+	rofi -show scripts -modi scripts:~/.local/bin/rofi-launcher
+
 # pass launcher
 super + p
 	~/.local/bin/rofi-pass
