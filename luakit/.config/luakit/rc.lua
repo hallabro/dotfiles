@@ -124,4 +124,14 @@ end)()
 
 require "keybindings"
 
+settings.window.search_engines.searx = "https://searx.me/?q=%s"
+settings.window.search_engines.default = settings.window.search_engines.searx
+
+follow.stylesheet = follow.stylesheet .. [===[
+    #luakit_select_overlay .hint_label {
+        font-size: 18px;
+	opacity: 1;
+    }
+]===]
+
 window.new(uris)
