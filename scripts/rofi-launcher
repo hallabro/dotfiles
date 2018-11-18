@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+if [[ -z "$@" ]]; then
+    echo -e "battery\ndate"
+else
+    case $1 in
+        date)
+	    notify-send "date" "`date "+%Y-%m-%d %H:%M"`"
+	    ;;
+	battery)
+	    notify-send "battery" \
+	        "`cat /sys/class/power_supply/BAT*/capacity | awk '{s+=$1} END {print s/2}'`%"
+	    ;;
+    esac
+fi
