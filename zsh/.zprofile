@@ -6,10 +6,6 @@ if [[ -x "$(command -v keychain)" ]]; then
 	--quiet)
 fi
 
-if [[ -x "$(command -v dbus-launch)" ]]; then
-    export $(dbus-launch)
-fi
-
 if [[ $TTY = "/dev/tty1" && ! $DISPLAY ]]; then
     exec startx
 fi

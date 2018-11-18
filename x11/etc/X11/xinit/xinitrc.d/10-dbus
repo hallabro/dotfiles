@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+if [[ -x "$(command -v dbus-launch)" ]]; then
+    export $(dbus-launch)
+fi
+
