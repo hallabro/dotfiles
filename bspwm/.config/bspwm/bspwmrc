@@ -23,5 +23,5 @@ bspc config click_to_focus true
 bspc rule -a Emacs state=tiled
 
 ~/.fehbg &
-export $(dbus-launch) && dunst &
+dunst &
 compton --config "$HOME/.config/compton.conf" -b
