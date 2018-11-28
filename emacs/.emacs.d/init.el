@@ -20,7 +20,9 @@
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
 (global-display-line-numbers-mode)
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(bind-key (kbd "<escape>") 'keyboard-escape-quit)
+
 (setq-default mode-line-format nil)
 (menu-bar-mode -1) 
 
@@ -34,7 +36,9 @@
 
 (use-package evil :ensure t
   :config
-  (evil-mode t))
+  (evil-mode t)
+  :config
+  (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer))
 
 (use-package helm :ensure t
   :config
@@ -43,30 +47,25 @@
   (global-set-key (kbd "M-x") 'helm-M-x)
   :bind (:map helm-map
 	      ("C-j" . 'helm-next-line)
-	      ("C-k" . 'helm-previous-line))
-  )
+	      ("C-k" . 'helm-previous-line)))
 
 (use-package base16-theme :ensure t
   :config
   (setq base16-theme-256-color-source "colors")
-  (load-theme 'base16-default-dark t)
-  )
+  (load-theme 'base16-default-dark t))
 
 (use-package hydra :ensure t :defer t
-  :bind (:map evil-normal-state-map
-	      ("SPC" . hydra-menu/body)))
+  :bind (:map evil-normal-state-map ("SPC" . hydra-menu/body)))
 
 (defhydra hydra-buffers (:color blue)
   ("l" helm-mini "list" :column "switch")
   ("s" helm-do-ag-buffers "search in buffers")
   ("a" save-buffer "save" :column "action")
-  ("k" (kill-buffer (current-buffer)) "kill")
-  )
+  ("k" (kill-buffer (current-buffer)) "kill"))
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
-  ("q"  save-buffers-kill-terminal "save and quit")
-  )
+  ("q"  save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
@@ -100,9 +99,12 @@
 (use-package helm-projectile :ensure t)
 (use-package helm-ag :ensure t)
 
-(use-package key-chord
-  :ensure t
+(use-package key-chord :ensure t
   :config
   (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
-  (key-chord-define-global "JJ" 'switch-to-last-buffer))
+  (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state))
+
+(use-package super-save :ensure t
+  :config
+  (setq auto-save-default nil)
+  (super-save-mode +1))
