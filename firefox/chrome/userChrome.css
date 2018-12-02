@@ -1,0 +1,71 @@
+#TabsToolbar {
+    background-color: #282828 !important;
+}
+
+.tabbrowser-tab:not([visuallyselected="true"]) {
+    color: #e8e8e8 !important;
+}
+
+.tabbrowser-tab[visuallyselected="true"]{
+    color: #282828 !important;
+}
+
+.tabs-newtab-button,
+.tab-close-button,
+#PanelUI-menu-button,
+.urlbar-history-dropmarker,
+#page-action-buttons,
+#main-window :-moz-any(#back-button, #forward-button)
+{
+    display: none !important;
+}
+
+:root {
+  --toolbarbutton-border-radius: 0px !important;
+}
+
+toolbarbutton {
+    filter: grayscale(100%);
+}
+
+.tabbrowser-tab[fadein="true"]:not([pinned]) {
+    max-width: 160px !important;
+    min-width: 10px !important;
+}
+
+/* Tridactyl */
+/* Avoid transparent background for menubar if nav-toolbox not focussed */
+#navigator-toolbox:not(:hover):not(:focus-within) #toolbar-menubar > * {
+    /* Colour matches the grey background of the default firefox theme. Can't see what variable it uses */
+    background-color: rgb(232, 232, 231);
+}
+
+/* Make nav-bar thinner */
+#nav-bar {
+    padding-top: 1px !important;
+    padding-bottom: 0 !important;
+}
+
+#main-window[sizemode="maximized"] #content-deck {
+    padding-top: 8px;
+}
+
+/* Hide URL notifications that aren't particularly useful and cover up the command line
+ * TODO: move it above the command line / bring functionality into status line like Vimperator */
+statuspanel[type="overLink"],
+#statuspanel[type="overLink"] {
+    display: none !important;
+}
+
+/* Partial removal of black bottom 1px line shown in fullscreen mode */
+#navigator-toolbox::after {
+    display: none !important;
+}
+
+/* Remove window decorations (Close, Minimize, Fullscreen) */
+#titlebar {
+    display: none !important;
+}
+#TabsToolbar .titlebar-placeholder {
+    display: none !important;
+}
