@@ -17,12 +17,6 @@
 // CVE-2016-5259, CVE-2016-2812, CVE-2016-1949, CVE-2016-5287 (fixed)
 user_pref("dom.serviceWorkers.enabled",				false);
 
-// PREF: Disable Web Workers
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers
-// https://www.w3schools.com/html/html5_webworkers.asp
-// NOTICE: Disabling Web Workers breaks "Download as ZIP" functionality on https://mega.nz/, WhatsApp Web, upload on https://www.virustotal.com/,  and probably others
-user_pref("dom.workers.enabled",					false);
-
 // PREF: Disable web notifications
 // https://support.mozilla.org/en-US/questions/1140439
 user_pref("dom.webnotifications.enabled",			false);
@@ -112,6 +106,11 @@ user_pref("beacon.enabled",					false);
 // NOTICE: Disabling clipboard events breaks Ctrl+C/X/V copy/cut/paste functionaility in JS-based web applications (Google Docs...)
 // https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/dom.event.clipboardevents.enabled
 user_pref("dom.event.clipboardevents.enabled",			false);
+
+// PREF: Disable "copy to clipboard" functionality via Javascript (Firefox >= 41)
+// NOTICE: Disabling clipboard operations will break legitimate JS-based "copy to clipboard" functionality
+// https://hg.mozilla.org/mozilla-central/rev/2f9f8ea4b9c3
+//user_pref("dom.allow_cut_copy", false);
 
 // PREF: Disable speech recognition
 // https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
@@ -518,13 +517,13 @@ user_pref("privacy.userContext.enabled",			true);
 // PREF: Enable hardening against various fingerprinting vectors (Tor Uplift project)
 // https://wiki.mozilla.org/Security/Tor_Uplift/Tracking
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1333933
-user_pref("privacy.resistFingerprinting",			false);
+user_pref("privacy.resistFingerprinting",			true);
 
 // PREF: Disable the built-in PDF viewer
 // https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-2743
 // https://blog.mozilla.org/security/2015/08/06/firefox-exploit-found-in-the-wild/
 // https://www.mozilla.org/en-US/security/advisories/mfsa2015-69/
-user_pref("pdfjs.disabled",					true);
+user_pref("pdfjs.disabled",					false);
 
 // PREF: Disable collection/sending of the health report (healthreport.sqlite*)
 // https://support.mozilla.org/en-US/kb/firefox-health-report-understand-your-browser-perf
@@ -714,6 +713,8 @@ user_pref("network.cookie.cookieBehavior",			1);
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1299996
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1260931
 // https://wiki.mozilla.org/Security/FirstPartyIsolation
+// NOTICE: First-party isolation breaks Microsoft Teams
+// NOTICE: First-party isolation causes HTTP basic auth to ask for credentials for every new tab (see #425)
 user_pref("privacy.firstparty.isolate",				true);
 
 // PREF: Make sure that third-party cookies (if enabled) never persist beyond the session.
@@ -722,10 +723,26 @@ user_pref("privacy.firstparty.isolate",				true);
 // https://developer.mozilla.org/en-US/docs/Cookies_Preferences_in_Mozilla#network.cookie.thirdparty.sessionOnly
 user_pref("network.cookie.thirdparty.sessionOnly",		true);
 
+// PREF: Spoof User-agent (disabled)
+//user_pref("general.useragent.override",				"Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0");
+//user_pref("general.appname.override",				"Netscape");
+//user_pref("general.appversion.override",			"5.0 (Windows)");
+//user_pref("general.platform.override",				"Win32");
+//user_pref("general.oscpu.override",				"Windows NT 6.1");
 
 /*******************************************************************************
  * SECTION: Caching                                                            *
  ******************************************************************************/
+
+// PREF: Permanently enable private browsing mode
+// https://support.mozilla.org/en-US/kb/Private-Browsing
+// https://wiki.mozilla.org/PrivateBrowsing
+// NOTICE: You can not view or inspect cookies when in private browsing: https://bugzilla.mozilla.org/show_bug.cgi?id=823941
+// NOTICE: When Javascript is enabled, Websites can detect use of Private Browsing mode
+// NOTICE: Private browsing breaks Kerberos authentication
+// NOTICE: Disables "Containers" functionality (see below)
+// NOTICE: "Always use private browsing mode" (browser.privatebrowsing.autostart) disables the possibility to use password manager: https://support.mozilla.org/en-US/kb/usernames-and-passwords-are-not-saved#w_private-browsing
+user_pref("browser.privatebrowsing.autostart",			false);
 
 // PREF: Do not download URLs for the offline cache
 // http://kb.mozillazine.org/Browser.cache.offline.enable
@@ -736,10 +753,14 @@ user_pref("browser.cache.offline.enable",			false);
 // NOTICE: Installing user.js will remove your browsing history, caches and local storage.
 // NOTICE: Installing user.js **will remove your saved passwords** (https://github.com/pyllyukko/user.js/issues/27)
 // NOTICE: Clearing open windows on Firefox exit causes 2 windows to open when Firefox starts https://bugzilla.mozilla.org/show_bug.cgi?id=1334945
-user_pref("privacy.clearOnShutdown.cache",			true);
+//user_pref("privacy.sanitize.sanitizeOnShutdown",		true);
+//user_pref("privacy.clearOnShutdown.cache",			true);
+//user_pref("privacy.clearOnShutdown.cookies",			true);
 user_pref("privacy.clearOnShutdown.downloads",			true);
 user_pref("privacy.clearOnShutdown.formdata",			true);
+//user_pref("privacy.clearOnShutdown.history",			true);
 user_pref("privacy.clearOnShutdown.offlineApps",		true);
+//user_pref("privacy.clearOnShutdown.sessions",			true);
 user_pref("privacy.clearOnShutdown.openWindows",		true);
 
 // PREF: Set time range to "Everything" as default in "Clear Recent History"
@@ -753,6 +774,9 @@ user_pref("privacy.cpd.downloads",				true);
 user_pref("privacy.cpd.formdata",				true);
 user_pref("privacy.cpd.history",				true);
 user_pref("privacy.cpd.sessions",				true);
+
+// PREF: Don't remember browsing history
+//user_pref("places.history.enabled",				false);
 
 // PREF: Disable disk cache
 // http://kb.mozillazine.org/Browser.cache.disk.enable
@@ -818,6 +842,7 @@ user_pref("browser.sessionstore.privacy_level",			2);
 
 // PREF: Delete temporary files on exit
 // https://bugzilla.mozilla.org/show_bug.cgi?id=238789
+user_pref("browser.helperApps.deleteTempFileOnExit",		true);
 
 // PREF: Do not create screenshots of visited pages (relates to the "new tab page" feature)
 // https://support.mozilla.org/en-US/questions/973320
@@ -1124,14 +1149,3 @@ user_pref("security.ssl3.dhe_dss_camellia_256_sha",		false);
 // PREF: Fallbacks due compatibility reasons
 user_pref("security.ssl3.rsa_aes_256_sha",			true); // 0x35
 user_pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
-
-// Themes
-user_pref("lightweightThemes.selectedThemeID", 			"firefox-compact-light@mozilla.org");
-
-// Tridactyl
-user_pref("privacy.resistFingerprinting.block_mozAddonManager", true);
-user_pref("extensions.webextensions.restrictedDomains",		"");
-
-// Custom
-user_pref("browser.autofocus",					false);
-
