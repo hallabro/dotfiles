@@ -9,7 +9,7 @@ URxvt*perl-ext-common: default,clipboard,keyboard-select,matcher
 URxvt*keysym.M-s: perl:keyboard-select:search
 URxvt*keysym.Shift-Control-V: perl:clipboard:paste
 URxvt*iso14755: False
-URxvt*url-launcher: /usr/bin/luakit
+URxvt*url-launcher: firefox
 URxvt*matcher.button: 1
 
 #define base00 #181818
