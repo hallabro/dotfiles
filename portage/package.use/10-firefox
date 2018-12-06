@@ -1,5 +1,6 @@
 dev-lang/python sqlite
+dev-db/sqlite secure-delete
 media-libs/libpng apng
 media-libs/libvpx postproc
-www-client/firefox hwaccel lto system-libvpx system-jpeg system-harfbuzz system-icu -screenshot 
+www-client/firefox hwaccel lto system-libvpx system-jpeg system-harfbuzz system-icu system-libevent system-sqlite -screenshot
 x11-libs/cairo X
