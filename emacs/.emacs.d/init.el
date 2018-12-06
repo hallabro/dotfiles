@@ -1,5 +1,6 @@
 (require 'package)
-(add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-mirror" . "http://www.mirrorservice.org/sites/melpa.org/packages/") t)
+;(add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
 (package-initialize)
 
 (eval-when-compile
@@ -20,6 +21,9 @@
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
 (global-display-line-numbers-mode)
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 20)
 
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -46,8 +50,8 @@
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   :bind (:map helm-map
-	      ("C-j" . 'helm-next-line)
-	      ("C-k" . 'helm-previous-line)))
+    ("C-j" . 'helm-next-line)
+    ("C-k" . 'helm-previous-line)))
 
 (use-package base16-theme :ensure t
   :config
@@ -65,21 +69,26 @@
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
-  ("q"  save-buffers-kill-terminal "save and quit"))
+  ("q" save-buffers-kill-terminal "save and quit"))
+
+(defhydra hydra-files (:color blue)
+  ("r" helm-recentf "recent"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
   ("s" helm-do-ag-project-root "search")
+  ("f" helm-projectile-find-file "files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
-  ("p" hydra-projects/body "projects" :exit t))
+  ("p" hydra-projects/body "projects" :exit t)
+  ("f" hydra-files/body "files" :exit t))
 
 (use-package avy :ensure t
   :bind (:map evil-normal-state-map
-	      ("s" . avy-goto-char-2)))
+    ("s" . avy-goto-char-2)))
 
 (use-package dtrt-indent :ensure t
   :config
@@ -102,9 +111,28 @@
 (use-package key-chord :ensure t
   :config
   (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state))
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 (use-package super-save :ensure t
   :config
   (setq auto-save-default nil)
   (super-save-mode +1))
+
+(use-package ace-window :ensure t
+  :bind
+  (:map evil-normal-state-map ("å" . ace-window)))
+
+(use-package markdown-mode :ensure t
+  :commands
+  (markdown-mode gfm-mode)
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+    ("\\.md\\'" . markdown-mode)
+    ("\\.markdown\\'" . markdown-mode))
+  :init
+  (setq markdown-command "multimarkdown"))
+
+(use-package evil-surround :ensure t
+  :config
+  (global-evil-surround-mode 1))
+
