@@ -6,10 +6,6 @@
     color: #e8e8e8 !important;
 }
 
-.tabbrowser-tab[visuallyselected="true"]{
-    color: #282828 !important;
-}
-
 .tabs-newtab-button,
 .tab-close-button,
 #PanelUI-menu-button,
