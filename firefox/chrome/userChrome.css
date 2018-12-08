@@ -65,3 +65,66 @@ statuspanel[type="overLink"],
 #TabsToolbar .titlebar-placeholder {
     display: none !important;
 }
+/* Firefox userChrome.css */
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+.tab-throbber {
+list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.png") !important;
+}
+
+/* Remove Tab Throbber Animation, from this author : https://www.reddit.com/r/firefox/comments/7cvzkq/how_can_i_remove_firefox_57_page_load_animation/ */
+.tab-throbber { display: none !important; }
+.tab-icon-image { visibility: show !important; display: block !important;}
+.tabbrowser-tab[progress="true"] .tab-icon-image {opacity:0.45; filter: blur(1px);}
+.tab-loading-burst[bursting]::before {
+background-image: none !important;
+animation: unset !important;
+}
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+* { transition: none !important;
+animation-duration: 0s !important; }
+
+/* Close the useless Tab Bar Full, animate New Tab, from this author : http://forums.mozillazine.org/viewtopic.php?f=38&t=2282765 */
+.tabbrowser-tab:not([pinned]) {
+max-width: 250px !important;
+min-width: 100px !important;
+}
+.tabbrowser-tab:not([pinned]):not([fadein]) {
+max-width: 0.1px !important;
+}
+.closing-tabs-spacer {
+width: 0 !important;
+}
+
+/* Remove the Ugly Distracting Transparent Tab effect, from this author : https://support.mozilla.org/en-US/questions/1187357#answer-1033293 */
+#tabbrowser-tabs > .tabbrowser-tab > .tab-stack > .tab-background * {
+    background: none !important;
+}
+
+/* Disable the Ugly Blue Glow Tab Effect, from this author : https://support.mozilla.org/en-US/questions/928081 */
+.tabbrowser-tab[pinned][titlechanged]:not([selected="true"]) {
+ background: -moz-linear-gradient(hsla(0,0%,100%,.2), hsla(0,0%,45%,.2) 2px, hsla(0,0%,32%,.2) 80%)
+!important;
+}
+.tabbrowser-tab[pinned][titlechanged]:not([selected="true"]):hover {
+  background-image: -moz-linear-gradient(hsla(0,0%,100%,.6), hsla(0,0%,100%,.2) 4px, hsla(0,0%,75%,.2) 80%) !important;
+}
+
+/* Disable the Tab Highlighting Fearure (absoluetly Useless for a normal use), from this author : http://forums.mozillazine.org/viewtopic.php?f=19&t=867225 */
+.tabbrowser-tab:not([selected="true"]) > .tab-image-middle {
+  background-image: url("chrome://global/skin/icons/tab-middle-bkgnd.png") !important;
+}
+.tabbrowser-tab:hover:not([selected="true"]) > .tab-image-middle {
+  background-image: url("chrome://global/skin/icons/tab-middle-bkgnd.png") !important;
+}
+
+/* Remove some Random Annoying Animations in the Toolbar, from this author :  annoying animations https://www.reddit.com/r/firefox/comments/37hw8o/how_to_disable_all_animations/ */
+* {
+animation-delay: 0ms !important;
+animation-duration: 0ms !important;
+transition: none !important;
+}
+
+/* Remove the Very Ugly and Distracting and Useless Hamburger Button (because it is redundant with the arrows) */
+#PanelUI-menu-button {display: none;}
+/*
