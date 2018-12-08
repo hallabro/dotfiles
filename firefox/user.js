@@ -1152,5 +1152,5 @@ user_pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 
 
 // Disable tab preview
-//
 user_pref("browser.ctrlTab.recentlyUsedOrder", 			false)
+user_pref("browser.autofocus", 					false)
