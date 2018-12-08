@@ -7,7 +7,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 export HISTORY_IGNORE="(ls|mpv *|pwd|pass *|unar *|unzip *)"
-export HISTSIZE=500
+export HISTSIZE=1000
 export SAVEHIST=$HISTSIZE
 
 BASE16_SHELL=$HOME/.config/base16-shell/
