@@ -20,6 +20,9 @@
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
+(defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
 
 (recentf-mode 1)
