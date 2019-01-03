@@ -139,3 +139,7 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package php-mode :ensure t
+  :init
+  (require 'php-mode))
+
