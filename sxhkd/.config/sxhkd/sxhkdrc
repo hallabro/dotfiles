@@ -71,7 +71,7 @@ super + alt + {1-5}
 	bspc desktop -s '^{1-9}'
 
 XF86ScreenSaver
-        i3lock
+        i3lock -i ~/dotfiles/wallpaper_gray.png
 
 XF86AudioRaiseVolume
 	amixer set Master playback 2dB+
@@ -89,4 +89,4 @@ XF86MonBrightnessDown
 	xbacklight -dec 10
 
 XF86Sleep
-	echo RELOADAGENT | gpg-connect-agent && ssh-add -D && i3lock && sudo s2ram
+	echo RELOADAGENT | gpg-connect-agent && ssh-add -D && i3lock -i ~/dotfiles/wallpaper_gray.png && sudo s2ram
