@@ -1,0 +1,7 @@
+alias emacs='emacsclient --tty'
+alias gst='git status --short'
+
+function dx() {
+    docker exec $@
+}
+compdef _docker dx="_docker_complete_running_containers"
