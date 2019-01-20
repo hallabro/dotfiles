@@ -24,4 +24,5 @@ bspc rule -a Emacs state=tiled
 
 ~/.fehbg &
 dunst &
+parcellite -d &
 compton --config "$HOME/.config/compton.conf" -b
