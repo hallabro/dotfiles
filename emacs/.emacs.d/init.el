@@ -37,9 +37,18 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(when window-system
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
+(defun hide-gui-elements (&optional frame)
+  "Hides some GUI elements."
+  (unless frame
+    (setq frame (selected-frame)))
+  (when frame
+    (with-selected-frame frame
+      (when window-system
+        (scroll-bar-mode -1)
+        (tool-bar-mode -1)))))
+
+(hide-gui-elements)
+(add-hook 'after-make-frame-functions #'hide-gui-elements t)
 
 (use-package evil :ensure t
   :config
@@ -143,3 +152,6 @@
   :init
   (require 'php-mode))
 
+(use-package python-mode :ensure t
+  :init
+  (require 'python-mode))
