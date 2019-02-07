@@ -1,10 +1,47 @@
-(require 'package)
-(add-to-list 'package-archives '("melpa-mirror" . "http://www.mirrorservice.org/sites/melpa.org/packages/") t)
-;(add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
-(package-initialize)
+;bootstrap straight
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(eval-when-compile
-  (require 'use-package))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
+(require 'subr-x)
+(straight-use-package 'git)
+
+;workaround for installing org-mode with straight
+(defun org-git-version ()
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (git-run "describe"
+              "--match=release\*"
+              "--abbrev=6"
+              "HEAD"))))
+
+(defun org-release ()
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (string-remove-prefix
+      "release_"
+      (git-run "describe"
+               "--match=release\*"
+               "--abbrev=0"
+               "HEAD")))))
+
+(provide 'org-version)
 
 (setq delete-old-versions -1 )
 (setq version-control t )
@@ -50,33 +87,46 @@
 (hide-gui-elements)
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 
-(use-package evil :ensure t
+(use-package evil 
   :config
   (evil-mode t)
   :config
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer))
 
-(use-package helm :ensure t
+(use-package helm 
   :config
   (require 'helm-config)
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
   :bind (:map helm-map
     ("C-j" . 'helm-next-line)
     ("C-k" . 'helm-previous-line)))
 
-(use-package base16-theme :ensure t
+(use-package base16-theme 
   :config
   (setq base16-theme-256-color-source "colors")
   (load-theme 'base16-default-dark t))
 
-(use-package hydra :ensure t :defer t
-  :bind (:map evil-normal-state-map ("SPC" . hydra-menu/body)))
+(use-package hydra :defer t
+  :bind (:map evil-normal-state-map
+      ("SPC" . hydra-menu/body)
+  	("m" . hydra-major/body))
+  :config
+  (setq hydra-cell-format "% -0s %% -8`%s"))
+
+(defun hydra-major/body ()
+  (interactive)
+  (cl-case major-mode
+    (org-mode
+     (hydra-org/body))
+    (t
+     (error "%S not supported" major-mode))))
 
 (defhydra hydra-buffers (:color blue)
-  ("l" helm-mini "list" :column "switch")
-  ("s" helm-do-ag-buffers "search in buffers")
-  ("a" save-buffer "save" :column "action")
+  ("l" helm-mini "list")
+  ("s" helm-do-ag-buffers "search")
+  ("a" save-buffer "save")
   ("k" (kill-buffer (current-buffer)) "kill"))
 
 (defhydra hydra-emacs (:color blue)
@@ -92,49 +142,58 @@
   ("f" helm-projectile-find-file "files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
+(defhydra hydra-org (:color blue)
+  ("t" org-todo "toggle todo status")
+  ("i" org-clock-in "clock in")
+  ("o" org-clock-out "clock out")
+  ("u" org-timestamp-up "timestamp up")
+  ("d" org-timestamp-down "timestamp down")
+  ("d" org-update-all-dblocks "update dblocks"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
   ("p" hydra-projects/body "projects" :exit t)
-  ("f" hydra-files/body "files" :exit t))
+  ("f" hydra-files/body "files" :exit t)
+  ("m" hydra-major/body "major" :exit t))
 
-(use-package avy :ensure t
+(use-package avy 
   :bind (:map evil-normal-state-map
     ("s" . avy-goto-char-2)))
 
-(use-package dtrt-indent :ensure t
+(use-package dtrt-indent 
   :config
   (dtrt-indent-mode 1))
 
-(use-package linum-relative :ensure t
+(use-package linum-relative 
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
   (linum-on)
   (linum-relative-mode)
   (helm-linum-relative-mode 1))
 
-(use-package projectile :ensure t
+(use-package projectile 
   :config
   (projectile-mode 1))
 
-(use-package helm-projectile :ensure t)
-(use-package helm-ag :ensure t)
+(use-package helm-projectile )
+(use-package helm-ag )
 
-(use-package key-chord :ensure t
+(use-package key-chord 
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
-(use-package super-save :ensure t
+(use-package super-save 
   :config
   (setq auto-save-default nil)
   (super-save-mode +1))
 
-(use-package ace-window :ensure t
+(use-package ace-window 
   :bind
   (:map evil-normal-state-map ("å" . ace-window)))
 
-(use-package markdown-mode :ensure t
+(use-package markdown-mode 
   :commands
   (markdown-mode gfm-mode)
   :mode
@@ -144,16 +203,23 @@
   :init
   (setq markdown-command "multimarkdown"))
 
-(use-package evil-surround :ensure t
+(use-package evil-surround 
   :config
   (global-evil-surround-mode 1))
 
-(use-package php-mode :ensure t
+(use-package php-mode 
   :init
   (require 'php-mode))
 
-(use-package python-mode :ensure t
+(use-package python-mode 
   :init
   (require 'python-mode))
 
-(use-package org-mode :ensure t)
+(use-package org
+  :config
+  (setq org-duration-format (quote h:mm))
+  (setq org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
+  (evil-define-key 'normal org-mode-map "K" 'org-timestamp-up)
+  (evil-define-key 'normal org-mode-map "J" 'org-timestamp-down)
+  (evil-define-key 'normal org-mode-map "L" 'org-clock-timestamps-up)
+  (evil-define-key 'normal org-mode-map "H" 'org-clock-timestamps-down))
