@@ -155,3 +155,5 @@
 (use-package python-mode :ensure t
   :init
   (require 'python-mode))
+
+(use-package org-mode :ensure t)
