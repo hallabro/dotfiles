@@ -14,6 +14,10 @@ super + i
 super + p
 	~/.local/bin/rofi-pass
 
+# calculator
+super + c
+	rofi -show calc -modi calc -no-show-match -no-sort
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
