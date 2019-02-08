@@ -90,3 +90,9 @@ XF86MonBrightnessDown
 
 XF86Sleep
 	echo RELOADAGENT | gpg-connect-agent && ssh-add -D && i3lock -i ~/dotfiles/wallpaper_gray.png && sudo s2ram
+
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
