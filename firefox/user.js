@@ -994,7 +994,7 @@ user_pref("security.ssl.enable_ocsp_must_staple",		true);
 // Disabling this will make OCSP bypassable by MitM attacks suppressing OCSP responses
 // NOTICE: `security.OCSP.require` will make the connection fail when the OCSP responder is unavailable
 // NOTICE: `security.OCSP.require` is known to break browsing on some [captive portals](https://en.wikipedia.org/wiki/Captive_portal)
-user_pref("security.OCSP.require",				true);
+user_pref("security.OCSP.require",				false);
 
 // PREF: Disable TLS Session Tickets
 // https://www.blackhat.com/us-13/briefings.html#NextGen
@@ -1156,3 +1156,8 @@ user_pref("browser.autofocus", 					false)
 
 // Disable animations
 user_pref("toolkit.cosmeticAnimations.enabled", 		false)
+
+// PREF: Disable Extension recommendations (Firefox >= 65)
+// https://support.mozilla.org/en-US/kb/extension-recommendations
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr",	false);
+
