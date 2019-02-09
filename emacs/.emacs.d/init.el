@@ -21,8 +21,7 @@
 ;workaround for installing org-mode with straight
 (defun org-git-version ()
   (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
+  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
     (string-trim
      (git-run "describe"
               "--match=release\*"
@@ -31,8 +30,7 @@
 
 (defun org-release ()
   (require 'git)
-  (let ((git-repo (expand-file-name
-                   "straight/repos/org/" user-emacs-directory)))
+  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
     (string-trim
      (string-remove-prefix
       "release_"
@@ -45,7 +43,7 @@
 
 (setq delete-old-versions -1 )
 (setq version-control t )
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) 
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 (setq vc-follow-symlinks t )
@@ -68,7 +66,7 @@
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (setq-default mode-line-format nil)
-(menu-bar-mode -1) 
+(menu-bar-mode -1)
 
 (defun switch-to-last-buffer ()
   (interactive)
@@ -87,15 +85,18 @@
 (hide-gui-elements)
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 
-(use-package evil 
+(use-package evil
   :config
   (evil-mode t)
   :config
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer))
 
-(use-package helm 
+(use-package helm
   :config
   (require 'helm-config)
+  (setq helm-mode-fuzzy-match t)
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching t)
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
@@ -103,7 +104,7 @@
     ("C-j" . 'helm-next-line)
     ("C-k" . 'helm-previous-line)))
 
-(use-package base16-theme 
+(use-package base16-theme
   :config
   (setq base16-theme-256-color-source "colors")
   (load-theme 'base16-default-dark t))
@@ -150,50 +151,54 @@
   ("d" org-timestamp-down "timestamp down")
   ("d" org-update-all-dblocks "update dblocks"))
 
+(defhydra hydra-navigation (:color blue)
+  ("t" neotree-toggle "toggle"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
   ("p" hydra-projects/body "projects" :exit t)
   ("f" hydra-files/body "files" :exit t)
+  ("n" hydra-navigation/body "navigation" :exit t)
   ("m" hydra-major/body "major" :exit t))
 
-(use-package avy 
+(use-package avy
   :bind (:map evil-normal-state-map
     ("s" . avy-goto-char-2)))
 
-(use-package dtrt-indent 
+(use-package dtrt-indent
   :config
   (dtrt-indent-mode 1))
 
-(use-package linum-relative 
+(use-package linum-relative
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
   (linum-on)
   (linum-relative-mode)
   (helm-linum-relative-mode 1))
 
-(use-package projectile 
+(use-package projectile
   :config
   (projectile-mode 1))
 
 (use-package helm-projectile )
 (use-package helm-ag )
 
-(use-package key-chord 
+(use-package key-chord
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
-(use-package super-save 
+(use-package super-save
   :config
   (setq auto-save-default nil)
   (super-save-mode +1))
 
-(use-package ace-window 
+(use-package ace-window
   :bind
   (:map evil-normal-state-map ("å" . ace-window)))
 
-(use-package markdown-mode 
+(use-package markdown-mode
   :commands
   (markdown-mode gfm-mode)
   :mode
@@ -203,15 +208,15 @@
   :init
   (setq markdown-command "multimarkdown"))
 
-(use-package evil-surround 
+(use-package evil-surround
   :config
   (global-evil-surround-mode 1))
 
-(use-package php-mode 
+(use-package php-mode
   :init
   (require 'php-mode))
 
-(use-package python-mode 
+(use-package python-mode
   :init
   (require 'python-mode))
 
@@ -223,3 +228,17 @@
   (evil-define-key 'normal org-mode-map "J" 'org-timestamp-down)
   (evil-define-key 'normal org-mode-map "L" 'org-clock-timestamps-up)
   (evil-define-key 'normal org-mode-map "H" 'org-clock-timestamps-down))
+
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package neotree
+  :config
+  (setq neo-cwd-line-style 'button)
+  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-create-node)
+  (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node))
