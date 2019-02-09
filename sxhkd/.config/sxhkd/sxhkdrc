@@ -6,6 +6,10 @@ super + Return
 super + @space
 	rofi -show run
 
+# rofi calculator
+super + c
+	rofi -show calc -modi calc -no-show-match -no-sort
+
 # script launcher
 super + i
 	rofi -show scripts -modi scripts:~/.local/bin/rofi-launcher
