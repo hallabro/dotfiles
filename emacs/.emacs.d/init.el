@@ -241,7 +241,7 @@
     "N" 'org-timestamp-up
     "T" 'org-timestamp-down
     "S" 'org-clock-timestamps-up
-    "H" 'org-clock-timestamps-down)
+    "H" 'org-clock-timestamps-down))
 
 (use-package company
   :config
