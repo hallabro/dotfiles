@@ -175,7 +175,8 @@
 
 (use-package avy
   :bind (:map evil-normal-state-map
-    ("s" . avy-goto-char-2)))
+    ("1" . avy-goto-char)
+    ("2" . avy-goto-char-2)))
 
 (use-package dtrt-indent
   :config
