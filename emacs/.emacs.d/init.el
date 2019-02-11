@@ -113,8 +113,8 @@
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
   :bind (:map helm-map
-    ("C-h" . 'helm-next-line)
-    ("C-t" . 'helm-previous-line)))
+    ("C-t" . 'helm-next-line)
+    ("C-n" . 'helm-previous-line)))
 
 (use-package base16-theme
   :config
@@ -175,6 +175,8 @@
   ("m" hydra-major/body "major" :exit t))
 
 (use-package avy
+  :config
+  (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
   :bind (:map evil-normal-state-map
     ("1" . avy-goto-char)
     ("2" . avy-goto-char-2)))
