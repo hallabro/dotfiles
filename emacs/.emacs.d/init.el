@@ -101,7 +101,7 @@
     "j" 'evil-next-line
     "k" 'evil-previous-line
     "h" 'evil-backward-char
-    "l" 'evil-forward-char)
+    "l" 'evil-forward-char))
 
 (use-package helm
   :config
@@ -241,7 +241,7 @@
     "K" 'org-timestamp-up
     "J" 'org-timestamp-down
     "L" 'org-clock-timestamps-up
-    "H" 'org-clock-timestamps-down)
+    "H" 'org-clock-timestamps-down))
 
 (use-package company
   :config
