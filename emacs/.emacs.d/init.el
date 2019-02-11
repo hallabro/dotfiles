@@ -168,7 +168,8 @@
 
 (use-package dtrt-indent
   :config
-  (dtrt-indent-mode 1))
+  (dtrt-indent-mode 1)
+  (setq dtrt-indent-verbosity 0))
 
 (use-package linum-relative
   :config
@@ -235,10 +236,20 @@
 
 (use-package neotree
   :config
+  (setq neo-window-width 40)
   (setq neo-cwd-line-style 'button)
+  (setq neo-autorefresh nil)
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-create-node)
-  (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node))
+  (evil-define-key 'normal neotree-mode-map (kbd "o") 'neotree-quick-look)
+  (evil-define-key 'normal neotree-mode-map (kbd "u") 'neotree-refresh)
+  (evil-define-key 'normal neotree-mode-map (kbd ".") 'neotree-hidden-file-toggle)
+  (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
+  (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
+  (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
+  (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-select-up-node)
+  (evil-define-key 'normal neotree-mode-map (kbd "l") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "a") 'neotree-change-root))
+
+(use-package tex-mode)
