@@ -139,7 +139,7 @@
   ("l" helm-mini "list")
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
-  ("k" (kill-buffer (current-buffer)) "kill"))
+  ("d" (kill-buffer (current-buffer)) "destroy"))
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
