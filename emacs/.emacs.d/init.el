@@ -90,7 +90,6 @@
   (evil-mode t)
   :config
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
-  (define-key evil-normal-state-map "s" nil)
   (evil-define-key nil evil-motion-state-map
     "j" 'evil-next-line
     "k" 'evil-previous-line
