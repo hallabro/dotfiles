@@ -89,7 +89,19 @@
   :config
   (evil-mode t)
   :config
-  (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer))
+  (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
+  (define-key evil-normal-state-map "s" nil)
+  (evil-define-key nil evil-motion-state-map
+    "t" 'evil-next-line
+    "n" 'evil-previous-line
+    "h" 'evil-backward-char
+    "s" 'evil-forward-char)
+
+  (evil-define-key 'visual evil-motion-state-map
+    "t" 'evil-next-line
+    "n" 'evil-previous-line
+    "h" 'evil-backward-char
+    "s" 'evil-forward-char))
 
 (use-package helm
   :config
@@ -101,8 +113,8 @@
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
   :bind (:map helm-map
-    ("C-j" . 'helm-next-line)
-    ("C-k" . 'helm-previous-line)))
+    ("C-h" . 'helm-next-line)
+    ("C-t" . 'helm-previous-line)))
 
 (use-package base16-theme
   :config
@@ -164,7 +176,7 @@
 
 (use-package avy
   :bind (:map evil-normal-state-map
-    ("s" . avy-goto-char-2)))
+    ("l" . avy-goto-char-2)))
 
 (use-package dtrt-indent
   :config
@@ -188,7 +200,7 @@
 (use-package key-chord
   :config
   (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+  (key-chord-define evil-insert-state-map "ht" 'evil-normal-state))
 
 (use-package super-save
   :config
@@ -225,10 +237,11 @@
   :config
   (setq org-duration-format (quote h:mm))
   (setq org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
-  (evil-define-key 'normal org-mode-map "K" 'org-timestamp-up)
-  (evil-define-key 'normal org-mode-map "J" 'org-timestamp-down)
-  (evil-define-key 'normal org-mode-map "L" 'org-clock-timestamps-up)
-  (evil-define-key 'normal org-mode-map "H" 'org-clock-timestamps-down))
+  (evil-define-key 'normal org-mode-map
+    "N" 'org-timestamp-up
+    "T" 'org-timestamp-down
+    "S" 'org-clock-timestamps-up
+    "H" 'org-clock-timestamps-down)
 
 (use-package company
   :config
@@ -239,17 +252,18 @@
   (setq neo-window-width 40)
   (setq neo-cwd-line-style 'button)
   (setq neo-autorefresh nil)
-  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "o") 'neotree-quick-look)
-  (evil-define-key 'normal neotree-mode-map (kbd "u") 'neotree-refresh)
-  (evil-define-key 'normal neotree-mode-map (kbd ".") 'neotree-hidden-file-toggle)
-  (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
-  (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
-  (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
-  (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-select-up-node)
-  (evil-define-key 'normal neotree-mode-map (kbd "l") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
-  (evil-define-key 'normal neotree-mode-map (kbd "a") 'neotree-change-root))
+  (evil-define-key 'normal neotree-mode-map
+    "q" 'neotree-hide
+    "o" 'neotree-quick-look
+    "u" 'neotree-refresh
+    "." 'neotree-hidden-file-toggle
+    "c" 'neotree-create-node
+    "r" 'neotree-rename-node
+    "d" 'neotree-delete-node
+    "h" 'neotree-select-up-node
+    "l" 'neotree-enter
+    "j" 'neotree-next-line
+    "k" 'neotree-previous-line
+    "a" 'neotree-change-root))
 
 (use-package tex-mode)
