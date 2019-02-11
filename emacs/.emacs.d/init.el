@@ -92,16 +92,16 @@
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (define-key evil-normal-state-map "s" nil)
   (evil-define-key nil evil-motion-state-map
-    "t" 'evil-next-line
-    "n" 'evil-previous-line
+    "j" 'evil-next-line
+    "k" 'evil-previous-line
     "h" 'evil-backward-char
-    "s" 'evil-forward-char)
+    "l" 'evil-forward-char)
 
   (evil-define-key 'visual evil-motion-state-map
-    "t" 'evil-next-line
-    "n" 'evil-previous-line
+    "j" 'evil-next-line
+    "k" 'evil-previous-line
     "h" 'evil-backward-char
-    "s" 'evil-forward-char))
+    "l" 'evil-forward-char)
 
 (use-package helm
   :config
@@ -113,8 +113,8 @@
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
   :bind (:map helm-map
-    ("C-h" . 'helm-next-line)
-    ("C-t" . 'helm-previous-line)))
+    ("C-j" . 'helm-next-line)
+    ("C-k" . 'helm-previous-line)))
 
 (use-package base16-theme
   :config
@@ -176,7 +176,7 @@
 
 (use-package avy
   :bind (:map evil-normal-state-map
-    ("l" . avy-goto-char-2)))
+    ("s" . avy-goto-char-2)))
 
 (use-package dtrt-indent
   :config
@@ -238,9 +238,9 @@
   (setq org-duration-format (quote h:mm))
   (setq org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
   (evil-define-key 'normal org-mode-map
-    "N" 'org-timestamp-up
-    "T" 'org-timestamp-down
-    "S" 'org-clock-timestamps-up
+    "K" 'org-timestamp-up
+    "J" 'org-timestamp-down
+    "L" 'org-clock-timestamps-up
     "H" 'org-clock-timestamps-down)
 
 (use-package company
