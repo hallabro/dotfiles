@@ -101,7 +101,7 @@
     "j" 'evil-next-line
     "k" 'evil-previous-line
     "h" 'evil-backward-char
-    "l" 'evil-forward-char)
+    "l" 'evil-forward-char))
 
 (use-package helm
   :config
