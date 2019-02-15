@@ -3,7 +3,7 @@ super + Return
 	urxvt
 
 # program launcher
-super + @space
+super + space
 	rofi -show run
 
 # rofi calculator
