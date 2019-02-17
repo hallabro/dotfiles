@@ -201,7 +201,7 @@
 (use-package key-chord
   :config
   (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map "ht" 'evil-normal-state))
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 (use-package super-save
   :config
