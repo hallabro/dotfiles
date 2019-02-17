@@ -268,3 +268,7 @@
     "a" 'neotree-change-root))
 
 (use-package tex-mode)
+
+(use-package column-marker
+  :config
+  (add-hook 'find-file-hook (lambda () (interactive) (column-marker-1 81))))
