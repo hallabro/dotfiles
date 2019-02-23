@@ -1,4 +1,5 @@
 app-text/poppler cairo
+gnome-base/librsvg -vala
 media-gfx/gimp pdf -alsa
 media-libs/gegl cairo
 media-libs/libmypaint gegl
