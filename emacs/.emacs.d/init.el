@@ -107,8 +107,7 @@
   :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t)
-  (setq projectile-indexing-method 'alien)
-  (setq projectile-enable-caching t)
+
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
@@ -197,6 +196,8 @@
 (use-package projectile
   :config
   (projectile-mode 1))
+  (setq projectile-sort-order 'recently-active)
+  (setq projectile-generic-command "fd . -0")
 
 (use-package helm-projectile )
 (use-package helm-ag )
