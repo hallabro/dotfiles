@@ -89,19 +89,24 @@
   :config
   (evil-mode t)
   :config
+  (evil-select-search-module 'evil-search-module 'evil-search)
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (define-key evil-normal-state-map "s" nil)
   (evil-define-key nil evil-motion-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
-    "s" 'evil-forward-char)
+    "s" 'evil-forward-char
+    "j" 'evil-ex-search-next
+    "J" 'evil-ex-search-previous)
 
   (evil-define-key 'visual evil-motion-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
-    "s" 'evil-forward-char))
+    "s" 'evil-forward-char
+    "j" 'evil-ex-search-next
+    "J" 'evil-ex-search-previous))
 
 (use-package helm
   :config
@@ -178,14 +183,13 @@
   :config
   (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
   :bind (:map evil-normal-state-map
-    ("1" . avy-goto-char)
-    ("2" . avy-goto-char-2)))
+    ("å" . avy-goto-char-2)))
 
 (use-package dtrt-indent
   :config
-  (dtrt-indent-mode 1)
-  (setq dtrt-indent-verbosity 0))
-
+  (setq dtrt-indent-verbosity 0)
+  (dtrt-indent-mode 1))
+  
 (use-package linum-relative
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
@@ -214,7 +218,7 @@
 
 (use-package ace-window
   :bind
-  (:map evil-normal-state-map ("å" . ace-window)))
+  (:map evil-normal-state-map ("ö" . ace-window)))
 
 (use-package markdown-mode
   :commands
@@ -250,7 +254,10 @@
 
 (use-package company
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0))
+  
 
 (use-package neotree
   :config
@@ -276,3 +283,7 @@
 (use-package column-marker
   :config
   (add-hook 'find-file-hook (lambda () (interactive) (column-marker-1 81))))
+
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
