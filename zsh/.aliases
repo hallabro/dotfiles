@@ -1,6 +1,10 @@
 alias emacs='emacsclient --tty'
 alias gst='git status --short'
 
+function mkcd() {
+	mkdir -p "$@" && cd "$@"
+}
+
 function dx() {
     docker exec $@
 }
