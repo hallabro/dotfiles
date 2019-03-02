@@ -24,6 +24,7 @@ setopt EXTENDEDGLOB
 
 [ -f ~/.aliases ] && source ~/.aliases
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.zcolors ] && source ~/.zcolors
 
 FZF=/usr/share/zsh/site-contrib/fzf.zsh
 [ -f $FZF ] && source $FZF
