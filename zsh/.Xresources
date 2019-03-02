@@ -1,3 +1,17 @@
+URxvt*font: xft:xos4 Terminus:size=9
+URxvt*scrollBar: false
+URxvt*externalBorder: 0
+URxvt*internalBorder: 4px
+URxvt*borerLess: true
+URxvt*borderColor: #181818
+URxvt*perl-lib: /usr/lib/urxvt/perl
+URxvt*perl-ext-common: default,clipboard,keyboard-select,matcher
+URxvt*keysym.M-s: perl:keyboard-select:search
+URxvt*keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*iso14755: False
+URxvt*url-launcher: firefox
+URxvt*matcher.button: 1
+
 ! Base16 Chalk
 ! Scheme: Chris Kempson (http://chriskempson.com)
 
@@ -52,3 +66,8 @@
 *color19:      base02
 *color20:      base04
 *color21:      base06
+
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintfull
