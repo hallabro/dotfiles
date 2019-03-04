@@ -24,6 +24,8 @@ setopt EXTENDEDGLOB
 
 [ -f ~/.aliases ] && source ~/.aliases
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.zcolors ] && source ~/.zcolors
+[ -f ~/.zdircolors ] && eval `dircolors .zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 FZF=/usr/share/zsh/site-contrib/fzf.zsh
 [ -f $FZF ] && source $FZF

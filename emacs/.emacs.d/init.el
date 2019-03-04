@@ -123,7 +123,7 @@
 (use-package base16-theme
   :config
   (setq base16-theme-256-color-source "colors")
-  (load-theme 'base16-default-dark t))
+  (load-theme 'base16-chalk t))
 
 (use-package hydra :defer t
   :bind (:map evil-normal-state-map
