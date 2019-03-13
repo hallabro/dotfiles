@@ -50,8 +50,7 @@
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )
 (setq inhibit-startup-screen t )
 (setq ring-bell-function 'ignore )
-(setq coding-system-for-read 'utf-8 )
-(setq coding-system-for-write 'utf-8 )
+(set-language-environment "UTF-8")
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
@@ -134,10 +133,9 @@
 (defun hydra-major/body ()
   (interactive)
   (cl-case major-mode
-    (org-mode
-     (hydra-org/body))
-    (t
-     (error "%S not supported" major-mode))))
+    (org-mode (hydra-org/body))
+    (latex-mode (hydra-tex/body))
+    (t (error "%S not supported" major-mode))))
 
 (defhydra hydra-buffers (:color blue)
   ("l" helm-mini "list")
@@ -158,6 +156,10 @@
   ("s" helm-do-ag-project-root "search")
   ("f" helm-projectile-find-file "files")
   ("d" projectile-discover-projects-in-directory "discover"))
+
+(defhydra hydra-tex (:color blue)
+  ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
+  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view"))
 
 (defhydra hydra-org (:color blue)
   ("t" org-todo "toggle todo status")
@@ -254,7 +256,6 @@
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-dabbrev-downcase 0)
   (setq company-idle-delay 0))
-  
 
 (use-package neotree
   :config
@@ -275,7 +276,22 @@
     "k" 'neotree-previous-line
     "a" 'neotree-change-root))
 
-(use-package tex-mode)
+(use-package tex
+  :demand t
+  :straight auctex
+  :config
+  (add-to-list 'TeX-view-program-list '("mupdf" ("mupdf" " %o" (mode-io-correlate " %(outpage)"))))
+  (setcdr (assq 'output-pdf TeX-view-program-selection) '("mupdf"))
+  (TeX-PDF-mode t)
+  (setq-default TeX-master nil)
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t))
+
+(defun mupdf-reload (file)
+  (interactive)
+  (TeX-revert-document-buffer file)
+  (call-process-shell-command "pkill -HUP mupdf || true"))
+(add-hook 'TeX-after-compilation-finished-functions #'mupdf-reload)
 
 (use-package column-marker
   :config
