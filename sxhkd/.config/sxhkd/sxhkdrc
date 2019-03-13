@@ -43,7 +43,7 @@ super + g
 	bspc node -s biggest.local
 
 # set the window state
-super + {i,shift + i,l,f}
+super + {l,shift + l,e,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # focus the node in the given direction
