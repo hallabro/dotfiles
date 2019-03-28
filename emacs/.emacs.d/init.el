@@ -67,6 +67,8 @@
 (setq-default mode-line-format nil)
 (menu-bar-mode -1)
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (defun switch-to-last-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
