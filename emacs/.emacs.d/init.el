@@ -274,9 +274,9 @@
     "r" 'neotree-rename-node
     "d" 'neotree-delete-node
     "h" 'neotree-select-up-node
-    "l" 'neotree-enter
-    "j" 'neotree-next-line
-    "k" 'neotree-previous-line
+    "s" 'neotree-enter
+    "t" 'neotree-next-line
+    "n" 'neotree-previous-line
     "a" 'neotree-change-root))
 
 (use-package tex
