@@ -56,6 +56,7 @@
 (setq byte-compile-warnings nil)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
+(setq c-syntactic-indentation nil)
 (defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
 
