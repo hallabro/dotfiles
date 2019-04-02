@@ -41,15 +41,15 @@
 
 (provide 'org-version)
 
-(setq delete-old-versions -1 )
-(setq version-control t )
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
-(setq vc-follow-symlinks t )
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )
-(setq inhibit-startup-screen t )
-(setq ring-bell-function 'ignore )
+(setq vc-follow-symlinks t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+(setq inhibit-startup-screen t)
+(setq ring-bell-function 'ignore)
 (set-language-environment "UTF-8")
 (setq sentence-end-double-space nil)
 (setq default-fill-column 80)
@@ -57,17 +57,15 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 (setq c-syntactic-indentation nil)
+(setq require-final-newline t)
+(setq show-trailing-whitespace t)
 (defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
-
 (recentf-mode 1)
 (setq recentf-max-menu-items 20)
-
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
-
 (setq-default mode-line-format nil)
 (menu-bar-mode -1)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (defun switch-to-last-buffer ()
@@ -304,9 +302,12 @@
   (call-process-shell-command "pkill -HUP mupdf || true"))
 (add-hook 'TeX-after-compilation-finished-functions #'mupdf-reload)
 
-(use-package column-marker
+(use-package whitespace
   :config
-  (add-hook 'find-file-hook (lambda () (interactive) (column-marker-1 81))))
+  (setq whitespace-line-column 80)
+  (setq whitespace-style '(face lines-tail))
+  :hook
+  (prog-mode . whitespace-mode))
 
 (use-package yaml-mode
   :config
