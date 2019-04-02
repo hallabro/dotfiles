@@ -56,17 +56,18 @@
 (setq byte-compile-warnings nil)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
-(setq c-syntactic-indentation nil)
 (setq require-final-newline t)
 (setq show-trailing-whitespace t)
 (defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
-(recentf-mode 1)
 (setq recentf-max-menu-items 20)
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
 (setq-default mode-line-format nil)
-(menu-bar-mode -1)
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(electric-indent-mode +1)
+(menu-bar-mode -1)
+(recentf-mode 1)
 
 (defun switch-to-last-buffer ()
   (interactive)
@@ -247,8 +248,8 @@
   (global-evil-surround-mode 1))
 
 (use-package php-mode
-  :init
-  (require 'php-mode))
+  :hook
+  (prog-mode . php-enable-symfony2-coding-style))
 
 (use-package python-mode
   :init
@@ -266,9 +267,10 @@
 
 (use-package company
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
   (setq company-dabbrev-downcase 0)
-  (setq company-idle-delay 0))
+  (setq company-idle-delay 0)
+  :hook
+  (after-init . global-company-mode))
 
 (use-package neotree
   :config
