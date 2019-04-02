@@ -94,6 +94,8 @@
   (evil-select-search-module 'evil-search-module 'evil-search)
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (define-key evil-normal-state-map "s" nil)
+  (define-key evil-normal-state-map "J" nil)
+
   (evil-define-key nil evil-motion-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
