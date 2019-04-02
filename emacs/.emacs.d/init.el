@@ -90,9 +90,16 @@
 (use-package evil
   :config
   (evil-mode t)
-  :config
   (evil-select-search-module 'evil-search-module 'evil-search)
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
+  (advice-add 'evil-ex-search-next :after
+    (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+  (advice-add 'evil-ex-search-previous :after
+    (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-up)
+  (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-down)
+
   (evil-define-key nil evil-motion-state-map
     "j" 'evil-next-line
     "k" 'evil-previous-line
