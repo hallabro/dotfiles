@@ -189,7 +189,8 @@
 (use-package dtrt-indent
   :config
   (setq dtrt-indent-verbosity 0)
-  (dtrt-indent-mode 1))
+  :hook
+  (prog-mode . dtrt-indent-mode))
   
 (use-package linum-relative
   :config
