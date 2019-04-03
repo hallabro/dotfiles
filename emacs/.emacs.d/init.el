@@ -245,7 +245,7 @@
 
 (use-package php-mode
   :hook
-  (prog-mode . php-enable-symfony2-coding-style))
+  (php . php-enable-symfony2-coding-style))
 
 (use-package python-mode
   :init
