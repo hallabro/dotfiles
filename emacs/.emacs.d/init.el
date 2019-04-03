@@ -152,6 +152,7 @@
   ("l" helm-mini "list")
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
+  ("s" switch-to-last-buffer "previous buffer")
   ("d" (kill-buffer (current-buffer)) "destroy"))
 
 (defhydra hydra-emacs (:color blue)
@@ -183,12 +184,16 @@
 (defhydra hydra-navigation (:color blue)
   ("t" neotree-toggle "toggle"))
 
+(defhydra hydra-window (:color blue)
+  ("l" ace-window "toggle"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
   ("p" hydra-projects/body "projects" :exit t)
   ("f" hydra-files/body "files" :exit t)
   ("n" hydra-navigation/body "navigation" :exit t)
+  ("w" hydra-window/body "window" :exit t)
   ("m" hydra-major/body "major" :exit t))
 
 (use-package avy
