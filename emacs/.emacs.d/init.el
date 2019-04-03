@@ -199,7 +199,7 @@
 
 (use-package avy
   :config
-  (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
+  (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?c ?p ?k ?m))
   :bind (:map evil-normal-state-map
     ("å" . avy-goto-char-2)))
 
@@ -208,7 +208,7 @@
   (setq dtrt-indent-verbosity 0)
   :hook
   (prog-mode . dtrt-indent-mode))
-  
+
 (use-package linum-relative
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
