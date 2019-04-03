@@ -183,7 +183,10 @@
   ("t" neotree-toggle "toggle"))
 
 (defhydra hydra-window (:color blue)
-  ("l" ace-window "toggle"))
+  ("b" split-window-below "split below")
+  ("r" split-window-right "split right")
+  ("d" delete-window "delete")
+  ("a" ace-window "ace"))
 
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
@@ -231,6 +234,8 @@
   (super-save-mode +1))
 
 (use-package ace-window
+  :config
+  (setq aw-keys '(?h ?a ?s ?p))
   :bind
   (:map evil-normal-state-map ("ö" . ace-window)))
 
