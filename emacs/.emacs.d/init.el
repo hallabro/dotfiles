@@ -92,7 +92,8 @@
   (evil-select-search-module 'evil-search-module 'evil-search)
   (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (define-key evil-normal-state-map "s" nil)
-  (define-key evil-normal-state-map "J" nil)
+  (define-key evil-normal-state-map "k" nil)
+  (define-key evil-normal-state-map "j" nil)
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
@@ -106,16 +107,16 @@
     "n" 'evil-previous-line
     "h" 'evil-backward-char
     "s" 'evil-forward-char
-    "j" 'evil-ex-search-next
-    "J" 'evil-ex-search-previous)
+    "k" 'evil-ex-search-next
+    "K" 'evil-ex-search-previous)
 
   (evil-define-key 'visual evil-motion-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
     "s" 'evil-forward-char
-    "j" 'evil-ex-search-next
-    "J" 'evil-ex-search-previous))
+    "k" 'evil-ex-search-next
+    "K" 'evil-ex-search-previous))
 
 (use-package helm
   :config
