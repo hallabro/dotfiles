@@ -1151,11 +1151,11 @@ user_pref("security.ssl3.rsa_aes_256_sha",			true); // 0x35
 user_pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 
 // Disable tab preview
-user_pref("browser.ctrlTab.recentlyUsedOrder", 			false)
-user_pref("browser.autofocus", 					false)
+user_pref("browser.ctrlTab.recentlyUsedOrder", 			false);
+user_pref("browser.autofocus", 					false);
 
 // Disable animations
-user_pref("toolkit.cosmeticAnimations.enabled", 		false)
+user_pref("toolkit.cosmeticAnimations.enabled", 		false);
 
 // PREF: Disable Extension recommendations (Firefox >= 65)
 // https://support.mozilla.org/en-US/kb/extension-recommendations
