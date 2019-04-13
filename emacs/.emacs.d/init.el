@@ -119,7 +119,6 @@
   :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t)
-
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
@@ -144,6 +143,7 @@
   (cl-case major-mode
     (org-mode (hydra-org/body))
     (latex-mode (hydra-tex/body))
+    (snippet-mode (hydra-yasnippet/body))
     (t (error "%S not supported" major-mode))))
 
 (defhydra hydra-buffers (:color blue)
@@ -193,6 +193,9 @@
   ("c" yas-new-snippet "create")
   ("l" yas-describe-tables "list"))
 
+(defhydra hydra-yasnippet (:color blue)
+  ("s" yas-load-snippet-buffer-and-close "save and quit"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
@@ -226,8 +229,8 @@
   (setq projectile-sort-order 'recently-active)
   (setq projectile-generic-command "fd . -0")
 
-(use-package helm-projectile )
-(use-package helm-ag )
+(use-package helm-projectile)
+(use-package helm-ag)
 
 (use-package key-chord
   :config
@@ -280,7 +283,16 @@
 (use-package company
   :config
   (setq company-dabbrev-downcase 0)
+  (setq company-show-numbers t)
   (setq company-idle-delay 0)
+  (setq company-selection-wrap-around t)
+  (setq company-minimum-prefix-length 1)
+  (let ((map company-active-map))
+    (mapc (lambda (x) (define-key map (format "%d" x)
+          `(lambda () (interactive) (company-complete-number ,x))))
+          (number-sequence 0 9))
+    (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
+    (define-key map (kbd "<return>") nil))
   :hook
   (after-init . global-company-mode))
 
