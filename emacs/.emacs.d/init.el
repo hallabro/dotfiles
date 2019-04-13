@@ -188,6 +188,11 @@
   ("d" delete-window "delete")
   ("a" ace-window "ace"))
 
+(defhydra hydra-snippet (:color blue)
+  ("i" yas-insert-snippet "insert")
+  ("c" yas-new-snippet "create")
+  ("l" yas-describe-tables "list"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
@@ -195,6 +200,7 @@
   ("f" hydra-files/body "files" :exit t)
   ("n" hydra-navigation/body "navigation" :exit t)
   ("w" hydra-window/body "window" :exit t)
+  ("s" hydra-snippet/body "snippet" :exit t)
   ("m" hydra-major/body "major" :exit t))
 
 (use-package avy
@@ -328,3 +334,7 @@
 (use-package js2-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
