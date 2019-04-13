@@ -152,6 +152,7 @@
   ("l" helm-mini "list")
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
+  ("s" switch-to-last-buffer "previous buffer")
   ("d" (kill-buffer (current-buffer)) "destroy"))
 
 (defhydra hydra-emacs (:color blue)
@@ -183,12 +184,25 @@
 (defhydra hydra-navigation (:color blue)
   ("t" neotree-toggle "toggle"))
 
+(defhydra hydra-window (:color blue)
+  ("b" split-window-below "split below")
+  ("r" split-window-right "split right")
+  ("d" delete-window "delete")
+  ("a" ace-window "ace"))
+
+(defhydra hydra-snippet (:color blue)
+  ("i" yas-insert-snippet "insert")
+  ("c" yas-new-snippet "create")
+  ("l" yas-describe-tables "list"))
+
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
   ("e" hydra-emacs/body "emacs" :exit t)
   ("p" hydra-projects/body "projects" :exit t)
   ("f" hydra-files/body "files" :exit t)
   ("n" hydra-navigation/body "navigation" :exit t)
+  ("w" hydra-window/body "window" :exit t)
+  ("s" hydra-snippet/body "snippet" :exit t)
   ("m" hydra-major/body "major" :exit t))
 
 (use-package avy
@@ -230,6 +244,8 @@
   (super-save-mode +1))
 
 (use-package ace-window
+  :config
+  (setq aw-keys '(?h ?a ?s ?p))
   :bind
   (:map evil-normal-state-map ("ö" . ace-window)))
 
@@ -322,3 +338,7 @@
 (use-package js2-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))

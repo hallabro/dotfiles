@@ -102,16 +102,6 @@ user_pref("dom.telephony.enabled",				false);
 // https://developer.mozilla.org/en-US/docs/Web/API/navigator.sendBeacon
 user_pref("beacon.enabled",					false);
 
-// PREF: Disable clipboard event detection (onCut/onCopy/onPaste) via Javascript
-// NOTICE: Disabling clipboard events breaks Ctrl+C/X/V copy/cut/paste functionaility in JS-based web applications (Google Docs...)
-// https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/dom.event.clipboardevents.enabled
-user_pref("dom.event.clipboardevents.enabled",			false);
-
-// PREF: Disable "copy to clipboard" functionality via Javascript (Firefox >= 41)
-// NOTICE: Disabling clipboard operations will break legitimate JS-based "copy to clipboard" functionality
-// https://hg.mozilla.org/mozilla-central/rev/2f9f8ea4b9c3
-//user_pref("dom.allow_cut_copy", false);
-
 // PREF: Disable speech recognition
 // https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
 // https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
@@ -1151,11 +1141,11 @@ user_pref("security.ssl3.rsa_aes_256_sha",			true); // 0x35
 user_pref("security.ssl3.rsa_aes_128_sha",			true); // 0x2f
 
 // Disable tab preview
-user_pref("browser.ctrlTab.recentlyUsedOrder", 			false)
-user_pref("browser.autofocus", 					false)
+user_pref("browser.ctrlTab.recentlyUsedOrder", 			false);
+user_pref("browser.autofocus", 					false);
 
 // Disable animations
-user_pref("toolkit.cosmeticAnimations.enabled", 		false)
+user_pref("toolkit.cosmeticAnimations.enabled", 		false);
 
 // PREF: Disable Extension recommendations (Firefox >= 65)
 // https://support.mozilla.org/en-US/kb/extension-recommendations
