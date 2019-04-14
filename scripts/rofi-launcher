@@ -3,12 +3,12 @@
 if [[ -z "$@" ]]; then
     echo -e "battery\ndate"
 else
-    case $1 in
+    case "$1" in
         date)
-	    notify-send "date" "`date "+%Y-%m-%d %H:%M"`"
+	    dunstify -r "101" -a date "date" "`date "+%Y-%m-%d %H:%M"`"
 	    ;;
 	battery)
-	    notify-send "battery" \
+	    dunstify -r "102" -a battery "battery" \
 	        "`cat /sys/class/power_supply/BAT*/capacity | awk '{s+=$1} END {print s/2}'`%"
 	    ;;
     esac
