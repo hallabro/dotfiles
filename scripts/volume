@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+amixer set Master playback "$1"
+dunstify -r "100" -a volume "volume" $(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master))

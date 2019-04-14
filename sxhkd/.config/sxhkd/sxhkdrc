@@ -82,10 +82,10 @@ XF86ScreenSaver
         i3lock -i ~/dotfiles/wallpaper_gray.png
 
 XF86AudioRaiseVolume
-	amixer set Master playback 2dB+
+	~/dotfiles/scripts/volume 2dB+
 
 XF86AudioLowerVolume
-	amixer set Master playback 2dB-
+	~/dotfiles/scripts/volume 2dB-
 
 XF86AudioMute
 	amixer set Master playback togglemute
