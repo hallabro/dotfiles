@@ -287,6 +287,7 @@
   (setq company-idle-delay 0)
   (setq company-selection-wrap-around t)
   (setq company-minimum-prefix-length 1)
+  (delete 'company-dabbrev company-backends)
   (let ((map company-active-map))
     (mapc (lambda (x) (define-key map (format "%d" x)
           `(lambda () (interactive) (company-complete-number ,x))))
@@ -294,7 +295,7 @@
     (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
     (define-key map (kbd "<return>") nil))
   :hook
-  (after-init . global-company-mode))
+  (prog-mode . global-company-mode))
 
 (use-package neotree
   :config
