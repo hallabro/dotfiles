@@ -18,6 +18,13 @@
 (require 'subr-x)
 (straight-use-package 'git)
 
+ (defun straight-x-clean-unused-repos ()
+   (interactive)
+   (dolist (repo (straight--directory-files (straight--repos-dir)))
+     (unless (or (straight--checkhash repo straight--repo-cache)
+		 (not (y-or-n-p (format "Delete repository %S?" repo))))
+       (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
+
 ;workaround for installing org-mode with straight
 (defun org-git-version ()
   (require 'git)
@@ -158,7 +165,9 @@
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
-  ("l" (list-packages) "list packages")
+  ("l" list-packages "list packages")
+  ("p" straight-x-clean-unused-repos "prune unused packages")
+  ("u" straight-pull-all "update packages")
   ("q" save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-files (:color blue)
@@ -292,6 +301,7 @@
   (setq company-idle-delay 0)
   (setq company-selection-wrap-around t)
   (setq company-minimum-prefix-length 1)
+  (delete 'company-dabbrev company-backends)
   (let ((map company-active-map))
     (mapc (lambda (x) (define-key map (format "%d" x)
           `(lambda () (interactive) (company-complete-number ,x))))
@@ -299,7 +309,7 @@
     (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
     (define-key map (kbd "<return>") nil))
   :hook
-  (after-init . global-company-mode))
+  (prog-mode . global-company-mode))
 
 (use-package neotree
   :config
