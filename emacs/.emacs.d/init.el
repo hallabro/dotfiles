@@ -351,12 +351,23 @@
 
 (use-package yaml-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  :mode "\\.yml\\'")
 
 (use-package js2-mode
+  :mode "\\.js\\'"
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+  (setq js2-strict-missing-semi-warning nil))
 
 (use-package yasnippet
   :config
   (yas-global-mode 1))
+
+(use-package go-mode
+  :mode "\\.go\\'")
+
+(use-package web-mode
+  :mode "\\.vue\\'")
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
