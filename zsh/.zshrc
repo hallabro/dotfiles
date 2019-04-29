@@ -1,5 +1,7 @@
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:$HOME/.local/bin
+export GOPATH=$HOME/projects/go
+export PATH=$PATH:$GOPATH/bin
 
 ZSH_THEME="theunraveler"
 plugins=(git)
