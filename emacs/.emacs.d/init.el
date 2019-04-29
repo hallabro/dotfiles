@@ -74,7 +74,8 @@
 (setq-default mode-line-format nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(electric-indent-mode +1)
+(electric-indent-mode 1)
+(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 
@@ -226,11 +227,10 @@
   (setq dtrt-indent-verbosity 0)
   :hook
   (prog-mode . dtrt-indent-mode))
-  
+
 (use-package linum-relative
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
-  (linum-on)
   (linum-relative-mode)
   (helm-linum-relative-mode 1))
 
