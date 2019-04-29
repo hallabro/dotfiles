@@ -59,6 +59,8 @@
 (setq ring-bell-function 'ignore)
 (set-language-environment "UTF-8")
 (setq sentence-end-double-space nil)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
 (setq inhibit-splash-screen t)
