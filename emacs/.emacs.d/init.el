@@ -76,13 +76,16 @@
 (electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
+(auto-fill-mode 1)
+(setq c-ignore-auto-fill nil)
 
 (defun switch-to-last-buffer ()
+  "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (defun hide-gui-elements (&optional frame)
-  "Hides some GUI elements."
+  "Hides some GUI elements in FRAME."
   (unless frame
     (setq frame (selected-frame)))
   (when frame
