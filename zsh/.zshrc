@@ -1,5 +1,7 @@
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:$HOME/.local/bin
+export GOPATH=$HOME/projects/go
+export PATH=$PATH:$GOPATH/bin
 
 ZSH_THEME="theunraveler"
 plugins=(git)
@@ -25,7 +27,7 @@ setopt EXTENDEDGLOB
 [ -f ~/.aliases ] && source ~/.aliases
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.zcolors ] && source ~/.zcolors
-[ -f ~/.zdircolors ] && eval `dircolors .zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+[ -f ~/.zdircolors ] && eval `dircolors ~/.zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 FZF=/usr/share/zsh/site-contrib/fzf.zsh
 [ -f $FZF ] && source $FZF

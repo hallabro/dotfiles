@@ -59,6 +59,8 @@
 (setq ring-bell-function 'ignore)
 (set-language-environment "UTF-8")
 (setq sentence-end-double-space nil)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 (setq default-fill-column 80)
 (setq byte-compile-warnings nil)
 (setq inhibit-splash-screen t)
@@ -72,7 +74,8 @@
 (setq-default mode-line-format nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(electric-indent-mode +1)
+(electric-indent-mode 1)
+(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 
@@ -233,7 +236,6 @@
 (use-package linum-relative
   :config
   (setq linum-relative-backend 'display-line-numbers-mode)
-  (linum-on)
   (linum-relative-mode)
   (helm-linum-relative-mode 1))
 
@@ -356,12 +358,23 @@
 
 (use-package yaml-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  :mode "\\.yml\\'")
 
 (use-package js2-mode
+  :mode "\\.js\\'"
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+  (setq js2-strict-missing-semi-warning nil))
 
 (use-package yasnippet
   :config
   (yas-global-mode 1))
+
+(use-package go-mode
+  :mode "\\.go\\'")
+
+(use-package web-mode
+  :mode "\\.vue\\'")
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
