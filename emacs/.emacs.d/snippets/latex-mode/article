@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: article
+# key: 
+# --
+\\documentclass{article}
+
+\\usepackage[swedish]{babel}
+\\usepackage[utf8]{inputenc}
+
+\\title{}
+\\author{Robin Hallabro-Kokko}
+
+\\begin{document}
+\\maketitle
+
+\\section{Inledning}
+\\endsection{}
+
+\\end{document}

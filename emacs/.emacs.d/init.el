@@ -144,8 +144,10 @@
 
 (use-package hydra :defer t
   :bind (:map evil-normal-state-map
-      ("SPC" . hydra-menu/body)
-  	("m" . hydra-major/body))
+    ("SPC" . hydra-menu/body)
+    ("m" . hydra-major/body)
+    :map evil-visual-state-map
+    ("SPC" . hydra-menu/body))
   :config
   (setq hydra-cell-format "% -0s %% -8`%s"))
 
@@ -182,7 +184,9 @@
 
 (defhydra hydra-tex (:color blue)
   ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
-  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view"))
+  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view")
+  ("i" (lambda () (interactive) (latex-insert-item)) "insert item")
+  ("l" (lambda () (interactive) (latex-insert-block)) "insert block"))
 
 (defhydra hydra-org (:color blue)
   ("t" org-todo "toggle todo status")
@@ -207,7 +211,7 @@
   ("l" yas-describe-tables "list"))
 
 (defhydra hydra-yasnippet (:color blue)
-  ("s" yas-load-snippet-buffer-and-close "save and quit"))
+  ("s" yas-load-snippet-buffer-and-close "save and load"))
 
 (defhydra hydra-menu (:color blue)
   ("b" hydra-buffers/body "buffer" :exit t)
@@ -340,6 +344,7 @@
   (setq TeX-parse-self t))
 
 (defun mupdf-reload (file)
+  "Sends SIGHUP to mupdf, reloading the output"
   (interactive)
   (TeX-revert-document-buffer file)
   (call-process-shell-command "pkill -HUP mupdf || true"))
