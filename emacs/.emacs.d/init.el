@@ -48,36 +48,41 @@
 
 (provide 'org-version)
 
-(setq delete-old-versions -1)
-(setq version-control t)
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-(setq vc-follow-symlinks t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-(setq inhibit-startup-screen t)
-(setq ring-bell-function 'ignore)
-(set-language-environment "UTF-8")
-(setq sentence-end-double-space nil)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq byte-compile-warnings nil)
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
-(setq require-final-newline t)
-(setq show-trailing-whitespace t)
+(setq delete-old-versions -1
+      version-control t
+      backup-directory-alist `(("." . "~/.emacs.d/backups"))
+      custom-file "~/.emacs.d/custom.el"
+      byte-compile-warnings nil
+      inhibit-splash-screen t
+      inhibit-startup-message t
+      require-final-newline t
+      show-trailing-whitespace t
+      vc-follow-symlinks t
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+      inhibit-startup-screen t
+      ring-bell-function 'ignore
+      sentence-end-double-space nil
+      c-ignore-auto-fill nil)
+
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              auto-fill-function 'do-auto-fill
+              mode-line-format nil)
+
+(bind-key (kbd "<escape>") 'keyboard-escape-quit)
+(defalias 'yes-or-no-p 'y-or-n-p)
 (defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
-(bind-key (kbd "<escape>") 'keyboard-escape-quit)
-(setq-default mode-line-format nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
+(load custom-file)
+(set-language-environment "UTF-8")
 
 (electric-indent-mode 1)
 (electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
-(auto-fill-mode 1)
-(setq c-ignore-auto-fill nil)
+(show-paren-mode 1)
+
+(add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
 (defun switch-to-last-buffer ()
   "Switch to the most recently used buffer."
@@ -241,9 +246,9 @@
 
 (use-package projectile
   :config
-  (projectile-mode 1))
-  (setq projectile-sort-order 'recently-active)
-  (setq projectile-generic-command "fd . -0")
+  (projectile-mode 1)
+  (setq projectile-sort-order 'recently-active
+        projectile-generic-command "fd . -0"))
 
 (use-package helm-projectile)
 (use-package helm-ag)
@@ -298,11 +303,11 @@
 
 (use-package company
   :config
-  (setq company-dabbrev-downcase 0)
-  (setq company-show-numbers t)
-  (setq company-idle-delay 0)
-  (setq company-selection-wrap-around t)
-  (setq company-minimum-prefix-length 1)
+  (setq company-dabbrev-downcase 0
+        company-show-numbers t
+        company-idle-delay 0
+        company-selection-wrap-around t
+        company-minimum-prefix-length 1)
   (delete 'company-dabbrev company-backends)
   (let ((map company-active-map))
     (mapc (lambda (x) (define-key map (format "%d" x)
@@ -340,11 +345,11 @@
   (setcdr (assq 'output-pdf TeX-view-program-selection) '("mupdf"))
   (TeX-PDF-mode t)
   (setq-default TeX-master nil)
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t))
+  (setq TeX-auto-save t
+        TeX-parse-self t))
 
 (defun mupdf-reload (file)
-  "Sends SIGHUP to mupdf, reloading the output"
+  "Sends SIGHUP to mupdf, reloading the output."
   (interactive)
   (TeX-revert-document-buffer file)
   (call-process-shell-command "pkill -HUP mupdf || true"))
@@ -352,8 +357,8 @@
 
 (use-package whitespace
   :config
-  (setq whitespace-line-column 80)
-  (setq whitespace-style '(face lines-tail))
+  (setq whitespace-line-column 80
+        whitespace-style '(face lines-tail))
   :hook
   (prog-mode . whitespace-mode))
 
@@ -379,3 +384,5 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
+
+(provide 'init)
