@@ -48,43 +48,50 @@
 
 (provide 'org-version)
 
-(setq delete-old-versions -1)
-(setq version-control t)
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-(setq vc-follow-symlinks t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-(setq inhibit-startup-screen t)
-(setq ring-bell-function 'ignore)
-(set-language-environment "UTF-8")
-(setq sentence-end-double-space nil)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq default-fill-column 80)
-(setq byte-compile-warnings nil)
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
-(setq require-final-newline t)
-(setq show-trailing-whitespace t)
+(setq delete-old-versions -1
+      version-control t
+      backup-directory-alist `(("." . "~/.emacs.d/backups"))
+      custom-file "~/.emacs.d/custom.el"
+      byte-compile-warnings nil
+      inhibit-splash-screen t
+      inhibit-startup-message t
+      require-final-newline t
+      show-trailing-whitespace t
+      vc-follow-symlinks t
+      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+      inhibit-startup-screen t
+      ring-bell-function 'ignore
+      sentence-end-double-space nil
+      x-stretch-cursor t
+      c-ignore-auto-fill nil)
+
+(setq-default indent-tabs-mode nil
+              tab-width 4
+              auto-fill-function 'do-auto-fill
+              mode-line-format nil)
+
+(bind-key (kbd "<escape>") 'keyboard-escape-quit)
+(defalias 'yes-or-no-p 'y-or-n-p)
 (defun display-startup-echo-area-message nil)
 (global-display-line-numbers-mode)
-(setq recentf-max-menu-items 20)
-(bind-key (kbd "<escape>") 'keyboard-escape-quit)
-(setq-default mode-line-format nil)
-(defalias 'yes-or-no-p 'y-or-n-p)
+(load custom-file)
+(set-language-environment "UTF-8")
 
 (electric-indent-mode 1)
 (electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
+(show-paren-mode 1)
 
-(defun switch-to-last-buffer ()
+(add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
+
+(defun switch-to-previous-buffer ()
+  "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (defun hide-gui-elements (&optional frame)
-  "Hides some GUI elements."
+  "Hides some GUI elements in FRAME."
   (unless frame
     (setq frame (selected-frame)))
   (when frame
@@ -100,7 +107,6 @@
   :config
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
-  (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (define-key evil-normal-state-map "s" nil)
   (define-key evil-normal-state-map "k" nil)
   (define-key evil-normal-state-map "j" nil)
@@ -144,10 +150,14 @@
   (setq base16-theme-256-color-source "colors")
   (load-theme 'base16-chalk t))
 
-(use-package hydra :defer t
+(use-package hydra
   :bind (:map evil-normal-state-map
-      ("SPC" . hydra-menu/body)
-  	("m" . hydra-major/body))
+    ("SPC" . hydra-menu/body)
+    ("m" . hydra-major/body)
+    :map evil-motion-state-map
+    ("SPC" . hydra-menu/body)
+    :map evil-visual-state-map
+    ("SPC" . hydra-menu/body))
   :config
   (setq hydra-cell-format "% -0s %% -8`%s"))
 
@@ -163,7 +173,7 @@
   ("l" helm-mini "list")
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
-  ("s" switch-to-last-buffer "previous buffer")
+  ("s" switch-to-previous-buffer "previous buffer")
   ("d" (kill-buffer (current-buffer)) "destroy"))
 
 (defhydra hydra-emacs (:color blue)
@@ -184,7 +194,9 @@
 
 (defhydra hydra-tex (:color blue)
   ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
-  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view"))
+  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view")
+  ("i" (lambda () (interactive) (latex-insert-item)) "insert item")
+  ("l" (lambda () (interactive) (latex-insert-block)) "insert block"))
 
 (defhydra hydra-org (:color blue)
   ("t" org-todo "toggle todo status")
@@ -209,23 +221,29 @@
   ("l" yas-describe-tables "list"))
 
 (defhydra hydra-yasnippet (:color blue)
-  ("s" yas-load-snippet-buffer-and-close "save and quit"))
+  ("s" yas-load-snippet-buffer-and-close "save and load"))
 
 (defhydra hydra-menu (:color blue)
-  ("b" hydra-buffers/body "buffer" :exit t)
-  ("e" hydra-emacs/body "emacs" :exit t)
-  ("p" hydra-projects/body "projects" :exit t)
-  ("f" hydra-files/body "files" :exit t)
-  ("n" hydra-navigation/body "navigation" :exit t)
-  ("w" hydra-window/body "window" :exit t)
-  ("s" hydra-snippet/body "snippet" :exit t)
-  ("m" hydra-major/body "major" :exit t))
+  "
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major,
+[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
+"
+  ("b" hydra-buffers/body nil :exit t)
+  ("e" hydra-emacs/body nil :exit t)
+  ("p" hydra-projects/body nil :exit t)
+  ("f" hydra-files/body nil :exit t)
+  ("n" hydra-navigation/body nil :exit t)
+  ("w" hydra-window/body nil :exit t)
+  ("s" hydra-snippet/body nil :exit t)
+  ("m" hydra-major/body nil :exit t)
+  ("c" evil-avy-goto-char-timer nil :exit t)
+  ("r" switch-to-previous-buffer nil :exit t)
+  ("a" ace-window nil :exit t))
 
 (use-package avy
   :config
-  (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?c ?p ?k ?m))
-  :bind (:map evil-normal-state-map
-    ("å" . avy-goto-char-2)))
+  (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?c ?p ?k ?m)
+        avy-timeout-seconds '0.4))
 
 (use-package dtrt-indent
   :config
@@ -241,9 +259,9 @@
 
 (use-package projectile
   :config
-  (projectile-mode 1))
-  (setq projectile-sort-order 'recently-active)
-  (setq projectile-generic-command "fd . -0")
+  (projectile-mode 1)
+  (setq projectile-sort-order 'recently-active
+        projectile-generic-command "fd . -0"))
 
 (use-package helm-projectile)
 (use-package helm-ag)
@@ -260,9 +278,7 @@
 
 (use-package ace-window
   :config
-  (setq aw-keys '(?h ?a ?s ?p))
-  :bind
-  (:map evil-normal-state-map ("ö" . ace-window)))
+  (setq aw-keys '(?h ?a ?s ?p)))
 
 (use-package markdown-mode
   :commands
@@ -298,11 +314,11 @@
 
 (use-package company
   :config
-  (setq company-dabbrev-downcase 0)
-  (setq company-show-numbers t)
-  (setq company-idle-delay 0)
-  (setq company-selection-wrap-around t)
-  (setq company-minimum-prefix-length 1)
+  (setq company-dabbrev-downcase 0
+        company-show-numbers t
+        company-idle-delay 0
+        company-selection-wrap-around t
+        company-minimum-prefix-length 1)
   (delete 'company-dabbrev company-backends)
   (let ((map company-active-map))
     (mapc (lambda (x) (define-key map (format "%d" x)
@@ -340,10 +356,11 @@
   (setcdr (assq 'output-pdf TeX-view-program-selection) '("mupdf"))
   (TeX-PDF-mode t)
   (setq-default TeX-master nil)
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t))
+  (setq TeX-auto-save t
+        TeX-parse-self t))
 
 (defun mupdf-reload (file)
+  "Sends SIGHUP to mupdf, reloading the output."
   (interactive)
   (TeX-revert-document-buffer file)
   (call-process-shell-command "pkill -HUP mupdf || true"))
@@ -351,8 +368,8 @@
 
 (use-package whitespace
   :config
-  (setq whitespace-line-column 80)
-  (setq whitespace-style '(face lines-tail))
+  (setq whitespace-line-column 80
+        whitespace-style '(face lines-tail))
   :hook
   (prog-mode . whitespace-mode))
 
@@ -378,3 +395,10 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
+
+(use-package expand-region
+  :config
+  (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
+  (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
+
+(provide 'init)
