@@ -62,6 +62,7 @@
       inhibit-startup-screen t
       ring-bell-function 'ignore
       sentence-end-double-space nil
+      x-stretch-cursor t
       c-ignore-auto-fill nil)
 
 (setq-default indent-tabs-mode nil
@@ -84,7 +85,7 @@
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
-(defun switch-to-last-buffer ()
+(defun switch-to-previous-buffer ()
   "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
@@ -106,7 +107,6 @@
   :config
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
-  (define-key evil-normal-state-map (kbd "ä") 'switch-to-last-buffer)
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
@@ -147,10 +147,12 @@
   (setq base16-theme-256-color-source "colors")
   (load-theme 'base16-chalk t))
 
-(use-package hydra :defer t
+(use-package hydra
   :bind (:map evil-normal-state-map
     ("SPC" . hydra-menu/body)
     ("m" . hydra-major/body)
+    :map evil-motion-state-map
+    ("SPC" . hydra-menu/body)
     :map evil-visual-state-map
     ("SPC" . hydra-menu/body))
   :config
@@ -168,7 +170,7 @@
   ("l" helm-mini "list")
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
-  ("s" switch-to-last-buffer "previous buffer")
+  ("s" switch-to-previous-buffer "previous buffer")
   ("d" (kill-buffer (current-buffer)) "destroy"))
 
 (defhydra hydra-emacs (:color blue)
@@ -219,18 +221,25 @@
   ("s" yas-load-snippet-buffer-and-close "save and load"))
 
 (defhydra hydra-menu (:color blue)
-  ("b" hydra-buffers/body "buffer" :exit t)
-  ("e" hydra-emacs/body "emacs" :exit t)
-  ("p" hydra-projects/body "projects" :exit t)
-  ("f" hydra-files/body "files" :exit t)
-  ("n" hydra-navigation/body "navigation" :exit t)
-  ("w" hydra-window/body "window" :exit t)
-  ("s" hydra-snippet/body "snippet" :exit t)
-  ("m" hydra-major/body "major" :exit t))
+  "
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major,
+[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
+"
+  ("b" hydra-buffers/body nil :exit t)
+  ("e" hydra-emacs/body nil :exit t)
+  ("p" hydra-projects/body nil :exit t)
+  ("f" hydra-files/body nil :exit t)
+  ("n" hydra-navigation/body nil :exit t)
+  ("w" hydra-window/body nil :exit t)
+  ("s" hydra-snippet/body nil :exit t)
+  ("m" hydra-major/body nil :exit t)
+  ("c" evil-avy-goto-char-timer nil :exit t)
+  ("r" switch-to-previous-buffer nil :exit t)
+  ("a" ace-window nil :exit t))
 
 (use-package avy
-  :bind (:map evil-normal-state-map
-    ("å" . avy-goto-char-2)))
+  :config
+  (setq avy-timeout-seconds '0.4))
 
 (use-package dtrt-indent
   :config
@@ -265,9 +274,7 @@
 
 (use-package ace-window
   :config
-  (setq aw-keys '(?h ?a ?s ?p))
-  :bind
-  (:map evil-normal-state-map ("ö" . ace-window)))
+  (setq aw-keys '(?h ?a ?s ?p)))
 
 (use-package markdown-mode
   :commands
@@ -384,5 +391,10 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
+
+(use-package expand-region
+  :config
+  (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
+  (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
 
 (provide 'init)
