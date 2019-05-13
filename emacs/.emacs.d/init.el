@@ -107,9 +107,9 @@
   :config
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
-  (define-key evil-normal-state-map "s" nil)
-  (define-key evil-normal-state-map "k" nil)
-  (define-key evil-normal-state-map "j" nil)
+  (define-key evil-motion-state-map "s" nil)
+  (define-key evil-motion-state-map "k" nil)
+  (define-key evil-motion-state-map "j" nil)
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
