@@ -8,7 +8,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 unalias -m "g*" # the git plugin has way to many aliases
 
-export HISTORY_IGNORE="(ls|mpv *|pwd|pass *|unar *|unzip *)"
+export HISTORY_IGNORE="(ls*|mpv*|pwd|pass*|un(zip|rar)*|rm*)"
 export HISTSIZE=1000
 export SAVEHIST=$HISTSIZE
 

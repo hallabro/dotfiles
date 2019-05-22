@@ -82,6 +82,7 @@
 (menu-bar-mode -1)
 (recentf-mode 1)
 (show-paren-mode 1)
+(global-auto-revert-mode t)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
