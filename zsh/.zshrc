@@ -3,7 +3,7 @@ export PATH=$PATH:$HOME/.local/bin
 export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOPATH/bin
 
-ZSH_THEME="theunraveler"
+ZSH_THEME="hallabro"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 unalias -m "g*" # the git plugin has way to many aliases
