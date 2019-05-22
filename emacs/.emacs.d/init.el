@@ -110,6 +110,7 @@
   (define-key evil-motion-state-map "s" nil)
   (define-key evil-motion-state-map "k" nil)
   (define-key evil-motion-state-map "j" nil)
+
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
@@ -118,7 +119,7 @@
   (define-key evil-normal-state-map (kbd "C-n") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "C-t") 'evil-scroll-down)
 
-  (evil-define-key nil evil-motion-state-map
+  (evil-define-key nil evil-normal-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
@@ -126,7 +127,7 @@
     "k" 'evil-ex-search-next
     "K" 'evil-ex-search-previous)
 
-  (evil-define-key 'visual evil-motion-state-map
+  (evil-define-key 'visual evil-normal-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
