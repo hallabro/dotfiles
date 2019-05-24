@@ -410,4 +410,16 @@
   (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
   (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
 
+(use-package shackle
+  :config
+  (setq shackle-default-alignment 'below
+        shackle-default-size 0.3
+        helm-display-function 'pop-to-buffer
+        shackle-default-rule '(:select t :align t :other t)
+        shackle-rules
+          '((compilation-mode :noselect t)
+           ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.3)
+           ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
+  (shackle-mode 1))
+
 (provide 'init)
