@@ -83,6 +83,7 @@
 (recentf-mode 1)
 (show-paren-mode 1)
 (global-auto-revert-mode t)
+(fringe-mode 0)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
@@ -395,6 +396,7 @@
 
 (use-package flycheck
   :config
+  (setq flycheck-indication-mode nil)
   (global-flycheck-mode))
 
 (use-package expand-region
