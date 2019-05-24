@@ -83,6 +83,7 @@
 (recentf-mode 1)
 (show-paren-mode 1)
 (global-auto-revert-mode t)
+(fringe-mode 0)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 
@@ -138,8 +139,14 @@
 
 (use-package helm
   :config
-  (require 'helm-config)
-  (setq helm-mode-fuzzy-match t)
+  (setq helm-M-x-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t
+        helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-apropos-fuzzy-match t
+        helm-lisp-fuzzy-completion t)
+
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
@@ -396,11 +403,24 @@
 
 (use-package flycheck
   :config
+  (setq flycheck-indication-mode nil)
   (global-flycheck-mode))
 
 (use-package expand-region
   :config
   (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
   (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
+
+(use-package shackle
+  :config
+  (setq shackle-default-alignment 'below
+        shackle-default-size 0.3
+        helm-display-function 'pop-to-buffer
+        shackle-default-rule '(:select t :align t :other t)
+        shackle-rules
+          '((compilation-mode :noselect t)
+           ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.3)
+           ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
+  (shackle-mode 1))
 
 (provide 'init)

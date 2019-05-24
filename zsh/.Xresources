@@ -12,9 +12,6 @@ URxvt*iso14755: False
 URxvt*url-launcher: firefox
 URxvt*matcher.button: 1
 
-! Base16 Chalk
-! Scheme: Chris Kempson (http://chriskempson.com)
-
 #define base00 #151515
 #define base01 #202020
 #define base02 #303030

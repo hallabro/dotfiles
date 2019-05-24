@@ -1,7 +1,7 @@
 alias emacs='emacsclient --tty'
 alias g=git
 alias gst='git status --short'
-alias ls=̈́'ls --color=tty'
+alias ls='ls --color=tty'
 alias s=sudo
 
 function mkcd() {
