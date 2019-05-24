@@ -221,7 +221,7 @@
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
   ("r" split-window-right "split right")
-  ("d" delete-window "delete")
+  ("d" ace-delete-window "delete")
   ("a" ace-window "ace"))
 
 (defhydra hydra-snippet (:color blue)
