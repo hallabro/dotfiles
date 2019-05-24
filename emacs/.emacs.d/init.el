@@ -139,8 +139,14 @@
 
 (use-package helm
   :config
-  (require 'helm-config)
-  (setq helm-mode-fuzzy-match t)
+  (setq helm-M-x-fuzzy-match t
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match t
+        helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-apropos-fuzzy-match t
+        helm-lisp-fuzzy-completion t)
+
   (helm-mode 1)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
