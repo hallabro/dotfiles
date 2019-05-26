@@ -221,7 +221,8 @@
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
   ("r" split-window-right "split right")
-  ("d" ace-delete-window "delete")
+  ("d" ace-delete-window "delete other")
+  ("x" delete-window "delete current")
   ("a" ace-window "ace"))
 
 (defhydra hydra-flycheck (:color blue)
