@@ -3,5 +3,5 @@ rofi.lines: 6
 rofi.width: 25
 rofi.kb-remove-to-eol:
 rofi.kb-accept-entry: Return,KP_Enter
-rofi.kb-row-up: Control+k
-rofi.kb-row-down: Control+j
+rofi.kb-row-up: Control+n
+rofi.kb-row-down: Control+t
