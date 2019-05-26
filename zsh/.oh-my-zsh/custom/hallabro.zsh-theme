@@ -1,7 +1,10 @@
-# Comment
+function ssh_connection() {
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo "%{$fg_bold[yellow]%}ssh@%m :: "
+  fi
+}
 
-PROMPT='%{$fg[magenta]%}%2~%B :: %{$reset_color%}'
-
+PROMPT='$(ssh_connection)%{$fg[magenta]%}%2~%B :: %{$reset_color%}'
 RPROMPT='%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%} $(git_prompt_status)%{$reset_color%}'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
