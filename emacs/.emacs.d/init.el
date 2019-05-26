@@ -423,6 +423,7 @@
         shackle-default-rule '(:select t :align t :other t)
         shackle-rules
           '((compilation-mode :noselect t)
+           (neotree-mode :align left)
            ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.3)
            ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
   (shackle-mode 1))
