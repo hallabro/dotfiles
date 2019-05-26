@@ -221,8 +221,12 @@
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
   ("r" split-window-right "split right")
-  ("d" delete-window "delete")
+  ("d" ace-delete-window "delete")
   ("a" ace-window "ace"))
+
+(defhydra hydra-flycheck (:color blue)
+  ("n" flycheck-next-error "next error" :exit nil)
+  ("p" flycheck-previous-error "previous error" :exit nil))
 
 (defhydra hydra-snippet (:color blue)
   ("i" yas-insert-snippet "insert")
@@ -234,7 +238,7 @@
 
 (defhydra hydra-menu (:color blue)
   "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major,
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_l_]: flycheck,
 [_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
 "
   ("b" hydra-buffers/body nil :exit t)
@@ -245,6 +249,7 @@
   ("w" hydra-window/body nil :exit t)
   ("s" hydra-snippet/body nil :exit t)
   ("m" hydra-major/body nil :exit t)
+  ("l" hydra-flycheck/body nil :exit t)
   ("c" evil-avy-goto-char-timer nil :exit t)
   ("r" switch-to-previous-buffer nil :exit t)
   ("a" ace-window nil :exit t))
