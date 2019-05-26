@@ -2,6 +2,7 @@ export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:$HOME/.local/bin
 export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOPATH/bin
+export EDITOR="emacsclient -t"
 
 ZSH_THEME="hallabro"
 plugins=(git)
