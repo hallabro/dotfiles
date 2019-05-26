@@ -29,6 +29,8 @@ setopt EXTENDEDGLOB
 
 FZF=/usr/share/zsh/site-contrib/fzf.zsh
 [ -f $FZF ] && source $FZF
+export FZF_BIND_OPTS="--bind ctrl-k:up,ctrl-j:down"
+export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
 
 _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" . "$1"
