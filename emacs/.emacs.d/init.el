@@ -354,6 +354,7 @@
     "u" 'neotree-refresh
     "." 'neotree-hidden-file-toggle
     "c" 'neotree-create-node
+    "C" 'neotree-copy-node
     "r" 'neotree-rename-node
     "d" 'neotree-delete-node
     "h" 'neotree-select-up-node
