@@ -129,7 +129,7 @@
     "k" 'evil-ex-search-next
     "K" 'evil-ex-search-previous)
 
-  (evil-define-key 'visual evil-normal-state-map
+  (evil-define-key nil evil-visual-state-map
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
