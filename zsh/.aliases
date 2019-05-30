@@ -7,7 +7,11 @@ alias ls='ls --color=tty'
 alias s=sudo
 
 function mkcd() {
-	mkdir -p "$@" && cd "$@"
+    mkdir -p "$@" && cd "$@"
+}
+
+function _source_if_exists() {
+    [ -r "$1" ] && source $1
 }
 
 function dx() {
