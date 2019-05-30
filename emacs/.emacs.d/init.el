@@ -199,6 +199,7 @@
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
   ("s" helm-do-ag-project-root "search")
+  ("r" projectile-replace "replace")
   ("f" helm-projectile-find-file "files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
