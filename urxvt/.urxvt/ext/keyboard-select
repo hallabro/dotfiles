@@ -171,13 +171,13 @@ sub key_press {
 		} else {
 			toggle_select($self, 'n');
 		}
-	} elsif ($key eq 'k' || $keysym == 0xff52) {
-		move_cursor($self, 'k');
-	} elsif ($key eq 'j' || $keysym == 0xff54) {
-		move_cursor($self, 'j');
+	} elsif ($key eq 'n' || $keysym == 0xff52) {
+		move_cursor($self, 'n');
+	} elsif ($key eq 't' || $keysym == 0xff54) {
+		move_cursor($self, 't');
 	} elsif ($key eq 'h' || $keysym == 0xff51) {
 		move_cursor($self, 'h');
-	} elsif ($key eq 'l' || $keysym == 0xff53) {
+	} elsif ($key eq 's' || $keysym == 0xff53) {
 		move_cursor($self, 'l');
 	} elsif ($keysym == 0xff57) {
 		move_cursor($self, '$');
