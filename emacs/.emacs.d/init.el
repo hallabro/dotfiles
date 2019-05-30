@@ -86,6 +86,7 @@
 (fringe-mode 0)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
+(setq recentf-exclude '("/vendor/"))
 
 (defun switch-to-previous-buffer ()
   "Switch to the most recently used buffer."
