@@ -161,6 +161,7 @@
   (load-theme 'base16-chalk t))
 
 (use-package hydra
+  :after evil
   :bind (:map evil-normal-state-map
     ("SPC" . hydra-menu/body)
     ("m" . hydra-major/body)
@@ -190,7 +191,7 @@
   ("r" (load-file "~/.emacs.d/init.el") "reload")
   ("l" list-packages "list packages")
   ("p" straight-x-clean-unused-repos "prune unused packages")
-  ("u" straight-pull-all "update packages")
+  ("u" auto-package-update-now "update packages")
   ("q" save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-files (:color blue)
@@ -279,10 +280,14 @@
   (setq projectile-sort-order 'recently-active
         projectile-generic-command "fd . -0"))
 
-(use-package helm-projectile)
-(use-package helm-ag)
+(use-package helm-projectile
+  :after helm projectile)
+
+(use-package helm-ag
+  :after helm)
 
 (use-package key-chord
+  :after evil
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
@@ -307,6 +312,7 @@
   (setq markdown-command "multimarkdown"))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -319,9 +325,10 @@
   (require 'python-mode))
 
 (use-package org
+  :after evil
   :config
-  (setq org-duration-format (quote h:mm))
-  (setq org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
+  (setq org-duration-format (quote h:mm)
+        org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
   (evil-define-key 'normal org-mode-map
     "K" 'org-timestamp-up
     "J" 'org-timestamp-down
@@ -408,6 +415,7 @@
   (global-flycheck-mode))
 
 (use-package expand-region
+  :after evil
   :config
   (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
   (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
@@ -426,5 +434,10 @@
   (shackle-mode 1))
 
 (use-package git-commit)
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t))
 
 (provide 'init)
