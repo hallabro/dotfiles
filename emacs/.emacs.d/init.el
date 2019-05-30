@@ -232,6 +232,11 @@
   ("n" flycheck-next-error "next error" :exit nil)
   ("p" flycheck-previous-error "previous error" :exit nil))
 
+(defhydra hydra-tags (:color blue)
+  ("r" helm-gtags-find-rtag "references")
+  ("f" helm-gtags-find-tag "find")
+  ("F" helm-gtags-find-tag-from-here "find from here"))
+
 (defhydra hydra-snippet (:color blue)
   ("i" yas-insert-snippet "insert")
   ("c" yas-new-snippet "create")
@@ -242,7 +247,7 @@
 
 (defhydra hydra-menu (:color blue)
   "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_l_]: flycheck,
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_l_]: flycheck, [_t_]: tags,
 [_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
 "
   ("b" hydra-buffers/body nil :exit t)
@@ -254,6 +259,7 @@
   ("s" hydra-snippet/body nil :exit t)
   ("m" hydra-major/body nil :exit t)
   ("l" hydra-flycheck/body nil :exit t)
+  ("t" hydra-tags/body nil :exit t)
   ("c" evil-avy-goto-char-timer nil :exit t)
   ("r" switch-to-previous-buffer nil :exit t)
   ("a" ace-window nil :exit t))
@@ -439,5 +445,8 @@
   :config
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t))
+
+(use-package helm-gtags
+  :after helm)
 
 (provide 'init)
