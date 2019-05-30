@@ -218,7 +218,7 @@
   ("d" org-update-all-dblocks "update dblocks"))
 
 (defhydra hydra-navigation (:color blue)
-  ("t" neotree-toggle "toggle"))
+  ("t" treemacs "toggle"))
 
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
@@ -345,25 +345,18 @@
   :hook
   (prog-mode . global-company-mode))
 
-(use-package neotree
+(use-package treemacs)
+
+(use-package treemacs-evil
+  :after treemacs evil)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
   :config
-  (setq neo-window-width 40)
-  (setq neo-cwd-line-style 'button)
-  (setq neo-autorefresh nil)
-  (evil-define-key 'normal neotree-mode-map
-    "q" 'neotree-hide
-    "o" 'neotree-quick-look
-    "u" 'neotree-refresh
-    "." 'neotree-hidden-file-toggle
-    "c" 'neotree-create-node
-    "C" 'neotree-copy-node
-    "r" 'neotree-rename-node
-    "d" 'neotree-delete-node
-    "h" 'neotree-select-up-node
-    "l" 'neotree-enter
-    "j" 'neotree-next-line
-    "k" 'neotree-previous-line
-    "a" 'neotree-change-root))
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "j") #'treemacs-next-line)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "k") #'treemacs-previous-line)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "h") #'treemacs-root-up)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "l") #'treemacs-root-down))
 
 (use-package tex
   :demand t
