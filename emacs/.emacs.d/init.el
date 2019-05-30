@@ -104,6 +104,7 @@
 
 (hide-gui-elements)
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
 
 (use-package evil
   :config
