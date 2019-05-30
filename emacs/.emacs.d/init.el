@@ -104,6 +104,7 @@
 
 (hide-gui-elements)
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
 
 (use-package evil
   :config
@@ -160,6 +161,7 @@
   (load-theme 'base16-chalk t))
 
 (use-package hydra
+  :after evil
   :bind (:map evil-normal-state-map
     ("SPC" . hydra-menu/body)
     ("m" . hydra-major/body)
@@ -189,7 +191,7 @@
   ("r" (load-file "~/.emacs.d/init.el") "reload")
   ("l" list-packages "list packages")
   ("p" straight-x-clean-unused-repos "prune unused packages")
-  ("u" straight-pull-all "update packages")
+  ("u" auto-package-update-now "update packages")
   ("q" save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-files (:color blue)
@@ -198,6 +200,7 @@
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
   ("s" helm-do-ag-project-root "search")
+  ("r" projectile-replace "replace")
   ("f" helm-projectile-find-file "files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
@@ -216,7 +219,7 @@
   ("d" org-update-all-dblocks "update dblocks"))
 
 (defhydra hydra-navigation (:color blue)
-  ("t" neotree-toggle "toggle"))
+  ("t" treemacs "toggle"))
 
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
@@ -278,10 +281,14 @@
   (setq projectile-sort-order 'recently-active
         projectile-generic-command "fd . -0"))
 
-(use-package helm-projectile)
-(use-package helm-ag)
+(use-package helm-projectile
+  :after helm projectile)
+
+(use-package helm-ag
+  :after helm)
 
 (use-package key-chord
+  :after evil
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "hh" 'evil-normal-state))
@@ -306,6 +313,7 @@
   (setq markdown-command "multimarkdown"))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -318,9 +326,10 @@
   (require 'python-mode))
 
 (use-package org
+  :after evil
   :config
-  (setq org-duration-format (quote h:mm))
-  (setq org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
+  (setq org-duration-format (quote h:mm)
+        org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
   (evil-define-key 'normal org-mode-map
     "N" 'org-timestamp-up
     "T" 'org-timestamp-down
@@ -344,25 +353,18 @@
   :hook
   (prog-mode . global-company-mode))
 
-(use-package neotree
+(use-package treemacs)
+
+(use-package treemacs-evil
+  :after treemacs evil)
+
+(use-package treemacs-projectile
+  :after treemacs projectile
   :config
-  (setq neo-window-width 40)
-  (setq neo-cwd-line-style 'button)
-  (setq neo-autorefresh nil)
-  (evil-define-key 'normal neotree-mode-map
-    "q" 'neotree-hide
-    "o" 'neotree-quick-look
-    "u" 'neotree-refresh
-    "." 'neotree-hidden-file-toggle
-    "c" 'neotree-create-node
-    "C" 'neotree-copy-node
-    "r" 'neotree-rename-node
-    "d" 'neotree-delete-node
-    "h" 'neotree-select-up-node
-    "s" 'neotree-enter
-    "t" 'neotree-next-line
-    "n" 'neotree-previous-line
-    "a" 'neotree-change-root))
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "t") #'treemacs-next-line)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "k") #'treemacs-previous-line)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "h") #'treemacs-root-up)
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "s") #'treemacs-root-down))
 
 (use-package tex
   :demand t
@@ -414,6 +416,7 @@
   (global-flycheck-mode))
 
 (use-package expand-region
+  :after evil
   :config
   (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
   (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
@@ -430,5 +433,12 @@
            ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.3)
            ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
   (shackle-mode 1))
+
+(use-package git-commit)
+
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t))
 
 (provide 'init)
