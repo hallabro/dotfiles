@@ -1,6 +1,8 @@
 alias emacs='emacsclient --tty'
 alias g=git
+alias gch='git checkout'
 alias gst='git status --short'
+alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
 alias s=sudo
 
