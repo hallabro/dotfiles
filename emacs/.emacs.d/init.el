@@ -431,4 +431,6 @@
            ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
   (shackle-mode 1))
 
+(use-package git-commit)
+
 (provide 'init)
