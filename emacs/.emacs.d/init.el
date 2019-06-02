@@ -236,7 +236,8 @@
 (defhydra hydra-tags (:color blue)
   ("r" helm-gtags-find-rtag "references")
   ("f" helm-gtags-find-tag "find")
-  ("F" helm-gtags-find-tag-from-here "find from here"))
+  ("F" helm-gtags-find-tag-from-here "find from here")
+  ("g" projectile-regenerate-tags "generate tags"))
 
 (defhydra hydra-snippet (:color blue)
   ("i" yas-insert-snippet "insert")
@@ -447,7 +448,11 @@
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t))
 
+(use-package ggtags
+  :config
+  (setenv "GTAGSLABEL" "ctags"))
+
 (use-package helm-gtags
-  :after helm)
+  :after helm ggtags)
 
 (provide 'init)
