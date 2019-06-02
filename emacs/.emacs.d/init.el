@@ -196,7 +196,8 @@
   ("q" save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-files (:color blue)
-  ("r" helm-recentf "recent"))
+  ("r" helm-recentf "recent")
+  ("R" helm-projectile-recentf "recent project files"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
@@ -236,7 +237,8 @@
 (defhydra hydra-tags (:color blue)
   ("r" helm-gtags-find-rtag "references")
   ("f" helm-gtags-find-tag "find")
-  ("F" helm-gtags-find-tag-from-here "find from here"))
+  ("F" helm-gtags-find-tag-from-here "find from here")
+  ("g" projectile-regenerate-tags "generate tags"))
 
 (defhydra hydra-snippet (:color blue)
   ("i" yas-insert-snippet "insert")
@@ -356,7 +358,9 @@
           `(lambda () (interactive) (company-complete-number ,x))))
           (number-sequence 0 9))
     (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
-    (define-key map (kbd "<return>") nil))
+    (define-key map (kbd "<return>") nil)
+    (define-key map (kbd "C-j") #'company-select-next)
+    (define-key map (kbd "C-k") #'company-select-previous))
   :hook
   (prog-mode . global-company-mode))
 
@@ -448,7 +452,11 @@
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t))
 
+(use-package ggtags
+  :config
+  (setenv "GTAGSLABEL" "ctags"))
+
 (use-package helm-gtags
-  :after helm)
+  :after helm ggtags)
 
 (provide 'init)
