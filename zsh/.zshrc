@@ -26,16 +26,10 @@ setopt EXTENDEDGLOB
 _source_if_exists ~/.zcolors
 [ -f ~/.zdircolors ] && eval `dircolors ~/.zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-<<<<<<< HEAD
-FZF=/usr/share/zsh/site-contrib/fzf.zsh
-[ -f $FZF ] && source $FZF
-export FZF_BIND_OPTS="--bind ctrl-n:up,ctrl-t:down"
-=======
 _source_if_exists "/usr/share/zsh/site-functions/_fzf"
 _source_if_exists "/usr/share/zsh/site-contrib/fzf.zsh"
 
-export FZF_BIND_OPTS="--bind ctrl-k:up,ctrl-j:down"
->>>>>>> master
+export FZF_BIND_OPTS="--bind ctrl-n:up,ctrl-t:down"
 export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
 
 _fzf_compgen_path() {
