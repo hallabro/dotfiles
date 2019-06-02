@@ -196,7 +196,8 @@
   ("q" save-buffers-kill-terminal "save and quit"))
 
 (defhydra hydra-files (:color blue)
-  ("r" helm-recentf "recent"))
+  ("r" helm-recentf "recent")
+  ("R" helm-projectile-recentf "recent project files"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
