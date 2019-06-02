@@ -3,6 +3,7 @@ export PATH=$PATH:$HOME/.local/bin
 export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOPATH/bin
 export EDITOR="emacsclient -t"
+export LESS="$LESS -FRXK"
 
 ZSH_THEME="hallabro"
 plugins=(git fd)
