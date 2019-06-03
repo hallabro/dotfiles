@@ -350,12 +350,10 @@
         company-show-numbers t
         company-idle-delay 0
         company-selection-wrap-around t
-        company-minimum-prefix-length 1)
+        company-dabbrev-char-regexp "[A-z:-]"
+        company-minimum-prefix-length 3)
   (delete 'company-dabbrev company-backends)
   (let ((map company-active-map))
-    (mapc (lambda (x) (define-key map (format "%d" x)
-          `(lambda () (interactive) (company-complete-number ,x))))
-          (number-sequence 0 9))
     (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
     (define-key map (kbd "<return>") nil)
     (define-key map (kbd "C-j") #'company-select-next)
