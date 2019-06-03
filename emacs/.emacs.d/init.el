@@ -122,6 +122,7 @@
 
   (define-key evil-normal-state-map (kbd "C-n") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "C-t") 'evil-scroll-down)
+  (define-key evil-motion-state-map (kbd "l") 'evil-find-char-to)
 
   (evil-define-key nil evil-normal-state-map
     "t" 'evil-next-line
