@@ -445,6 +445,7 @@
   (shackle-mode 1))
 
 (use-package git-commit)
+(use-package git-modes)
 
 (use-package auto-package-update
   :config
