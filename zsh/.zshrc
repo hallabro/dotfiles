@@ -32,6 +32,7 @@ _source_if_exists "/usr/share/zsh/site-contrib/fzf.zsh"
 
 export FZF_BIND_OPTS="--bind ctrl-n:up,ctrl-t:down"
 export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
+bindkey '^F' transpose-chars
 
 _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" . "$1"
