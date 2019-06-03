@@ -9,6 +9,8 @@ URxvt.keysym.M-k: perl:keyboard-select:activate
 URxvt*iso14755: False
 URxvt*url-launcher: firefox
 URxvt*matcher.button: 1
+URxvt*keysym.Control-k: \033[5~
+URxvt*keysym.Control-j: \033[6~
 URxvt*keysym.Control-h: \033[1;5D
 URxvt*keysym.Control-l: \033[1;5C
 
