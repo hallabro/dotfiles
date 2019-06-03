@@ -357,8 +357,8 @@
   (let ((map company-active-map))
     (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
     (define-key map (kbd "<return>") nil)
-    (define-key map (kbd "C-j") #'company-select-next)
-    (define-key map (kbd "C-k") #'company-select-previous))
+    (define-key map (kbd "C-t") #'company-select-next)
+    (define-key map (kbd "C-n") #'company-select-previous))
   :hook
   (prog-mode . global-company-mode))
 
