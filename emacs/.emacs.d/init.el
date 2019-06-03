@@ -325,6 +325,17 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package evil-args
+  :after evil
+  :config
+  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+  (define-key evil-normal-state-map "L" 'evil-forward-arg)
+  (define-key evil-motion-state-map "L" 'evil-forward-arg)
+  (define-key evil-normal-state-map "H" 'evil-backward-arg)
+  (define-key evil-motion-state-map "H" 'evil-backward-arg)
+  (define-key evil-normal-state-map "K" 'evil-jump-out-args))
+
 (use-package php-mode
   :hook
   (php . php-enable-symfony2-coding-style))
