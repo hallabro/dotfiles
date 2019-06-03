@@ -362,19 +362,6 @@
   :hook
   (prog-mode . global-company-mode))
 
-(use-package treemacs)
-
-(use-package treemacs-evil
-  :after treemacs evil)
-
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :config
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "t") #'treemacs-next-line)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "k") #'treemacs-previous-line)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "h") #'treemacs-root-up)
-  (evil-define-key 'treemacs treemacs-mode-map (kbd "s") #'treemacs-root-down))
-
 (use-package tex
   :demand t
   :straight auctex
