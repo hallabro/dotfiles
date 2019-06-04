@@ -269,7 +269,8 @@
 
 (use-package avy
   :config
-  (setq avy-timeout-seconds '0.4))
+  (setq avy-timeout-seconds '0.4
+        avy-all-windows nil))
 
 (use-package dtrt-indent
   :config
