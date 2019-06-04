@@ -466,12 +466,4 @@
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
 
-(use-package lsp-mode
-  :commands lsp)
-
-(use-package company-lsp
-  :after lsp-mode
-  :config
-  (setq company-backends 'company-lsp))
-
 (provide 'init)
