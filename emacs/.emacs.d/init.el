@@ -456,4 +456,12 @@
 (use-package helm-gtags
   :after helm ggtags)
 
+(use-package lsp-mode
+  :commands lsp)
+
+(use-package company-lsp
+  :after lsp-mode
+  :config
+  (setq company-backends 'company-lsp))
+
 (provide 'init)
