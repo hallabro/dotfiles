@@ -271,7 +271,8 @@
 (use-package avy
   :config
   (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?c ?p ?k ?m)
-        avy-timeout-seconds '0.4))
+        avy-timeout-seconds '0.4
+        avy-all-windows nil))
 
 (use-package dtrt-indent
   :config
@@ -456,5 +457,13 @@
 
 (use-package helm-gtags
   :after helm ggtags)
+
+(use-package lsp-mode
+  :commands lsp)
+
+(use-package company-lsp
+  :after lsp-mode
+  :config
+  (setq company-backends 'company-lsp))
 
 (provide 'init)
