@@ -460,7 +460,7 @@
   :after lsp-mode
   :init
   (setq lsp-clients-php-server-command
-        `("php", (expand-file-name "~/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php --memory-limit=256M")))
+        `("php", (expand-file-name "~/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php")))
   :config
   (push 'company-lsp company-backends)
   (setq company-lsp-cache-candidates t
