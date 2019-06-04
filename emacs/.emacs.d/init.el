@@ -268,7 +268,8 @@
 
 (use-package avy
   :config
-  (setq avy-timeout-seconds '0.4))
+  (setq avy-timeout-seconds '0.4
+        avy-all-windows nil))
 
 (use-package dtrt-indent
   :config
@@ -462,5 +463,13 @@
   (push 'company-lsp company-backends)
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
+
+(use-package lsp-mode
+  :commands lsp)
+
+(use-package company-lsp
+  :after lsp-mode
+  :config
+  (setq company-backends 'company-lsp))
 
 (provide 'init)
