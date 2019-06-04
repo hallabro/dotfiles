@@ -234,11 +234,10 @@
   ("n" flycheck-next-error "next error" :exit nil)
   ("p" flycheck-previous-error "previous error" :exit nil))
 
-(defhydra hydra-tags (:color blue)
-  ("r" helm-gtags-find-rtag "references")
-  ("f" helm-gtags-find-tag "find")
-  ("F" helm-gtags-find-tag-from-here "find from here")
-  ("g" projectile-regenerate-tags "generate tags"))
+(defhydra hydra-lsp (:color blue)
+  ("r" lsp-find-references "references")
+  ("d" lsp-find-definition "definition")
+  ("e" lsp-describe-thing-at-point "describe"))
 
 (defhydra hydra-snippet (:color blue)
   ("i" yas-insert-snippet "insert")
@@ -250,7 +249,7 @@
 
 (defhydra hydra-menu (:color blue)
   "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_l_]: flycheck, [_t_]: tags,
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
 [_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
 "
   ("b" hydra-buffers/body nil :exit t)
@@ -261,8 +260,8 @@
   ("w" hydra-window/body nil :exit t)
   ("s" hydra-snippet/body nil :exit t)
   ("m" hydra-major/body nil :exit t)
-  ("l" hydra-flycheck/body nil :exit t)
-  ("t" hydra-tags/body nil :exit t)
+  ("y" hydra-flycheck/body nil :exit t)
+  ("l" hydra-lsp/body nil :exit t)
   ("c" evil-avy-goto-char-timer nil :exit t)
   ("r" switch-to-previous-buffer nil :exit t)
   ("a" ace-window nil :exit t))
@@ -448,11 +447,20 @@
   (setq auto-package-update-delete-old-versions t
         auto-package-update-hide-results t))
 
-(use-package ggtags
-  :config
-  (setenv "GTAGSLABEL" "ctags"))
+(use-package lsp-mode
+  :hook
+  (php-mode . lsp)
+  (c++-mode . lsp)
+  (js2-mode . lsp))
 
-(use-package helm-gtags
-  :after helm ggtags)
+(use-package company-lsp
+  :after lsp-mode
+  :init
+  (setq lsp-clients-php-server-command
+        `("php", (expand-file-name "~/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php --memory-limit=256M")))
+  :config
+  (push 'company-lsp company-backends)
+  (setq company-lsp-cache-candidates t
+        company-lsp-async t))
 
 (provide 'init)
