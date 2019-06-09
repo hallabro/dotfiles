@@ -1,0 +1,19 @@
+#!/bin/bash
+conf="$(dirname $0)/sync-repos.conf"
+
+if [ ! -f "${conf}" ]; then
+     echo "${conf} does not exist"
+     exit 1
+fi
+
+source "${conf}"
+
+for repo in ${repos}
+do
+    if [ ! -d "${repo}" ]; then
+        echo "${repo} does not exist"
+        break
+    fi
+
+    su - "${user}" bash -c "cd ${repo} && git pull --rebase -q && git push -q"
+done
