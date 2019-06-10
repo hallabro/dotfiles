@@ -2,6 +2,8 @@ alias e=emacs
 alias emacs='emacsclient --tty'
 alias g=git
 alias gch='git checkout'
+alias gd='git diff'
+alias gdc='git diff --cached'
 alias gst='git status --short'
 alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
