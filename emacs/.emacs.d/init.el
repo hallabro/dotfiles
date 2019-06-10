@@ -450,15 +450,11 @@
 
 (use-package lsp-mode
   :hook
-  (php-mode . lsp)
   (c++-mode . lsp)
   (js2-mode . lsp))
 
 (use-package company-lsp
   :after lsp-mode
-  :init
-  (setq lsp-clients-php-server-command
-        `("php", (expand-file-name "~/.composer/vendor/felixfbecker/language-server/bin/php-language-server.php")))
   :config
   (push 'company-lsp company-backends)
   (setq company-lsp-cache-candidates t
