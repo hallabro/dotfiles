@@ -193,7 +193,7 @@
   ("l" list-packages "list packages")
   ("p" straight-x-clean-unused-repos "prune unused packages")
   ("u" auto-package-update-now "update packages")
-  ("q" save-buffers-kill-terminal "save and quit"))
+  ("e" save-buffers-kill-terminal "save and exit"))
 
 (defhydra hydra-files (:color blue)
   ("r" helm-recentf "recent")
