@@ -3,7 +3,7 @@ STOW_COMMAND:=/usr/bin/stow
 SHELL=/bin/zsh
 HOME:=${HOME}
 PORTAGE:=/etc/portage
-X11CONF:=/etx/X11
+X11CONF:=/etc/X11
 .DEFAULT_GOAL := error
 
 define stow
