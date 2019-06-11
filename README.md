@@ -25,6 +25,7 @@ Dotfiles containing configuration for:
 Management
 ==========
 
-The dotfiles are managed with
-[dotdrop](https://github.com/deadc0de6/dotdrop) or manually with [GNU
-Stow](https://www.gnu.org/software/stow/) or `ln -s`.
+The dotfiles are managed with [GNU
+Make](https://www.gnu.org/software/make/) (See [Makefile](Makefile)
+manually with [GNU Stow](https://www.gnu.org/software/stow/) or `ln
+-s`.
