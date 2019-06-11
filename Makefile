@@ -139,7 +139,7 @@ portage:
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base
-base: sxhkd ranger ssh emacs git less zsh
+base: sxhkd ranger ssh emacs git less zsh neomutt
 
 .PHONY : x11
 x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox
