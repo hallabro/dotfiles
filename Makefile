@@ -102,6 +102,10 @@ less:
 compton: configexists
 	$(call stow,$@,${HOME})
 
+.PHONY : gtk
+gtk: configexists
+	$(call stow,$@,${HOME})
+
 .PHONY : firefox
 firefox:
 	$(call createmaybe,${HOME}/.mozilla/firefox/profile)
