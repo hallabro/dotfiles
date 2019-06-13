@@ -295,7 +295,10 @@
   :after helm projectile)
 
 (use-package helm-ag
-  :after helm)
+  :after helm
+  :config
+  (setq helm-ag-insert-at-point 'symbol)
+  (setq helm-ag-fuzzy-match t))
 
 (use-package key-chord
   :after evil
