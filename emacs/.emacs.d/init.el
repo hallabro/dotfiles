@@ -463,4 +463,6 @@
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
 
+(use-package ebuild-mode)
+
 (provide 'init)
