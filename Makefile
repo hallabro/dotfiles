@@ -117,9 +117,13 @@ x11conf:
 	$(call sudo_createmaybe,${X11CONF}/xorg.conf.d)
 	$(call sudo_stow,x11,${X11CONF})
 
-.PHONY : x11conf_desktop
-x11conf_desktop: x11conf
+.PHONY : x11_desktop
+x11_desktop: x11conf
 	$(call sudo_stow_dest,desktop,x11,${X11CONF})
+
+.PHONY : x11_t25
+x11_t25: x11conf
+	$(call sudo_stow_dest,t25,x11,${X11CONF})
 
 .PHONY : portage_desktop
 portage_desktop: portage
@@ -146,13 +150,13 @@ portage:
 base: sxhkd ranger ssh emacs git less zsh neomutt
 
 .PHONY : x11
-x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox
+x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox gtk
 
 .PHONY : desktop
-desktop: base x11 x11conf_desktop portage_desktop
+desktop: base x11 x11_desktop portage_desktop
 
 .PHONY : t25
-t25: base x11 x11conf portage_t25
+t25: base x11 x11conf x11_t25 portage_t25
 
 .PHONY : fileserver
 fileserver: base portage_fileserver
