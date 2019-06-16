@@ -63,6 +63,7 @@
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 (add-to-list 'recentf-exclude "/vendor/")
+(add-to-list 'recentf-exclude "/sudo")
 
 (defun switch-to-previous-buffer ()
   "Switch to the most recently used buffer."
@@ -170,7 +171,8 @@
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
   ("s" switch-to-previous-buffer "previous buffer")
-  ("d" (kill-buffer (current-buffer)) "destroy"))
+  ("d" (kill-buffer (current-buffer)) "destroy")
+  ("u" sudo-edit "open as sudo"))
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
@@ -449,5 +451,7 @@
         company-lsp-async t))
 
 (use-package ebuild-mode)
+
+(use-package sudo-edit)
 
 (provide 'init)
