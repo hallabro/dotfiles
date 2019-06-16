@@ -25,29 +25,6 @@
 		 (not (y-or-n-p (format "Delete repository %S?" repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
-;workaround for installing org-mode with straight
-(defun org-git-version ()
-  (require 'git)
-  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (git-run "describe"
-              "--match=release\*"
-              "--abbrev=6"
-              "HEAD"))))
-
-(defun org-release ()
-  (require 'git)
-  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (string-remove-prefix
-      "release_"
-      (git-run "describe"
-               "--match=release\*"
-               "--abbrev=0"
-               "HEAD")))))
-
-(provide 'org-version)
-
 (setq delete-old-versions -1
       version-control t
       backup-directory-alist `(("." . "~/.emacs.d/backups"))
