@@ -180,6 +180,7 @@
   ("e" save-buffers-kill-terminal "save and exit"))
 
 (defhydra hydra-files (:color blue)
+  ("d" dired "dired")
   ("r" helm-recentf "recent")
   ("R" helm-projectile-recentf "recent project files"))
 
