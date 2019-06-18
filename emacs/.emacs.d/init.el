@@ -1,4 +1,3 @@
-;bootstrap straight
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -14,58 +13,35 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+(setq use-package-always-demand t)
 
-(require 'subr-x)
 (straight-use-package 'git)
 
  (defun straight-x-clean-unused-repos ()
    (interactive)
    (dolist (repo (straight--directory-files (straight--repos-dir)))
      (unless (or (straight--checkhash repo straight--repo-cache)
-		 (not (y-or-n-p (format "Delete repository %S?" repo))))
+		 (not (y-or-n-p (format "Delete repository %S? " repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
-;workaround for installing org-mode with straight
-(defun org-git-version ()
-  (require 'git)
-  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (git-run "describe"
-              "--match=release\*"
-              "--abbrev=6"
-              "HEAD"))))
-
-(defun org-release ()
-  (require 'git)
-  (let ((git-repo (expand-file-name "straight/repos/org/" user-emacs-directory)))
-    (string-trim
-     (string-remove-prefix
-      "release_"
-      (git-run "describe"
-               "--match=release\*"
-               "--abbrev=0"
-               "HEAD")))))
-
-(provide 'org-version)
-
-(setq delete-old-versions -1
-      version-control t
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
       backup-directory-alist `(("." . "~/.emacs.d/backups"))
-      custom-file "~/.emacs.d/custom.el"
       byte-compile-warnings nil
+      custom-file "~/.emacs.d/custom.el"
+      delete-old-versions -1
       inhibit-splash-screen t
       inhibit-startup-message t
-      require-final-newline t
-      show-trailing-whitespace t
-      vc-follow-symlinks t
-      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
       inhibit-startup-screen t
+      make-backup-files nil
+      require-final-newline t
       ring-bell-function 'ignore
       sentence-end-double-space nil
-      x-stretch-cursor t
-      c-ignore-auto-fill nil)
+      vc-follow-symlinks t
+      version-control t
+      x-stretch-cursor t)
 
-(setq-default indent-tabs-mode nil
+(setq-default show-trailing-whitespace t
+              indent-tabs-mode nil
               tab-width 4
               auto-fill-function 'do-auto-fill
               mode-line-format nil)
@@ -86,7 +62,8 @@
 (fringe-mode 0)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
-(setq recentf-exclude '("/vendor/"))
+(add-to-list 'recentf-exclude "/vendor/")
+(add-to-list 'recentf-exclude "/sudo")
 
 (defun switch-to-previous-buffer ()
   "Switch to the most recently used buffer."
@@ -141,6 +118,14 @@
 
 (use-package helm
   :config
+  (defvar helm-M-x-fuzzy-match)
+  (defvar helm-buffers-fuzzy-matching)
+  (defvar helm-recentf-fuzzy-match)
+  (defvar helm-semantic-fuzzy-match)
+  (defvar helm-imenu-fuzzy-match)
+  (defvar helm-apropos-fuzzy-match)
+  (defvar helm-lisp-fuzzy-completion)
+
   (setq helm-M-x-fuzzy-match t
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match t
@@ -158,7 +143,7 @@
 
 (use-package base16-theme
   :config
-  (setq base16-theme-256-color-source "colors")
+  (defconst base16-theme-256-color-source "colors")
   (load-theme 'base16-chalk t))
 
 (use-package hydra
@@ -186,7 +171,8 @@
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
   ("s" switch-to-previous-buffer "previous buffer")
-  ("d" (kill-buffer (current-buffer)) "destroy"))
+  ("d" (kill-buffer (current-buffer)) "destroy")
+  ("u" sudo-edit "open as sudo"))
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
@@ -196,6 +182,7 @@
   ("e" save-buffers-kill-terminal "save and exit"))
 
 (defhydra hydra-files (:color blue)
+  ("d" dired "dired")
   ("r" helm-recentf "recent")
   ("R" helm-projectile-recentf "recent project files"))
 
@@ -462,5 +449,9 @@
   (push 'company-lsp company-backends)
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
+
+(use-package ebuild-mode)
+
+(use-package sudo-edit)
 
 (provide 'init)
