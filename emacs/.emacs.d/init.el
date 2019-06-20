@@ -183,14 +183,15 @@
 
 (defhydra hydra-files (:color blue)
   ("d" dired "dired")
-  ("r" helm-recentf "recent")
-  ("R" helm-projectile-recentf "recent project files"))
+  ("f" helm-find-files "find")
+  ("r" helm-recentf "recent"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
   ("s" helm-do-ag-project-root "search")
   ("r" projectile-replace "replace")
   ("f" helm-projectile-find-file "files")
+  ("F" helm-projectile-recentf "recent project files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
 (defhydra hydra-tex (:color blue)
