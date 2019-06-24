@@ -238,7 +238,7 @@
 (defhydra hydra-menu (:color blue)
   "
 [_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
-[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
+[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char, [_k_]: previous mark.
 "
   ("b" hydra-buffers/body nil :exit t)
   ("e" hydra-emacs/body nil :exit t)
@@ -252,6 +252,7 @@
   ("l" hydra-lsp/body nil :exit t)
   ("c" evil-avy-goto-char-timer nil :exit t)
   ("r" switch-to-previous-buffer nil :exit t)
+  ("k" avy-pop-mark nil :exit t)
   ("a" ace-window nil :exit t))
 
 (use-package avy
