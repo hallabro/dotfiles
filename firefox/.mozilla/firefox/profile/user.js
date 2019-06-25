@@ -1151,3 +1151,6 @@ user_pref("toolkit.cosmeticAnimations.enabled", 		false);
 // https://support.mozilla.org/en-US/kb/extension-recommendations
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr",	false);
 
+// Disable zooming
+user_pref("zoom.minPercent", 100);
+user_pref("zoom.maxPercent", 100);

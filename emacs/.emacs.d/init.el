@@ -84,41 +84,34 @@
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
 
+(use-package general)
+
 (use-package evil
+  :after general
   :config
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
-  (define-key evil-motion-state-map "s" nil)
-  (define-key evil-motion-state-map "k" nil)
-  (define-key evil-motion-state-map "j" nil)
 
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 
-  (define-key evil-normal-state-map (kbd "C-n") 'evil-scroll-up)
-  (define-key evil-normal-state-map (kbd "C-t") 'evil-scroll-down)
   (define-key evil-motion-state-map (kbd "l") 'evil-find-char-to)
-
-  (evil-define-key nil evil-normal-state-map
+  :general
+  (:states '(normal visual)
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
     "s" 'evil-forward-char
     "k" 'evil-ex-search-next
-    "K" 'evil-ex-search-previous)
-
-  (evil-define-key nil evil-visual-state-map
-    "t" 'evil-next-line
-    "n" 'evil-previous-line
-    "h" 'evil-backward-char
-    "s" 'evil-forward-char
-    "k" 'evil-ex-search-next
-    "K" 'evil-ex-search-previous))
+    "K" 'evil-ex-search-previous
+    "C-n" 'evil-scroll-up
+    "C-t" 'evil-scroll-down))
 
 (use-package helm
   :config
+  (helm-mode 1)
   (defvar helm-M-x-fuzzy-match)
   (defvar helm-buffers-fuzzy-matching)
   (defvar helm-recentf-fuzzy-match)
@@ -127,20 +120,12 @@
   (defvar helm-apropos-fuzzy-match)
   (defvar helm-lisp-fuzzy-completion)
 
-  (setq helm-M-x-fuzzy-match t
-        helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match t
-        helm-semantic-fuzzy-match t
-        helm-imenu-fuzzy-match t
-        helm-apropos-fuzzy-match t
-        helm-lisp-fuzzy-completion t)
-
-  (helm-mode 1)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-  :bind (:map helm-map
-    ("C-t" . 'helm-next-line)
-    ("C-n" . 'helm-previous-line)))
+  :general
+  ("M-x" 'helm-M-x)
+  (:keymaps 'helm-map
+    "TAB" 'helm-execute-persistent-action
+    "C-t" 'helm-next-line
+    "C-n" 'helm-previous-line))
 
 (use-package base16-theme
   :config
@@ -148,16 +133,13 @@
   (load-theme 'base16-chalk t))
 
 (use-package hydra
-  :after evil
-  :bind (:map evil-normal-state-map
-    ("SPC" . hydra-menu/body)
-    ("m" . hydra-major/body)
-    :map evil-motion-state-map
-    ("SPC" . hydra-menu/body)
-    :map evil-visual-state-map
-    ("SPC" . hydra-menu/body))
   :config
-  (setq hydra-cell-format "% -0s %% -8`%s"))
+  (setq hydra-cell-format "% -0s %% -8`%s")
+
+  :general
+  (:states '(normal visual motion)
+    "SPC" 'hydra-menu/body
+    "m" 'hydra-major/body))
 
 (defun hydra-major/body ()
   (interactive)
@@ -183,7 +165,8 @@
   ("e" save-buffers-kill-terminal "save and exit"))
 
 (defhydra hydra-files (:color blue)
-  ("d" dired "dired")
+  ("p" projectile-dired "project root")
+  ("d" dired-jump "dired")
   ("f" helm-find-files "find")
   ("r" helm-recentf "recent"))
 
@@ -208,9 +191,6 @@
   ("u" org-timestamp-up "timestamp up")
   ("d" org-timestamp-down "timestamp down")
   ("d" org-update-all-dblocks "update dblocks"))
-
-(defhydra hydra-navigation (:color blue)
-  ("t" treemacs "toggle"))
 
 (defhydra hydra-window (:color blue)
   ("b" split-window-below "split below")
@@ -238,14 +218,13 @@
 
 (defhydra hydra-menu (:color blue)
   "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
-[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
+[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
+[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char, [_k_]: previous mark.
 "
   ("b" hydra-buffers/body nil :exit t)
   ("e" hydra-emacs/body nil :exit t)
   ("p" hydra-projects/body nil :exit t)
   ("f" hydra-files/body nil :exit t)
-  ("n" hydra-navigation/body nil :exit t)
   ("w" hydra-window/body nil :exit t)
   ("s" hydra-snippet/body nil :exit t)
   ("m" hydra-major/body nil :exit t)
@@ -253,6 +232,7 @@
   ("l" hydra-lsp/body nil :exit t)
   ("c" evil-avy-goto-char-timer nil :exit t)
   ("r" switch-to-previous-buffer nil :exit t)
+  ("k" avy-pop-mark nil :exit t)
   ("a" ace-window nil :exit t))
 
 (use-package avy
@@ -320,14 +300,14 @@
 
 (use-package evil-args
   :after evil
-  :config
-  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
-  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
-  (define-key evil-normal-state-map "T" 'evil-forward-arg)
-  (define-key evil-motion-state-map "T" 'evil-forward-arg)
-  (define-key evil-normal-state-map "N" 'evil-backward-arg)
-  (define-key evil-motion-state-map "N" 'evil-backward-arg)
-  (define-key evil-normal-state-map "H" 'evil-jump-out-args))
+  :general
+  (:states '(normal motion)
+    "T" 'evil-forward-arg
+    "N" 'evil-backward-arg
+    "H" 'evil-jump-out-args)
+  (:keymaps '(evil-inner-text-objects-map evil-outer-text-objects-map)
+    "a" 'evil-inner-arg
+    "a" 'evil-outer-arg))
 
 (use-package php-mode
   :hook
@@ -342,7 +322,8 @@
   :config
   (setq org-duration-format (quote h:mm)
         org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
-  (evil-define-key 'normal org-mode-map
+  :general
+  (:keymaps 'org-mode-map :states 'normal
     "N" 'org-timestamp-up
     "T" 'org-timestamp-down
     "S" 'org-clock-timestamps-up
@@ -357,13 +338,14 @@
         company-dabbrev-char-regexp "[A-z:-]"
         company-minimum-prefix-length 3)
   (delete 'company-dabbrev company-backends)
-  (let ((map company-active-map))
-    (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
-    (define-key map (kbd "<return>") nil)
-    (define-key map (kbd "C-t") #'company-select-next)
-    (define-key map (kbd "C-n") #'company-select-previous))
+
   :hook
-  (prog-mode . global-company-mode))
+  (prog-mode . global-company-mode)
+
+  :general
+  (:keymaps 'company-active-map
+    "C-t" 'company-select-next
+    "C-n" 'company-select-previous))
 
 (use-package tex
   :demand t
@@ -416,9 +398,10 @@
 
 (use-package expand-region
   :after evil
-  :config
-  (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
-  (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
+  :general
+  (:states '(normal visual)
+    "+" 'er/expand-region
+    "-" 'er/contract-region))
 
 (use-package shackle
   :config
@@ -453,8 +436,10 @@
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
 
-(use-package ebuild-mode)
+(use-package ebuild-mode
+  :mode "\\.ebuild\\'")
 
-(use-package sudo-edit)
+(use-package sudo-edit
+  :commands sudo-edit)
 
 (provide 'init)
