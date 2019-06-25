@@ -63,6 +63,7 @@
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 (add-to-list 'recentf-exclude "/vendor/")
+(add-to-list 'recentf-exclude "/sudo")
 
 (defun switch-to-previous-buffer ()
   "Switch to the most recently used buffer."
@@ -171,7 +172,8 @@
   ("s" helm-do-ag-buffers "search")
   ("a" save-buffer "save")
   ("s" switch-to-previous-buffer "previous buffer")
-  ("d" (kill-buffer (current-buffer)) "destroy"))
+  ("d" (kill-buffer (current-buffer)) "destroy")
+  ("u" sudo-edit "open as sudo"))
 
 (defhydra hydra-emacs (:color blue)
   ("r" (load-file "~/.emacs.d/init.el") "reload")
@@ -181,14 +183,16 @@
   ("e" save-buffers-kill-terminal "save and exit"))
 
 (defhydra hydra-files (:color blue)
-  ("r" helm-recentf "recent")
-  ("R" helm-projectile-recentf "recent project files"))
+  ("d" dired "dired")
+  ("f" helm-find-files "find")
+  ("r" helm-recentf "recent"))
 
 (defhydra hydra-projects (:color blue)
   ("w" helm-projectile-switch-project "switch")
   ("s" helm-do-ag-project-root "search")
   ("r" projectile-replace "replace")
   ("f" helm-projectile-find-file "files")
+  ("F" helm-projectile-recentf "recent project files")
   ("d" projectile-discover-projects-in-directory "discover"))
 
 (defhydra hydra-tex (:color blue)
@@ -450,5 +454,7 @@
         company-lsp-async t))
 
 (use-package ebuild-mode)
+
+(use-package sudo-edit)
 
 (provide 'init)
