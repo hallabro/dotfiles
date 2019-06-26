@@ -146,7 +146,8 @@
 
   :general
   (:states '(normal visual)
-    "SPC" 'hydra-menu/body))
+    "SPC" 'hydra-menu/body
+    "C-m" 'hydra-movement/body))
 
 (defun hydra-major/body ()
   (interactive)
