@@ -273,9 +273,14 @@
 
 (use-package helm-ag
   :after helm
-  :config
-  (setq helm-ag-insert-at-point 'symbol)
-  (setq helm-ag-fuzzy-match t))
+  :general
+  (:states 'normal
+   :keymaps 'helm-ag-edit-map
+    "c" 'helm-ag--edit-commit
+    "q" 'helm-ag--edit-abort)
+
+  (:keymaps 'helm-ag-map
+    "C-e" 'helm-ag-edit))
 
 (use-package key-chord
   :after evil
