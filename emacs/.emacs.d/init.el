@@ -52,6 +52,7 @@
 (global-display-line-numbers-mode)
 (load custom-file)
 (set-language-environment "UTF-8")
+(put 'dired-find-alternate-file 'disabled nil)
 
 (electric-indent-mode 1)
 (electric-pair-mode 1)
@@ -96,6 +97,15 @@
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+
+  (with-eval-after-load 'dired
+    (general-def
+      :states 'normal
+      :keymaps 'dired-mode-map
+      "h" 'dired-up-directory
+      "l" 'dired-find-alternate-file
+      "j" 'evil-next-line
+      "k" 'evil-previous-line))
 
   :general
   (:states '(normal visual)
