@@ -49,7 +49,6 @@
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defun display-startup-echo-area-message nil)
-(global-display-line-numbers-mode)
 (load custom-file)
 (set-language-environment "UTF-8")
 (put 'dired-find-alternate-file 'disabled nil)
@@ -146,9 +145,8 @@
   (setq hydra-cell-format "% -0s %% -8`%s")
 
   :general
-  (:states '(normal visual motion)
-    "SPC" 'hydra-menu/body
-    "m" 'hydra-major/body))
+  (:states '(normal visual)
+    "SPC" 'hydra-menu/body))
 
 (defun hydra-major/body ()
   (interactive)
@@ -184,21 +182,20 @@
   ("s" helm-do-ag-project-root "search")
   ("r" projectile-replace "replace")
   ("f" helm-projectile-find-file "files")
-  ("F" helm-projectile-recentf "recent project files")
-  ("d" projectile-discover-projects-in-directory "discover"))
+  ("F" helm-projectile-recentf "recent files")
+  ("d" projectile-discover-projects-in-directory "discover")
+  ("k" projectile-kill-buffers "kill buffers"))
 
 (defhydra hydra-tex (:color blue)
   ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
   ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view")
-  ("i" (lambda () (interactive) (latex-insert-item)) "insert item")
-  ("l" (lambda () (interactive) (latex-insert-block)) "insert block"))
+  ("i" latex-insert-item "insert item")
+  ("l" latex-insert-block "insert block"))
 
 (defhydra hydra-org (:color blue)
   ("t" org-todo "toggle todo status")
   ("i" org-clock-in "clock in")
   ("o" org-clock-out "clock out")
-  ("u" org-timestamp-up "timestamp up")
-  ("d" org-timestamp-down "timestamp down")
   ("d" org-update-all-dblocks "update dblocks"))
 
 (defhydra hydra-window (:color blue)
@@ -208,9 +205,9 @@
   ("x" delete-window "delete current")
   ("a" ace-window "ace"))
 
-(defhydra hydra-flycheck (:color blue)
-  ("n" flycheck-next-error "next error" :exit nil)
-  ("p" flycheck-previous-error "previous error" :exit nil))
+(defhydra hydra-flycheck (:color red)
+  ("n" flycheck-next-error "next error")
+  ("p" flycheck-previous-error "previous error"))
 
 (defhydra hydra-lsp (:color blue)
   ("r" lsp-find-references "references")
@@ -225,42 +222,46 @@
 (defhydra hydra-yasnippet (:color blue)
   ("s" yas-load-snippet-buffer-and-close "save and load"))
 
+(defhydra hydra-movement (:color blue)
+  ("m" evil-avy-goto-char-timer "timer")
+  ("l" evil-avy-goto-line "line")
+  ("c" evil-avy-goto-char-in-line "char in line")
+  ("p" avy-pop-mark "avy pop mark"))
+
 (defhydra hydra-menu (:color blue)
-  "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
-[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char, [_k_]: previous mark, [_u_]: helm resume.
-"
-  ("b" hydra-buffers/body nil :exit t)
-  ("e" hydra-emacs/body nil :exit t)
-  ("p" hydra-projects/body nil :exit t)
-  ("f" hydra-files/body nil :exit t)
-  ("w" hydra-window/body nil :exit t)
-  ("s" hydra-snippet/body nil :exit t)
-  ("m" hydra-major/body nil :exit t)
-  ("y" hydra-flycheck/body nil :exit t)
-  ("l" hydra-lsp/body nil :exit t)
-  ("c" evil-avy-goto-char-timer nil :exit t)
-  ("r" switch-to-previous-buffer nil :exit t)
-  ("k" avy-pop-mark nil :exit t)
-  ("u" helm-resume nil :exit t)
-  ("a" ace-window nil :exit t))
+  ("b" hydra-buffers/body "buffers")
+  ("e" hydra-emacs/body "emacs")
+  ("p" hydra-projects/body "projects")
+  ("f" hydra-files/body "files")
+  ("w" hydra-window/body "windows")
+  ("s" hydra-snippet/body "snippets")
+  ("j" hydra-major/body "major")
+  ("y" hydra-flycheck/body "flycheck")
+  ("l" hydra-lsp/body "lsp")
+  ("m" hydra-movement/body "lsp")
+  ("r" switch-to-previous-buffer "previous buffer")
+  ("u" helm-resume "helm resume")
+  ("a" ace-window "ace"))
 
 (use-package avy
   :config
-  (setq avy-timeout-seconds '0.4
-        avy-all-windows nil))
+  (setq avy-timeout-seconds '0.3
+        avy-all-windows nil)
+
+  (general-unbind '(normal motion) "m")
+
+  :general
+  (:states '(motion normal)
+   :prefix "m"
+    "m" 'evil-avy-goto-char-timer
+    "c" 'evil-avy-goto-char-in-line
+    "l" 'evil-avy-goto-line))
 
 (use-package dtrt-indent
   :config
   (setq dtrt-indent-verbosity 0)
   :hook
   (prog-mode . dtrt-indent-mode))
-
-(use-package linum-relative
-  :config
-  (setq linum-relative-backend 'display-line-numbers-mode)
-  (linum-relative-mode)
-  (helm-linum-relative-mode 1))
 
 (use-package projectile
   :config
