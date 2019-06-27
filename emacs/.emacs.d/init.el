@@ -325,10 +325,6 @@
     "a" 'evil-inner-arg
     "a" 'evil-outer-arg))
 
-(use-package php-mode
-  :hook
-  (php . php-enable-symfony2-coding-style))
-
 (use-package python-mode
   :init
   (require 'python-mode))
@@ -399,13 +395,17 @@
 
 (use-package yasnippet
   :config
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (setq yas-indent-line 'auto
+        yas-also-indent-empty-lines t))
 
 (use-package go-mode
   :mode "\\.go\\'")
 
 (use-package web-mode
-  :mode "\\.vue\\'")
+  :config
+  (setq web-mode-enable-comment-annotation t)
+  :mode ("\\.php\\'" "\\.vue\\'"))
 
 (use-package flycheck
   :config
