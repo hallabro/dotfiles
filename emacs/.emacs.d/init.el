@@ -238,8 +238,8 @@
   (:states '(motion normal operator visual)
    :prefix "m"
     "m" 'evil-avy-goto-char-timer
-    "c" 'evil-avy-goto-char-in-line
-    "l" 'evil-avy-goto-line))
+    "l" 'evil-avy-goto-line
+    "p" 'avy-pop-mark))
 
 (use-package dtrt-indent
   :config
