@@ -435,7 +435,7 @@
   :config
   (setq which-key-idle-delay 0.4
         which-key-separator " "
-        which-key-show-prefix nil
+        which-key-prefix-prefix nil
         which-key-allow-evil-operators t
         which-key-show-operator-state-maps t)
   (which-key-mode))
