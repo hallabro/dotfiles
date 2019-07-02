@@ -217,6 +217,11 @@
     "C-j" 'helm-next-line
     "C-k" 'helm-previous-line))
 
+(use-package helm-flx
+  :config
+  (helm-flx-mode t)
+  (setq helm-flx-for-helm-locate t))
+
 (use-package base16-theme
   :config
   (defconst base16-theme-256-color-source "colors")
