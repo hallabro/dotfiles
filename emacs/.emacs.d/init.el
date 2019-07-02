@@ -54,7 +54,6 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (electric-indent-mode 1)
-(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 (show-paren-mode 1)
@@ -84,7 +83,93 @@
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
 
-(use-package general)
+(use-package general
+  :config
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'override
+    :states 'normal
+    "b" '(:ignore t :which-key "buffers")
+    "bl" 'helm-mini
+    "bs" 'helm-do-ag-buffers
+    "ba" 'save-buffer
+    "bs" 'switch-to-previous-buffer
+    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "destroy")
+    "bu" 'sudo-edit
+
+    "e" '(:ignore t :which-key "emacs")
+    "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "restart")
+    "el" 'list-packages
+    "ep" 'straight-x-clean-unused-repos
+    "eu" 'auto-package-update-now
+    "ee" 'save-buffers-kill-terminal
+
+    "f" '(:ignore t :which-key "files")
+    "fp" 'projectile-dired
+    "fd" 'dired-jump
+    "ff" 'helm-find-files
+    "fr" 'helm-recentf
+
+    "p" '(:ignore t :which-key "projects")
+    "pw" 'helm-projectile-switch-project
+    "ps" 'helm-do-ag-project-root
+    "pr" 'projectile-replace
+    "pf" 'helm-projectile-find-file
+    "pF" 'helm-projectile-recentf
+    "pd" 'projectile-discover-projects-in-directory
+    "pk" 'projectile-kill-buffers
+
+    "w" '(:ignore t :which-key "windows")
+    "wb" 'split-window-below
+    "wr" 'split-window-right
+    "wd" 'ace-delete-window
+    "wx" 'delete-window
+    "wa" 'ace-window
+
+    "y" '(:ignore t :which-key "flycheck")
+    "yn" 'flycheck-next-error
+    "yp" 'flycheck-previous-error
+
+    "s" '(:ignore t :which-key "snippets")
+    "si" 'yas-insert-snippet
+    "sc" 'yas-new-snippet
+    "sl" 'yas-describe-tables
+
+    "r" 'switch-to-previous-buffer
+    "u" 'helm-resume
+    "a" 'ace-window)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'org-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mt" 'org-todo
+    "mi" 'org-clock-in
+    "mo" 'org-clock-out
+    "md" 'org-update-all-dblocks)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'latex-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
+    "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
+    "mi" 'latex-insert-item
+    "ml" 'latex-insert-block)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'snippet-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "ms" 'yas-load-snippet-buffer-and-close)
+
+  (general-define-key
+    :states 'motion
+    :prefix "d"
+    "" '(:ignore t :which-key "evil-inner")))
 
 (use-package evil
   :after general
@@ -121,14 +206,11 @@
 
 (use-package helm
   :config
+  (setq helm-M-x-fuzzy-match t
+        helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t
+        helm-recentf-fuzzy-match t)
   (helm-mode 1)
-  (defvar helm-M-x-fuzzy-match)
-  (defvar helm-buffers-fuzzy-matching)
-  (defvar helm-recentf-fuzzy-match)
-  (defvar helm-semantic-fuzzy-match)
-  (defvar helm-imenu-fuzzy-match)
-  (defvar helm-apropos-fuzzy-match)
-  (defvar helm-lisp-fuzzy-completion)
 
   :general
   ("M-x" 'helm-M-x)
@@ -137,114 +219,15 @@
     "C-t" 'helm-next-line
     "C-n" 'helm-previous-line))
 
+(use-package helm-flx
+  :config
+  (helm-flx-mode t)
+  (setq helm-flx-for-helm-locate t))
+
 (use-package base16-theme
   :config
   (defconst base16-theme-256-color-source "colors")
   (load-theme 'base16-chalk t))
-
-(use-package hydra
-  :config
-  (setq hydra-cell-format "% -0s %% -8`%s")
-
-  :general
-  (:states '(normal visual)
-    "SPC" 'hydra-menu/body
-    "C-m" 'hydra-movement/body))
-
-(defun hydra-major/body ()
-  (interactive)
-  (cl-case major-mode
-    (org-mode (hydra-org/body))
-    (latex-mode (hydra-tex/body))
-    (snippet-mode (hydra-yasnippet/body))
-    (t (error "%S not supported" major-mode))))
-
-(defhydra hydra-buffers (:color blue)
-  ("l" helm-mini "list")
-  ("s" helm-do-ag-buffers "search")
-  ("a" save-buffer "save")
-  ("s" switch-to-previous-buffer "previous buffer")
-  ("d" (kill-buffer (current-buffer)) "destroy")
-  ("u" sudo-edit "open as sudo"))
-
-(defhydra hydra-emacs (:color blue)
-  ("r" (load-file "~/.emacs.d/init.el") "reload")
-  ("l" list-packages "list packages")
-  ("p" straight-x-clean-unused-repos "prune unused packages")
-  ("u" auto-package-update-now "update packages")
-  ("e" save-buffers-kill-terminal "save and exit"))
-
-(defhydra hydra-files (:color blue)
-  ("p" projectile-dired "project root")
-  ("d" dired-jump "dired")
-  ("f" helm-find-files "find")
-  ("r" helm-recentf "recent"))
-
-(defhydra hydra-projects (:color blue)
-  ("w" helm-projectile-switch-project "switch")
-  ("s" helm-do-ag-project-root "search")
-  ("r" projectile-replace "replace")
-  ("f" helm-projectile-find-file "files")
-  ("F" helm-projectile-recentf "recent files")
-  ("d" projectile-discover-projects-in-directory "discover")
-  ("k" projectile-kill-buffers "kill buffers"))
-
-(defhydra hydra-tex (:color blue)
-  ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
-  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view")
-  ("i" latex-insert-item "insert item")
-  ("l" latex-insert-block "insert block"))
-
-(defhydra hydra-org (:color blue)
-  ("t" org-todo "toggle todo status")
-  ("i" org-clock-in "clock in")
-  ("o" org-clock-out "clock out")
-  ("d" org-update-all-dblocks "update dblocks"))
-
-(defhydra hydra-window (:color blue)
-  ("b" split-window-below "split below")
-  ("r" split-window-right "split right")
-  ("d" ace-delete-window "delete other")
-  ("x" delete-window "delete current")
-  ("a" ace-window "ace"))
-
-(defhydra hydra-flycheck (:color red)
-  ("n" flycheck-next-error "next error")
-  ("p" flycheck-previous-error "previous error"))
-
-(defhydra hydra-lsp (:color blue)
-  ("r" lsp-find-references "references")
-  ("d" lsp-find-definition "definition")
-  ("e" lsp-describe-thing-at-point "describe"))
-
-(defhydra hydra-snippet (:color blue)
-  ("i" yas-insert-snippet "insert")
-  ("c" yas-new-snippet "create")
-  ("l" yas-describe-tables "list"))
-
-(defhydra hydra-yasnippet (:color blue)
-  ("s" yas-load-snippet-buffer-and-close "save and load"))
-
-(defhydra hydra-movement (:color blue)
-  ("m" evil-avy-goto-char-timer "timer")
-  ("l" evil-avy-goto-line "line")
-  ("c" evil-avy-goto-char-in-line "char in line")
-  ("p" avy-pop-mark "avy pop mark"))
-
-(defhydra hydra-menu (:color blue)
-  ("b" hydra-buffers/body "buffers")
-  ("e" hydra-emacs/body "emacs")
-  ("p" hydra-projects/body "projects")
-  ("f" hydra-files/body "files")
-  ("w" hydra-window/body "windows")
-  ("s" hydra-snippet/body "snippets")
-  ("j" hydra-major/body "major")
-  ("y" hydra-flycheck/body "flycheck")
-  ("l" hydra-lsp/body "lsp")
-  ("m" hydra-movement/body "lsp")
-  ("r" switch-to-previous-buffer "previous buffer")
-  ("u" helm-resume "helm resume")
-  ("a" ace-window "ace"))
 
 (use-package avy
   :config
@@ -316,17 +299,6 @@
   :after evil
   :config
   (global-evil-surround-mode 1))
-
-(use-package evil-args
-  :after evil
-  :general
-  (:states '(normal motion)
-    "T" 'evil-forward-arg
-    "N" 'evil-backward-arg
-    "H" 'evil-jump-out-args)
-  (:keymaps '(evil-inner-text-objects-map evil-outer-text-objects-map)
-    "a" 'evil-inner-arg
-    "a" 'evil-outer-arg))
 
 (use-package php-mode
   :hook
@@ -402,13 +374,18 @@
 
 (use-package yasnippet
   :config
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (setq yas-indent-line 'auto
+        yas-also-indent-empty-lines t))
 
 (use-package go-mode
   :mode "\\.go\\'")
 
 (use-package web-mode
-  :mode "\\.vue\\'")
+  :config
+  (setq web-mode-enable-comment-annotation t)
+  :mode
+  "\\.vue\\'")
 
 (use-package flycheck
   :config
@@ -460,5 +437,27 @@
 
 (use-package sudo-edit
   :commands sudo-edit)
+
+(use-package which-key
+  :config
+  (setq which-key-idle-delay 0.4
+        which-key-separator " "
+        which-key-show-prefix nil
+        which-key-allow-evil-operators t
+        which-key-show-operator-state-maps t)
+  (which-key-mode))
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode))
+
+(use-package evil-smartparens
+  :hook
+  (prog-mode . evil-smartparens-mode))
+
+(use-package php-mode
+  :hook
+  (php . php-enable-symfony2-coding-style))
 
 (provide 'init)
