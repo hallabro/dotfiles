@@ -54,7 +54,6 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (electric-indent-mode 1)
-(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 (show-paren-mode 1)
@@ -165,7 +164,12 @@
     :keymaps 'snippet-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
-    "ms" 'yas-load-snippet-buffer-and-close))
+    "ms" 'yas-load-snippet-buffer-and-close)
+
+  (general-define-key
+    :states 'motion
+    :prefix "d"
+    "" '(:ignore t :which-key "evil-inner")))
 
 (use-package evil
   :after general
@@ -200,14 +204,11 @@
 
 (use-package helm
   :config
+  (setq helm-M-x-fuzzy-match t
+        helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t
+        helm-recentf-fuzzy-match t)
   (helm-mode 1)
-  (defvar helm-M-x-fuzzy-match)
-  (defvar helm-buffers-fuzzy-matching)
-  (defvar helm-recentf-fuzzy-match)
-  (defvar helm-semantic-fuzzy-match)
-  (defvar helm-imenu-fuzzy-match)
-  (defvar helm-apropos-fuzzy-match)
-  (defvar helm-lisp-fuzzy-completion)
 
   :general
   ("M-x" 'helm-M-x)
@@ -291,17 +292,6 @@
   :config
   (global-evil-surround-mode 1))
 
-(use-package evil-args
-  :after evil
-  :general
-  (:states '(normal motion)
-    "L" 'evil-forward-arg
-    "H" 'evil-backward-arg
-    "K" 'evil-jump-out-args)
-  (:keymaps '(evil-inner-text-objects-map evil-outer-text-objects-map)
-    "a" 'evil-inner-arg
-    "a" 'evil-outer-arg))
-
 (use-package python-mode
   :init
   (require 'python-mode))
@@ -382,7 +372,8 @@
 (use-package web-mode
   :config
   (setq web-mode-enable-comment-annotation t)
-  :mode ("\\.php\\'" "\\.vue\\'"))
+  :mode
+  "\\.vue\\'")
 
 (use-package flycheck
   :config
@@ -439,7 +430,22 @@
   :config
   (setq which-key-idle-delay 0.4
         which-key-separator " "
-        which-key-prefix-prefix nil)
+        which-key-show-prefix nil
+        which-key-allow-evil-operators t
+        which-key-show-operator-state-maps t)
   (which-key-mode))
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode))
+
+(use-package evil-smartparens
+  :hook
+  (prog-mode . evil-smartparens-mode))
+
+(use-package php-mode
+  :hook
+  (php . php-enable-symfony2-coding-style))
 
 (provide 'init)
