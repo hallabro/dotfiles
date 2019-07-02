@@ -235,7 +235,7 @@
   (general-unbind '(normal motion) "m")
 
   :general
-  (:states '(motion normal)
+  (:states '(motion normal operator visual)
    :prefix "m"
     "m" 'evil-avy-goto-char-timer
     "c" 'evil-avy-goto-char-in-line
@@ -452,5 +452,11 @@
 (use-package php-mode
   :hook
   (php . php-enable-symfony2-coding-style))
+
+(use-package evil-avy
+  :straight (evil-avy :host github :repo "louy2/evil-avy"
+                      :fork (:host github :repo "idoktz/evil-avy"))
+  :config
+  (evil-avy-mode))
 
 (provide 'init)
