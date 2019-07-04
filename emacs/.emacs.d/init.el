@@ -135,6 +135,8 @@
     "sc" 'yas-new-snippet
     "sl" 'yas-describe-tables
 
+    "k" 'helm-show-kill-ring
+    "g" 'helm-register
     "r" 'switch-to-previous-buffer
     "u" 'helm-resume
     "a" 'ace-window)
