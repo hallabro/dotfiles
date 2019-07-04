@@ -40,6 +40,7 @@
       version-control t
       x-stretch-cursor t)
 
+
 (setq-default show-trailing-whitespace t
               indent-tabs-mode nil
               tab-width 4
@@ -126,9 +127,11 @@
     "wx" 'delete-window
     "wa" 'ace-window
 
-    "y" '(:ignore t :which-key "flycheck")
+    "y" '(:ignore t :which-key "fly")
     "yn" 'flycheck-next-error
     "yp" 'flycheck-previous-error
+    "yd" 'ispell-change-dictionary
+    "yc" 'flyspell-correct-wrapper
 
     "s" '(:ignore t :which-key "snippets")
     "si" 'yas-insert-snippet
@@ -202,7 +205,8 @@
     "n" 'evil-ex-search-next
     "N" 'evil-ex-search-previous
     "C-k" 'evil-scroll-up
-    "C-j" 'evil-scroll-down))
+    "C-j" 'evil-scroll-down
+    "U" 'undo-tree-redo))
 
 (use-package helm
   :config
@@ -460,5 +464,11 @@
                       :fork (:host github :repo "idoktz/evil-avy"))
   :config
   (evil-avy-mode))
+
+(use-package flyspell-correct-helm
+  :config
+  (defconst ispell-program-name "aspell")
+  :hook
+  (LaTex . flyspell-mode))
 
 (provide 'init)
