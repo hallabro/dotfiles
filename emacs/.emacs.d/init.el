@@ -459,11 +459,9 @@
   :hook
   (php . php-enable-symfony2-coding-style))
 
-(use-package evil-avy
-  :straight (evil-avy :host github :repo "louy2/evil-avy"
-                      :fork (:host github :repo "idoktz/evil-avy"))
+(use-package evil-snipe
   :config
-  (evil-avy-mode))
+  (evil-snipe-override-mode 1))
 
 (use-package flyspell-correct-helm
   :config
