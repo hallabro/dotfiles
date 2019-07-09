@@ -1,4 +1,30 @@
 source ~/.config/neomutt/credentials
+source ~/.config/neomutt/unbind
+
+bind generic,index,pager q exit
+macro generic,index,pager Q "qqq"
+
+bind editor <Tab> complete-query
+
+bind generic,index k previous-entry
+bind generic,index j next-entry
+bind generic,pager k half-up
+bind generic,pager j half-down
+
+bind index l display-message
+
+bind pager h exit
+bind index,pager m mail
+bind index,pager r reply
+bind index,pager R group-reply
+bind index,pager f forward-message
+
+bind index,pager K sidebar-prev
+bind index,pager J sidebar-next
+bind index,pager L sidebar-open
+
+bind generic,index,pager n search-next
+bind generic,index,pager N search-opposite
 
 auto_view text/html
 alternative_order text/plain text/html
@@ -13,6 +39,8 @@ set sort_browser = "reverse-date"
 set fast_reply
 set header_cache = ~/.cache/neomutt/headers
 set message_cachedir = ~/.cache/neomutt/messages
+set pager_stop
+
 unset user_agent
 unset confirmappend
 
@@ -31,14 +59,13 @@ set imap_check_subscribed
 unset imap_passive
 unset imap_peek
 
+set sleep_time=0
+set beep=no
+
 ignore *
 unignore from date subject to cc
-unignore x-mailer
-unignore x-spam-status
-unignore x-spam-report
 
-bind index,pager \CP sidebar-prev
-bind index,pager \CN sidebar-next
-bind index,pager \CO sidebar-open
+set from = "robin@hallabro.nu"
+set realname = "Robin Hallabro-Kokko"
 
 mailboxes = +Inbox +Archive +Spam +Sent +Trash
