@@ -76,8 +76,9 @@ rofi-pass: rofi configexists
 mpv: configexists
 	$(call stow,$@,${HOME})
 
-.PHONY : neomutt
-neomutt: configexists
+.PHONY : aerc
+aerc: configexists
+	$(call createmaybe,${HOME}/.config/aerc)
 	$(call stow,$@,${HOME})
 
 .PHONY : parcellite
@@ -147,7 +148,7 @@ portage:
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base
-base: sxhkd ranger ssh emacs git less zsh neomutt
+base: sxhkd ranger ssh emacs git less zsh aerc
 
 .PHONY : x11
 x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox gtk
