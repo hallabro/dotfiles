@@ -40,6 +40,7 @@
       version-control t
       x-stretch-cursor t)
 
+
 (setq-default show-trailing-whitespace t
               indent-tabs-mode nil
               tab-width 4
@@ -126,15 +127,19 @@
     "wx" 'delete-window
     "wa" 'ace-window
 
-    "y" '(:ignore t :which-key "flycheck")
+    "y" '(:ignore t :which-key "fly")
     "yn" 'flycheck-next-error
     "yp" 'flycheck-previous-error
+    "yd" 'ispell-change-dictionary
+    "yc" 'flyspell-correct-wrapper
 
     "s" '(:ignore t :which-key "snippets")
     "si" 'yas-insert-snippet
     "sc" 'yas-new-snippet
     "sl" 'yas-describe-tables
 
+    "k" 'helm-show-kill-ring
+    "g" 'helm-register
     "r" 'switch-to-previous-buffer
     "u" 'helm-resume
     "a" 'ace-window)
@@ -196,13 +201,12 @@
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
-    "s" 'evil-forward-char
+    "l" 'evil-forward-char
     "k" 'evil-ex-search-next
     "K" 'evil-ex-search-previous
     "C-n" 'evil-scroll-up
-    "C-t" 'evil-scroll-down)
-  (:states 'motion
-    "l" 'evil-find-char-to))
+    "C-t" 'evil-scroll-down
+    "U" 'undo-tree-redo))
 
 (use-package helm
   :config
@@ -238,11 +242,11 @@
   (general-unbind '(normal motion) "m")
 
   :general
-  (:states '(motion normal)
+  (:states '(motion normal operator visual)
    :prefix "m"
     "m" 'evil-avy-goto-char-timer
-    "c" 'evil-avy-goto-char-in-line
-    "l" 'evil-avy-goto-line))
+    "l" 'evil-avy-goto-line
+    "p" 'avy-pop-mark))
 
 (use-package dtrt-indent
   :config
@@ -442,7 +446,7 @@
   :config
   (setq which-key-idle-delay 0.4
         which-key-separator " "
-        which-key-show-prefix nil
+        which-key-prefix-prefix nil
         which-key-allow-evil-operators t
         which-key-show-operator-state-maps t)
   (which-key-mode))
@@ -459,5 +463,15 @@
 (use-package php-mode
   :hook
   (php . php-enable-symfony2-coding-style))
+
+(use-package evil-snipe
+  :config
+  (evil-snipe-override-mode 1))
+
+(use-package flyspell-correct-helm
+  :config
+  (defconst ispell-program-name "aspell")
+  :hook
+  (LaTex . flyspell-mode))
 
 (provide 'init)
