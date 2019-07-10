@@ -3,6 +3,7 @@ hallabro/dotfiles
 
 Dotfiles containing configuration for:
 
+* [aerc](https://aerc-mail.org/)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [compton](https://github.com/chjj/compton)
 * [dunst](https://github.com/dunst-project/dunst)
@@ -11,7 +12,6 @@ Dotfiles containing configuration for:
 * [GNU Less](https://www.gnu.org/software/less/)
 * [git](https://git-scm.com/)
 * [mpv](https://mpv.io/)
-* [neomutt](https://neomutt.org/)
 * [OpenSSH](https://www.openssh.com/)
 * [parcellite](http://parcellite.sourceforge.net/)
 * [ranger](https://github.com/ranger/ranger)
