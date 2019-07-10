@@ -201,7 +201,7 @@
     "t" 'evil-next-line
     "n" 'evil-previous-line
     "h" 'evil-backward-char
-    "l" 'evil-forward-char
+    "s" 'evil-forward-char
     "k" 'evil-ex-search-next
     "K" 'evil-ex-search-previous
     "C-n" 'evil-scroll-up
