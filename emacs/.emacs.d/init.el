@@ -40,6 +40,7 @@
       version-control t
       x-stretch-cursor t)
 
+
 (setq-default show-trailing-whitespace t
               indent-tabs-mode nil
               tab-width 4
@@ -49,12 +50,11 @@
 (bind-key (kbd "<escape>") 'keyboard-escape-quit)
 (defalias 'yes-or-no-p 'y-or-n-p)
 (defun display-startup-echo-area-message nil)
-(global-display-line-numbers-mode)
 (load custom-file)
 (set-language-environment "UTF-8")
+(put 'dired-find-alternate-file 'disabled nil)
 
 (electric-indent-mode 1)
-(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 (show-paren-mode 1)
@@ -84,192 +84,174 @@
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
 
+(use-package general
+  :config
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'override
+    :states 'normal
+    "b" '(:ignore t :which-key "buffers")
+    "bl" 'helm-mini
+    "bs" 'helm-do-ag-buffers
+    "ba" 'save-buffer
+    "bs" 'switch-to-previous-buffer
+    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "destroy")
+    "bu" 'sudo-edit
+
+    "e" '(:ignore t :which-key "emacs")
+    "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "restart")
+    "el" 'list-packages
+    "ep" 'straight-x-clean-unused-repos
+    "eu" 'auto-package-update-now
+    "ee" 'save-buffers-kill-terminal
+
+    "f" '(:ignore t :which-key "files")
+    "fp" 'projectile-dired
+    "fd" 'dired-jump
+    "ff" 'helm-find-files
+    "fr" 'helm-recentf
+
+    "p" '(:ignore t :which-key "projects")
+    "pw" 'helm-projectile-switch-project
+    "ps" 'helm-do-ag-project-root
+    "pr" 'projectile-replace
+    "pf" 'helm-projectile-find-file
+    "pF" 'helm-projectile-recentf
+    "pd" 'projectile-discover-projects-in-directory
+    "pk" 'projectile-kill-buffers
+
+    "w" '(:ignore t :which-key "windows")
+    "wb" 'split-window-below
+    "wr" 'split-window-right
+    "wd" 'ace-delete-window
+    "wx" 'delete-window
+    "wa" 'ace-window
+
+    "y" '(:ignore t :which-key "fly")
+    "yn" 'flycheck-next-error
+    "yp" 'flycheck-previous-error
+    "yd" 'ispell-change-dictionary
+    "yc" 'flyspell-correct-wrapper
+
+    "s" '(:ignore t :which-key "snippets")
+    "si" 'yas-insert-snippet
+    "sc" 'yas-new-snippet
+    "sl" 'yas-describe-tables
+
+    "k" 'helm-show-kill-ring
+    "g" 'helm-register
+    "r" 'switch-to-previous-buffer
+    "u" 'helm-resume
+    "a" 'ace-window)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'org-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mt" 'org-todo
+    "mi" 'org-clock-in
+    "mo" 'org-clock-out
+    "md" 'org-update-all-dblocks)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'latex-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
+    "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
+    "mi" 'latex-insert-item
+    "ml" 'latex-insert-block)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'snippet-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "ms" 'yas-load-snippet-buffer-and-close)
+
+  (general-define-key
+    :states 'motion
+    :prefix "d"
+    "" '(:ignore t :which-key "evil-inner")))
+
 (use-package evil
+  :after general
   :config
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
-  (define-key evil-motion-state-map "s" nil)
-  (define-key evil-motion-state-map "k" nil)
-  (define-key evil-motion-state-map "j" nil)
 
   (advice-add 'evil-ex-search-next :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
   (advice-add 'evil-ex-search-previous :after
     (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
 
-  (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-up)
-  (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-down)
+  (with-eval-after-load 'dired
+    (general-def
+      :states 'normal
+      :keymaps 'dired-mode-map
+      "h" 'dired-up-directory
+      "l" 'dired-find-alternate-file
+      "j" 'evil-next-line
+      "k" 'evil-previous-line))
 
-  (evil-define-key nil evil-normal-state-map
+  :general
+  (:states '(normal visual)
     "j" 'evil-next-line
     "k" 'evil-previous-line
     "h" 'evil-backward-char
     "l" 'evil-forward-char
     "n" 'evil-ex-search-next
-    "N" 'evil-ex-search-previous)
-
-  (evil-define-key 'visual evil-normal-state-map
-    "j" 'evil-next-line
-    "k" 'evil-previous-line
-    "h" 'evil-backward-char
-    "l" 'evil-forward-char
-    "n" 'evil-ex-search-next
-    "N" 'evil-ex-search-previous))
+    "N" 'evil-ex-search-previous
+    "C-k" 'evil-scroll-up
+    "C-j" 'evil-scroll-down
+    "U" 'undo-tree-redo))
 
 (use-package helm
   :config
-  (defvar helm-M-x-fuzzy-match)
-  (defvar helm-buffers-fuzzy-matching)
-  (defvar helm-recentf-fuzzy-match)
-  (defvar helm-semantic-fuzzy-match)
-  (defvar helm-imenu-fuzzy-match)
-  (defvar helm-apropos-fuzzy-match)
-  (defvar helm-lisp-fuzzy-completion)
-
   (setq helm-M-x-fuzzy-match t
-        helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match t
-        helm-semantic-fuzzy-match t
-        helm-imenu-fuzzy-match t
-        helm-apropos-fuzzy-match t
-        helm-lisp-fuzzy-completion t)
-
+        helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t
+        helm-recentf-fuzzy-match t)
   (helm-mode 1)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
-  :bind (:map helm-map
-    ("C-j" . 'helm-next-line)
-    ("C-k" . 'helm-previous-line)))
+
+  :general
+  ("M-x" 'helm-M-x)
+  (:keymaps 'helm-map
+    "TAB" 'helm-execute-persistent-action
+    "C-j" 'helm-next-line
+    "C-k" 'helm-previous-line))
+
+(use-package helm-flx
+  :config
+  (helm-flx-mode t)
+  (setq helm-flx-for-helm-locate t))
 
 (use-package base16-theme
   :config
   (defconst base16-theme-256-color-source "colors")
   (load-theme 'base16-chalk t))
 
-(use-package hydra
-  :after evil
-  :bind (:map evil-normal-state-map
-    ("SPC" . hydra-menu/body)
-    ("m" . hydra-major/body)
-    :map evil-motion-state-map
-    ("SPC" . hydra-menu/body)
-    :map evil-visual-state-map
-    ("SPC" . hydra-menu/body))
-  :config
-  (setq hydra-cell-format "% -0s %% -8`%s"))
-
-(defun hydra-major/body ()
-  (interactive)
-  (cl-case major-mode
-    (org-mode (hydra-org/body))
-    (latex-mode (hydra-tex/body))
-    (snippet-mode (hydra-yasnippet/body))
-    (t (error "%S not supported" major-mode))))
-
-(defhydra hydra-buffers (:color blue)
-  ("l" helm-mini "list")
-  ("s" helm-do-ag-buffers "search")
-  ("a" save-buffer "save")
-  ("s" switch-to-previous-buffer "previous buffer")
-  ("d" (kill-buffer (current-buffer)) "destroy")
-  ("u" sudo-edit "open as sudo"))
-
-(defhydra hydra-emacs (:color blue)
-  ("r" (load-file "~/.emacs.d/init.el") "reload")
-  ("l" list-packages "list packages")
-  ("p" straight-x-clean-unused-repos "prune unused packages")
-  ("u" auto-package-update-now "update packages")
-  ("e" save-buffers-kill-terminal "save and exit"))
-
-(defhydra hydra-files (:color blue)
-  ("d" dired "dired")
-  ("f" helm-find-files "find")
-  ("r" helm-recentf "recent"))
-
-(defhydra hydra-projects (:color blue)
-  ("w" helm-projectile-switch-project "switch")
-  ("s" helm-do-ag-project-root "search")
-  ("r" projectile-replace "replace")
-  ("f" helm-projectile-find-file "files")
-  ("F" helm-projectile-recentf "recent project files")
-  ("d" projectile-discover-projects-in-directory "discover"))
-
-(defhydra hydra-tex (:color blue)
-  ("b" (lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) "build")
-  ("v" (lambda () (interactive) (save-buffer) (TeX-command-run-all ())) "build and view")
-  ("i" (lambda () (interactive) (latex-insert-item)) "insert item")
-  ("l" (lambda () (interactive) (latex-insert-block)) "insert block"))
-
-(defhydra hydra-org (:color blue)
-  ("t" org-todo "toggle todo status")
-  ("i" org-clock-in "clock in")
-  ("o" org-clock-out "clock out")
-  ("u" org-timestamp-up "timestamp up")
-  ("d" org-timestamp-down "timestamp down")
-  ("d" org-update-all-dblocks "update dblocks"))
-
-(defhydra hydra-navigation (:color blue)
-  ("t" treemacs "toggle"))
-
-(defhydra hydra-window (:color blue)
-  ("b" split-window-below "split below")
-  ("r" split-window-right "split right")
-  ("d" ace-delete-window "delete other")
-  ("x" delete-window "delete current")
-  ("a" ace-window "ace"))
-
-(defhydra hydra-flycheck (:color blue)
-  ("n" flycheck-next-error "next error" :exit nil)
-  ("p" flycheck-previous-error "previous error" :exit nil))
-
-(defhydra hydra-lsp (:color blue)
-  ("r" lsp-find-references "references")
-  ("d" lsp-find-definition "definition")
-  ("e" lsp-describe-thing-at-point "describe"))
-
-(defhydra hydra-snippet (:color blue)
-  ("i" yas-insert-snippet "insert")
-  ("c" yas-new-snippet "create")
-  ("l" yas-describe-tables "list"))
-
-(defhydra hydra-yasnippet (:color blue)
-  ("s" yas-load-snippet-buffer-and-close "save and load"))
-
-(defhydra hydra-menu (:color blue)
-  "
-[_b_]: buffer, [_e_]: emacs, [_p_]: projects, [_f_]: files, [_n_]: navigation, [_w_]: window, [_s_]: snippets, [_m_]: major, [_y_]: flycheck, [_l_]: lsp,
-[_a_]: ace-window, [_r_]: previous buffer, [_c_]: goto char.
-"
-  ("b" hydra-buffers/body nil :exit t)
-  ("e" hydra-emacs/body nil :exit t)
-  ("p" hydra-projects/body nil :exit t)
-  ("f" hydra-files/body nil :exit t)
-  ("n" hydra-navigation/body nil :exit t)
-  ("w" hydra-window/body nil :exit t)
-  ("s" hydra-snippet/body nil :exit t)
-  ("m" hydra-major/body nil :exit t)
-  ("y" hydra-flycheck/body nil :exit t)
-  ("l" hydra-lsp/body nil :exit t)
-  ("c" evil-avy-goto-char-timer nil :exit t)
-  ("r" switch-to-previous-buffer nil :exit t)
-  ("a" ace-window nil :exit t))
-
 (use-package avy
   :config
-  (setq avy-timeout-seconds '0.4
-        avy-all-windows nil))
+  (setq avy-timeout-seconds '0.3
+        avy-all-windows nil)
+
+  (general-unbind '(normal motion) "m")
+
+  :general
+  (:states '(motion normal operator visual)
+   :prefix "m"
+    "m" 'evil-avy-goto-char-timer
+    "l" 'evil-avy-goto-line
+    "p" 'avy-pop-mark))
 
 (use-package dtrt-indent
   :config
   (setq dtrt-indent-verbosity 0)
   :hook
   (prog-mode . dtrt-indent-mode))
-
-(use-package linum-relative
-  :config
-  (setq linum-relative-backend 'display-line-numbers-mode)
-  (linum-relative-mode)
-  (helm-linum-relative-mode 1))
 
 (use-package projectile
   :config
@@ -282,9 +264,14 @@
 
 (use-package helm-ag
   :after helm
-  :config
-  (setq helm-ag-insert-at-point 'symbol)
-  (setq helm-ag-fuzzy-match t))
+  :general
+  (:states 'normal
+   :keymaps 'helm-ag-edit-map
+    "c" 'helm-ag--edit-commit
+    "q" 'helm-ag--edit-abort)
+
+  (:keymaps 'helm-ag-map
+    "C-e" 'helm-ag-edit))
 
 (use-package key-chord
   :after evil
@@ -316,21 +303,6 @@
   :config
   (global-evil-surround-mode 1))
 
-(use-package evil-args
-  :after evil
-  :config
-  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
-  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
-  (define-key evil-normal-state-map "L" 'evil-forward-arg)
-  (define-key evil-motion-state-map "L" 'evil-forward-arg)
-  (define-key evil-normal-state-map "H" 'evil-backward-arg)
-  (define-key evil-motion-state-map "H" 'evil-backward-arg)
-  (define-key evil-normal-state-map "K" 'evil-jump-out-args))
-
-(use-package php-mode
-  :hook
-  (php . php-enable-symfony2-coding-style))
-
 (use-package python-mode
   :init
   (require 'python-mode))
@@ -340,7 +312,8 @@
   :config
   (setq org-duration-format (quote h:mm)
         org-todo-keywords '((sequence "TODO" "STARTED" "PENDING" "DONE")))
-  (evil-define-key 'normal org-mode-map
+  :general
+  (:keymaps 'org-mode-map :states 'normal
     "K" 'org-timestamp-up
     "J" 'org-timestamp-down
     "L" 'org-clock-timestamps-up
@@ -355,13 +328,14 @@
         company-dabbrev-char-regexp "[A-z:-]"
         company-minimum-prefix-length 3)
   (delete 'company-dabbrev company-backends)
-  (let ((map company-active-map))
-    (define-key map " " (lambda () (interactive) (company-abort) (self-insert-command 1)))
-    (define-key map (kbd "<return>") nil)
-    (define-key map (kbd "C-j") #'company-select-next)
-    (define-key map (kbd "C-k") #'company-select-previous))
+
   :hook
-  (prog-mode . global-company-mode))
+  (prog-mode . global-company-mode)
+
+  :general
+  (:keymaps 'company-active-map
+    "C-j" 'company-select-next
+    "C-k" 'company-select-previous))
 
 (use-package tex
   :demand t
@@ -399,13 +373,18 @@
 
 (use-package yasnippet
   :config
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (setq yas-indent-line 'auto
+        yas-also-indent-empty-lines t))
 
 (use-package go-mode
   :mode "\\.go\\'")
 
 (use-package web-mode
-  :mode "\\.vue\\'")
+  :config
+  (setq web-mode-enable-comment-annotation t)
+  :mode
+  "\\.vue\\'")
 
 (use-package flycheck
   :config
@@ -414,9 +393,10 @@
 
 (use-package expand-region
   :after evil
-  :config
-  (define-key evil-normal-state-map (kbd "+") 'er/expand-region)
-  (define-key evil-normal-state-map (kbd "-") 'er/contract-region))
+  :general
+  (:states '(normal visual)
+    "+" 'er/expand-region
+    "-" 'er/contract-region))
 
 (use-package shackle
   :config
@@ -451,8 +431,42 @@
   (setq company-lsp-cache-candidates t
         company-lsp-async t))
 
-(use-package ebuild-mode)
+(use-package ebuild-mode
+  :mode "\\.ebuild\\'")
 
-(use-package sudo-edit)
+(use-package sudo-edit
+  :commands sudo-edit)
+
+(use-package which-key
+  :config
+  (setq which-key-idle-delay 0.4
+        which-key-separator " "
+        which-key-prefix-prefix nil
+        which-key-allow-evil-operators t
+        which-key-show-operator-state-maps t)
+  (which-key-mode))
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode))
+
+(use-package evil-smartparens
+  :hook
+  (prog-mode . evil-smartparens-mode))
+
+(use-package php-mode
+  :hook
+  (php . php-enable-symfony2-coding-style))
+
+(use-package evil-snipe
+  :config
+  (evil-snipe-override-mode 1))
+
+(use-package flyspell-correct-helm
+  :config
+  (defconst ispell-program-name "aspell")
+  :hook
+  (LaTex . flyspell-mode))
 
 (provide 'init)

@@ -618,7 +618,7 @@ user_pref("browser.search.suggest.enabled",			false);
 // PREF: Disable "Show search suggestions in location bar results"
 user_pref("browser.urlbar.suggest.searches",			false);
 // PREF: When using the location bar, don't suggest URLs from browsing history
-user_pref("browser.urlbar.suggest.history",			true);
+user_pref("browser.urlbar.suggest.history",			false);
 
 // PREF: Disable SSDP
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1111967
@@ -1151,3 +1151,6 @@ user_pref("toolkit.cosmeticAnimations.enabled", 		false);
 // https://support.mozilla.org/en-US/kb/extension-recommendations
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr",	false);
 
+// Disable zooming
+user_pref("zoom.minPercent", 100);
+user_pref("zoom.maxPercent", 100);
