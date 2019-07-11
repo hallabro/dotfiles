@@ -12,7 +12,7 @@ layout_cmd () {
 }
 
 URL_field='url'
-USERNAME_field='user'
+USERNAME_field='username'
 AUTOTYPE_field='autotype'
 
 delay=2
