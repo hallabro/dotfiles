@@ -1,9 +1,6 @@
-if [[ -x "$(command -v keychain)" ]]; then
-    eval $(keychain ~/.ssh/id_rsa B4C48F45F16E612B625004B802E221882616B4EB \
-        --agents ssh,gpg \
-	--eval \
-	--noask \
-	--quiet)
+if [[ -x "$(command -v gnome-keyring-daemon)" ]]; then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
 fi
 
 if [[ $TTY = "/dev/tty1" && ! $DISPLAY ]]; then

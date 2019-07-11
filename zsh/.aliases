@@ -7,6 +7,7 @@ alias gdc='git diff --cached'
 alias gst='git status --short'
 alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
+alias pass=gopass
 alias s=sudo
 
 function mkcd() {
