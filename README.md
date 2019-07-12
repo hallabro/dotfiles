@@ -7,7 +7,6 @@ Dotfiles containing configuration for:
 * [bspwm](https://github.com/baskerville/bspwm)
 * [compton](https://github.com/chjj/compton)
 * [dunst](https://github.com/dunst-project/dunst)
-* [Firefox](https://www.mozilla.org)
 * [GNU Emacs](https://www.gnu.org/software/emacs/)
 * [GNU Less](https://www.gnu.org/software/less/)
 * [git](https://git-scm.com/)

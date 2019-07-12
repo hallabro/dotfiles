@@ -107,11 +107,6 @@ compton: configexists
 gtk: configexists
 	$(call stow,$@,${HOME})
 
-.PHONY : firefox
-firefox:
-	$(call createmaybe,${HOME}/.mozilla/firefox/profile)
-	$(call stow,$@,${HOME})
-
 .PHONY : x11conf
 x11conf:
 	$(call sudo_createmaybe,${X11CONF}/xinit/xinitrc.d)
@@ -151,7 +146,7 @@ portage:
 base: sxhkd ranger ssh emacs git less zsh aerc
 
 .PHONY : x11
-x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox gtk
+x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton gtk
 
 .PHONY : desktop
 desktop: base x11 x11_desktop portage_desktop
