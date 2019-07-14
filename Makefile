@@ -140,6 +140,7 @@ portage:
 	$(call sudo_createmaybe,${PORTAGE}/package.license)
 	$(call sudo_createmaybe,${PORTAGE}/package.use)
 	$(call sudo_createmaybe,${PORTAGE}/repos.conf)
+	$(call sudo_createmaybe,${PORTAGE}/patches)
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base

@@ -1,0 +1,13 @@
+--- a/install/dracut-install.c	2019-07-14 20:19:37.233966896 +0200
++++ b/install/dracut-install.c	2019-07-14 20:20:27.921964818 +0200
+@@ -1371,9 +1371,7 @@
+ 
+         err = kmod_module_new_from_loaded(ctx, &loaded_list);
+         if (err < 0) {
+-                errno = err;
+-                log_error("Could not get list of loaded modules: %m. Switching to non-hostonly mode.");
+-                arg_hostonly = false;
++                log_error("Could not get list of loaded modules: %m.");
+         } else {
+                 kmod_list_foreach(itr, loaded_list) {
+                         _cleanup_kmod_module_unref_list_ struct kmod_list *modlist = NULL;
