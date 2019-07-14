@@ -1,2 +1,0 @@
-application/pdf; zathura %s
-text/html; w3m -T text/html -dump %s; copiousoutput

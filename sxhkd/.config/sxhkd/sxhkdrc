@@ -26,10 +26,6 @@ super + c
 super + Escape
 	pkill -USR1 -x sxhkd
 
-# quit bspwm normally
-super + alt + Escape
-	bspc quit
-
 # close and kill
 super + {_,shift + }w
 	bspc node -{c,k}
@@ -47,16 +43,8 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-
-# focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
-
-# focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
@@ -79,7 +67,7 @@ super + alt + {1-5}
 	bspc desktop -s '^{1-9}'
 
 XF86ScreenSaver
-        i3lock -i ~/dotfiles/wallpaper_gray.png
+    i3lock -i ~/dotfiles/wallpaper_gray.png
 
 XF86AudioRaiseVolume
 	~/dotfiles/scripts/volume 2dB+

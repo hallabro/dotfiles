@@ -76,8 +76,9 @@ rofi-pass: rofi configexists
 mpv: configexists
 	$(call stow,$@,${HOME})
 
-.PHONY : neomutt
-neomutt: configexists
+.PHONY : aerc
+aerc: configexists
+	$(call createmaybe,${HOME}/.config/aerc)
 	$(call stow,$@,${HOME})
 
 .PHONY : parcellite
@@ -104,11 +105,6 @@ compton: configexists
 
 .PHONY : gtk
 gtk: configexists
-	$(call stow,$@,${HOME})
-
-.PHONY : firefox
-firefox:
-	$(call createmaybe,${HOME}/.mozilla/firefox/profile)
 	$(call stow,$@,${HOME})
 
 .PHONY : x11conf
@@ -147,10 +143,10 @@ portage:
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base
-base: sxhkd ranger ssh emacs git less zsh neomutt
+base: sxhkd ranger ssh emacs git less zsh aerc
 
 .PHONY : x11
-x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton firefox gtk
+x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton gtk
 
 .PHONY : desktop
 desktop: base x11 x11_desktop portage_desktop
