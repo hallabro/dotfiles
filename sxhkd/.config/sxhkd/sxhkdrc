@@ -67,7 +67,7 @@ super + alt + {1-5}
 	bspc desktop -s '^{1-9}'
 
 XF86ScreenSaver
-    i3lock -i ~/dotfiles/wallpaper_gray.png
+	gnome-keyring-daemon -r -d && i3lock -i ~/dotfiles/wallpaper_gray.png
 
 XF86AudioRaiseVolume
 	~/dotfiles/scripts/volume 2dB+
