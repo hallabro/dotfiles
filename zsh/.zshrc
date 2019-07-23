@@ -11,7 +11,7 @@ alias alias="true"
 source $ZSH/oh-my-zsh.sh
 unalias "alias" # hackish way of disabling all bundled aliases
 
-export HISTORY_IGNORE="(ls*|mpv*|pwd|pass*|un(zip|rar)*|rm*)"
+export HISTORY_IGNORE="(ls*|mpv*|pwd|(go)?pass*|un(zip|rar)*|rm(dir)?*)"
 export HISTSIZE=1000
 export SAVEHIST=$HISTSIZE
 
