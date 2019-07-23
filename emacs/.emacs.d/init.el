@@ -12,8 +12,8 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq use-package-always-demand t)
+(setq straight-use-package-by-default t
+      use-package-always-demand t)
 
 (straight-use-package 'git)
 
@@ -39,7 +39,6 @@
       vc-follow-symlinks t
       version-control t
       x-stretch-cursor t)
-
 
 (setq-default show-trailing-whitespace t
               indent-tabs-mode nil
