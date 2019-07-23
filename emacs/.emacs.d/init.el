@@ -65,7 +65,7 @@
 (add-to-list 'recentf-exclude "/vendor/")
 (add-to-list 'recentf-exclude "/sudo")
 
-(defun switch-to-previous-buffer ()
+(defun previous-buffer ()
   "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
@@ -91,58 +91,57 @@
     :keymaps 'override
     :states 'normal
     "b" '(:ignore t :which-key "buffers")
-    "bl" 'helm-mini
-    "bs" 'helm-do-ag-buffers
-    "ba" 'save-buffer
-    "bs" 'switch-to-previous-buffer
+    "bl" '(helm-mini :which-key "list")
+    "bs" '(helm-do-ag-buffers :which-key "ag")
+    "ba" '(save-buffer :which-key "save")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "destroy")
-    "bu" 'sudo-edit
+    "bu" '(sudo-edit :which-key "sudo edit")
 
     "e" '(:ignore t :which-key "emacs")
-    "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "restart")
-    "el" 'list-packages
-    "ep" 'straight-x-clean-unused-repos
-    "eu" 'auto-package-update-now
-    "ee" 'save-buffers-kill-terminal
+    "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload")
+    "el" '(list-packages :which-key "list packages")
+    "ep" '(straight-x-clean-unused-repos :which-key "prune unused packages")
+    "eu" '(auto-package-update-now :which-key "update packages")
+    "ee" '(save-buffers-kill-terminal :which-key "save and exit")
 
     "f" '(:ignore t :which-key "files")
-    "fp" 'projectile-dired
-    "fd" 'dired-jump
-    "ff" 'helm-find-files
-    "fr" 'helm-recentf
+    "fd" '(dired-jump :which-key "dired")
+    "ff" '(helm-find-files :which-key "find")
+    "fr" '(helm-recentf :which-key "recent")
 
     "p" '(:ignore t :which-key "projects")
-    "pw" 'helm-projectile-switch-project
-    "ps" 'helm-do-ag-project-root
-    "pr" 'projectile-replace
-    "pf" 'helm-projectile-find-file
-    "pF" 'helm-projectile-recentf
-    "pd" 'projectile-discover-projects-in-directory
-    "pk" 'projectile-kill-buffers
+    "pd" '(projectile-dired :which-key "dired")
+    "pw" '(helm-projectile-switch-project :which-key "switch")
+    "ps" '(helm-do-ag-project-root :which-key "ag")
+    "pr" '(projectile-replace :which-key "search and replace")
+    "pf" '(helm-projectile-find-file :which-key "find file")
+    "pF" '(helm-projectile-recentf :which-key "recent files")
+    "pD" '(projectile-discover-projects-in-directory :which-key "discover")
+    "pk" '(projectile-kill-buffers :which-key "kill buffers")
 
     "w" '(:ignore t :which-key "windows")
-    "wb" 'split-window-below
-    "wr" 'split-window-right
-    "wd" 'ace-delete-window
-    "wx" 'delete-window
-    "wa" 'ace-window
+    "wb" '(split-window-below :which-key "split below")
+    "wr" '(split-window-right :which-key "split right")
+    "wd" '(ace-delete-window :which-key "ace delete")
+    "wx" '(delete-window :which-key "delete")
 
     "y" '(:ignore t :which-key "fly")
-    "yn" 'flycheck-next-error
-    "yp" 'flycheck-previous-error
-    "yd" 'ispell-change-dictionary
-    "yc" 'flyspell-correct-wrapper
+    "yn" '(flycheck-next-error :which-key "next")
+    "yp" '(flycheck-previous-error :which-key "previous")
+    "yd" '(ispell-change-dictionary :which-key "set dictionary")
+    "ys" '(flyspell-correct-wrapper :which-key "helm flyspell")
+    "yc" '(helm-flycheck :which-key "helm flycheck")
 
     "s" '(:ignore t :which-key "snippets")
-    "si" 'yas-insert-snippet
-    "sc" 'yas-new-snippet
-    "sl" 'yas-describe-tables
+    "si" '(yas-insert-snippet :which-key "insert")
+    "sc" '(yas-new-snippet :which-key "create")
+    "sl" '(yas-describe-tables :which-key "list")
 
-    "k" 'helm-show-kill-ring
-    "g" 'helm-register
-    "r" 'switch-to-previous-buffer
-    "u" 'helm-resume
-    "a" 'ace-window)
+    "k" '(helm-show-kill-ring :which-key "kill-ring")
+    "g" '(helm-register :which-key "registers")
+    "r" '(previous-buffer :which-key "previous buffer")
+    "u" '(helm-resume :which-key "helm resume")
+    "a" '(ace-window :which-key "ace window"))
 
   (general-define-key
     :prefix "SPC"
@@ -467,6 +466,8 @@
   (defconst ispell-program-name "aspell")
   :hook
   (LaTex . flyspell-mode))
+
+(use-package helm-flycheck)
 
 (use-package evil-replace-with-register
   :general
