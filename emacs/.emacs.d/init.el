@@ -468,4 +468,9 @@
   :hook
   (LaTex . flyspell-mode))
 
+(use-package evil-replace-with-register
+  :general
+  (:states 'normal
+     "mr" 'evil-replace-with-register))
+
 (provide 'init)
