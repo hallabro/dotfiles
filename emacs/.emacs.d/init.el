@@ -447,6 +447,9 @@
 (use-package smartparens
   :config
   (require 'smartparens-config)
+  (sp-pair "(" nil :unless '(sp-point-before-word-p))
+  (sp-pair "[" nil :unless '(sp-point-before-word-p))
+  (sp-pair "{" nil :unless '(sp-point-before-word-p))
   (smartparens-global-mode))
 
 (use-package evil-smartparens
