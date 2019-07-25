@@ -100,7 +100,7 @@
     "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload")
     "el" '(list-packages :which-key "list packages")
     "ep" '(straight-x-clean-unused-repos :which-key "prune unused packages")
-    "eu" '(auto-package-update-now :which-key "update packages")
+    "eu" '(straight-pull-all :which-key "update packages")
     "ee" '(save-buffers-kill-terminal :which-key "save and exit")
 
     "f" '(:ignore t :which-key "files")
@@ -411,11 +411,6 @@
 
 (use-package git-commit)
 (use-package git-modes)
-
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t))
 
 (use-package lsp-mode
   :hook
