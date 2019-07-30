@@ -7,6 +7,7 @@ Dotfiles containing configuration for:
 * [bspwm](https://github.com/baskerville/bspwm)
 * [compton](https://github.com/chjj/compton)
 * [dunst](https://github.com/dunst-project/dunst)
+* [dracut](https://fedoraproject.org/wiki/Dracut)
 * [GNU Emacs](https://www.gnu.org/software/emacs/)
 * [GNU Less](https://www.gnu.org/software/less/)
 * [git](https://git-scm.com/)

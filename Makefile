@@ -4,6 +4,7 @@ SHELL=/bin/zsh
 HOME:=${HOME}
 PORTAGE:=/etc/portage
 X11CONF:=/etc/X11
+ETC:=/etc
 .DEFAULT_GOAL := error
 
 define stow
@@ -103,6 +104,10 @@ less:
 compton: configexists
 	$(call stow,$@,${HOME})
 
+.PHONY : dracut
+dracut:
+	$(call sudo_stow,$@,${ETC})
+
 .PHONY : gtk
 gtk: configexists
 	$(call stow,$@,${HOME})
@@ -140,7 +145,6 @@ portage:
 	$(call sudo_createmaybe,${PORTAGE}/package.license)
 	$(call sudo_createmaybe,${PORTAGE}/package.use)
 	$(call sudo_createmaybe,${PORTAGE}/repos.conf)
-	$(call sudo_createmaybe,${PORTAGE}/patches)
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base
