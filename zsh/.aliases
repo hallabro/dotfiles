@@ -10,6 +10,10 @@ alias ls='ls --color=tty'
 alias pass=gopass
 alias s=sudo
 
+function esudo() {
+    e /sudo::"$1"
+}
+
 function mkcd() {
     mkdir -p "$@" && cd "$@"
 }
