@@ -83,6 +83,18 @@
 (add-hook 'after-make-frame-functions #'hide-gui-elements t)
 (add-hook 'with-editor-mode-hook 'evil-insert-state)
 
+(defun split-and-focus-vertical ()
+  "Splits window and switch focus."
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun split-and-focus-horizontal ()
+  "Splits window and switch focus."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
 (use-package general
   :config
   (general-define-key
@@ -119,8 +131,8 @@
     "pk" '(projectile-kill-buffers :which-key "kill buffers")
 
     "w" '(:ignore t :which-key "windows")
-    "wb" '(split-window-below :which-key "split below")
-    "wr" '(split-window-right :which-key "split right")
+    "wb" '(split-and-focus-vertical :which-key "split below")
+    "wr" '(split-and-focus-horizontal :which-key "split right")
     "wd" '(ace-delete-window :which-key "ace delete")
     "wx" '(delete-window :which-key "delete")
 
