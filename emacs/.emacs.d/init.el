@@ -471,4 +471,10 @@
   (:states 'normal
      "mr" 'evil-replace-with-register))
 
+(use-package dired-narrow
+  :general
+  (:keymaps 'dired-mode-map
+    "/" 'dired-narrow
+    "c" 'find-file))
+
 (provide 'init)
