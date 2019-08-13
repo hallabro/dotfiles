@@ -105,7 +105,7 @@
     "bl" '(helm-mini :which-key "list")
     "bs" '(helm-do-ag-buffers :which-key "ag")
     "ba" '(save-buffer :which-key "save")
-    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "destroy")
+    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
     "bu" '(sudo-edit :which-key "sudo edit")
 
     "e" '(:ignore t :which-key "emacs")
@@ -134,7 +134,7 @@
     "wb" '(split-and-focus-vertical :which-key "split below")
     "wr" '(split-and-focus-horizontal :which-key "split right")
     "wd" '(ace-delete-window :which-key "ace delete")
-    "wx" '(delete-window :which-key "delete")
+    "wx" '(delete-window :which-key "close")
 
     "y" '(:ignore t :which-key "fly")
     "yn" '(flycheck-next-error :which-key "next")
@@ -166,7 +166,7 @@
 
   (general-define-key
     :prefix "SPC"
-    :keymaps 'latex-mode-map
+    :keymaps 'LaTeX-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
     "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
