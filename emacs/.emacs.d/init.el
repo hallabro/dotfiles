@@ -166,7 +166,7 @@
 
   (general-define-key
     :prefix "SPC"
-    :keymaps 'latex-mode-map
+    :keymaps 'LaTeX-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
     "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
