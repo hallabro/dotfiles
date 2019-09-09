@@ -107,6 +107,7 @@
     "ba" '(save-buffer :which-key "save")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
     "bu" '(sudo-edit :which-key "sudo edit")
+    "bf" '(auto-fill-mode :which-key "auto-fill")
 
     "e" '(:ignore t :which-key "emacs")
     "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload")
