@@ -24,8 +24,8 @@
 		 (not (y-or-n-p (format "Delete repository %S? " repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
-      backup-directory-alist `(("." . "~/.emacs.d/backups"))
+(setq auto-save-file-name-transforms `((".*", temporary-file-directory t))
+      backup-directory-alist `((".*" ., temporary-file-directory))
       byte-compile-warnings nil
       custom-file "~/.emacs.d/custom.el"
       delete-old-versions -1
