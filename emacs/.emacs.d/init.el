@@ -27,6 +27,7 @@
 (setq auto-save-file-name-transforms `((".*", temporary-file-directory t))
       backup-directory-alist `((".*" ., temporary-file-directory))
       byte-compile-warnings nil
+      create-lockfiles nil
       custom-file "~/.emacs.d/custom.el"
       delete-old-versions -1
       inhibit-splash-screen t
