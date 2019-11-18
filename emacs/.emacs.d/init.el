@@ -233,7 +233,10 @@
   (:keymaps 'helm-map
     "TAB" 'helm-execute-persistent-action
     "C-j" 'helm-next-line
-    "C-k" 'helm-previous-line))
+    "C-k" 'helm-previous-line)
+  (:keymaps '(helm-find-files-map helm-read-file-map)
+    "C-l" 'helm-execute-persistent-action
+    "C-h" 'helm-find-files-up-one-level))
 
 (use-package helm-flx
   :config
