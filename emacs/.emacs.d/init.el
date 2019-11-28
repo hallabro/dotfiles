@@ -55,6 +55,7 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 (electric-indent-mode 1)
+(electric-pair-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 (show-paren-mode 1)
