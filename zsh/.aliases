@@ -12,7 +12,6 @@ alias reboot='openrc-shutdown -r now'
 alias s='sudo '
 alias shutdown='openrc-shutdown'
 
-
 function esudo() {
     e /sudo::"$1"
 }
