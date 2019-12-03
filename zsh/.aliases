@@ -7,7 +7,7 @@ alias gdc='git diff --cached'
 alias gst='git status --short'
 alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
-alias s=sudo
+alias s='sudo '
 
 function esudo() {
     e /sudo::"$1"
