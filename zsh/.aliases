@@ -5,9 +5,13 @@ alias gch='git checkout'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gst='git status --short'
+alias halt='openrc-shutdown -H now'
 alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
+alias reboot='openrc-shutdown -r now'
 alias s='sudo '
+alias shutdown='openrc-shutdown'
+
 
 function esudo() {
     e /sudo::"$1"
