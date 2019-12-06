@@ -9,7 +9,8 @@ alias halt='openrc-shutdown -H now'
 alias l='ls --color=tty -al'
 alias ls='ls --color=tty'
 alias reboot='openrc-shutdown -r now'
-alias s='sudo '
+alias s='sudo'
+alias sudo='sudo '
 alias shutdown='openrc-shutdown'
 
 function esudo() {
