@@ -10,8 +10,8 @@ alias l='ls -al'
 alias ls='ls --color=tty'
 alias reboot='openrc-shutdown -r now'
 alias s='sudo'
-alias sudo='sudo '
 alias shutdown='openrc-shutdown'
+alias sudo='sudo '
 
 function esudo() {
     e /sudo::"$1"
