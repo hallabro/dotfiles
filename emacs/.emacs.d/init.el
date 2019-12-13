@@ -147,6 +147,9 @@
     "sc" '(yas-new-snippet :which-key "create")
     "sl" '(yas-describe-tables :which-key "list")
 
+    "h" '(:ignore t :which-key "help")
+    "hb" '(counsel-descbinds :which-key "describe keybinds")
+
     "k" '(counsel-yank-pop :which-key "kill ring")
     "g" '(counsel-register :which-key "registers")
     "r" '(previous-buffer :which-key "previous buffer")
