@@ -42,6 +42,7 @@
       x-stretch-cursor t)
 
 (setq-default show-trailing-whitespace t
+              sp-escape-quotes-after-insert nil
               indent-tabs-mode nil
               tab-width 4
               auto-fill-function 'do-auto-fill
@@ -494,5 +495,7 @@
   (:keymaps 'dired-mode-map
     "/" 'dired-narrow
     "c" 'find-file))
+
+(use-package highlight-parentheses)
 
 (provide 'init)
