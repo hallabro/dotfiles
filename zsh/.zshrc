@@ -4,6 +4,7 @@ export GOPATH=$HOME/projects/go
 export PATH=$PATH:$GOPATH/bin
 export EDITOR="emacsclient -t"
 export LESS="$LESS -FRXK"
+export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
 ZSH_THEME="hallabro"
 plugins=(git fd)
