@@ -259,12 +259,12 @@
 
 (use-package super-save
   :config
+  (add-to-list 'super-save-triggers 'ace-window)
   (setq auto-save-default nil)
   (super-save-mode +1))
 
 (use-package ace-window
   :config
-  (add-to-list 'super-save-triggers 'ace-window)
   (setq aw-keys '(?h ?a ?s ?p)))
 
 (use-package markdown-mode
