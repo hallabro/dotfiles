@@ -205,6 +205,8 @@
       "j" 'evil-next-line
       "k" 'evil-previous-line))
 
+  (eval-after-load "evil-maps" (define-key evil-motion-state-map "\C-w" nil))
+
   :general
   (:states '(normal visual)
     "j" 'evil-next-line
