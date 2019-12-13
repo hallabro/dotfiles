@@ -154,7 +154,7 @@
     "g" '(counsel-register :which-key "registers")
     "r" '(previous-buffer :which-key "previous buffer")
     "u" '(ivy-resume :which-key "ivy resume")
-    "a" '(ace-window :which-key "ace window"))
+    "SPC" '(ace-window :which-key "ace window"))
 
   (general-define-key
     :prefix "SPC"
@@ -460,6 +460,7 @@
         ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   :general
   (:keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
+    "C-w" 'ivy-backward-kill-word
     "C-k" 'ivy-previous-line
     "C-j" 'ivy-next-line
     "C-l" 'ivy-alt-done))
