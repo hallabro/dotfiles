@@ -107,6 +107,7 @@
     "b" '(:ignore t :which-key "buffers")
     "bl" '(ivy-switch-buffer :which-key "list")
     "ba" '(save-buffer :which-key "save")
+    "bS" '(save-some-buffers t :which-key "save all")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
     "bu" '(sudo-edit :which-key "sudo edit")
     "bf" '(auto-fill-mode :which-key "auto-fill")
