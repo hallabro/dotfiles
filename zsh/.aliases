@@ -6,11 +6,12 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gst='git status --short'
 alias halt='openrc-shutdown -H now'
-alias l='ls --color=tty -al'
+alias l='ls -al'
 alias ls='ls --color=tty'
 alias reboot='openrc-shutdown -r now'
-alias s='sudo '
-alias shutdown='openrc-shutdown'
+alias s='sudo'
+alias shutdown='openrc-shutdown -p now'
+alias sudo='sudo '
 
 function esudo() {
     e /sudo::"$1"

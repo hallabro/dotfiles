@@ -42,6 +42,7 @@
       x-stretch-cursor t)
 
 (setq-default show-trailing-whitespace t
+              sp-escape-quotes-after-insert nil
               indent-tabs-mode nil
               tab-width 4
               auto-fill-function 'do-auto-fill
@@ -104,9 +105,9 @@
     :keymaps 'override
     :states 'normal
     "b" '(:ignore t :which-key "buffers")
-    "bl" '(helm-mini :which-key "list")
-    "bs" '(helm-do-ag-buffers :which-key "ag")
+    "bl" '(ivy-switch-buffer :which-key "list")
     "ba" '(save-buffer :which-key "save")
+    "bS" '(save-some-buffers t :which-key "save all")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
     "bu" '(sudo-edit :which-key "sudo edit")
     "bf" '(auto-fill-mode :which-key "auto-fill")
@@ -120,18 +121,16 @@
 
     "f" '(:ignore t :which-key "files")
     "fd" '(dired-jump :which-key "dired")
-    "ff" '(helm-find-files :which-key "find")
-    "fr" '(helm-recentf :which-key "recent")
+    "ff" '(counsel-file-jump :which-key "find")
+    "fr" '(counsel-recentf :which-key "recent")
 
     "p" '(:ignore t :which-key "projects")
     "pd" '(projectile-dired :which-key "dired")
-    "pw" '(helm-projectile-switch-project :which-key "switch")
-    "ps" '(helm-do-ag-project-root :which-key "ag")
-    "pr" '(projectile-replace :which-key "search and replace")
-    "pf" '(helm-projectile-find-file :which-key "find file")
-    "pF" '(helm-projectile-recentf :which-key "recent files")
+    "pw" '(counsel-projectile-switch-project :which-key "switch")
+    "ps" '(counsel-projectile-ag :which-key "ag")
+    "pr" '(projectie-replace :which-key "search and replace")
+    "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
-    "pk" '(projectile-kill-buffers :which-key "kill buffers")
 
     "w" '(:ignore t :which-key "windows")
     "wb" '(split-and-focus-vertical :which-key "split below")
@@ -143,19 +142,20 @@
     "yn" '(flycheck-next-error :which-key "next")
     "yp" '(flycheck-previous-error :which-key "previous")
     "yd" '(ispell-change-dictionary :which-key "set dictionary")
-    "ys" '(flyspell-correct-wrapper :which-key "helm flyspell")
-    "yc" '(helm-flycheck :which-key "helm flycheck")
 
     "s" '(:ignore t :which-key "snippets")
     "si" '(yas-insert-snippet :which-key "insert")
     "sc" '(yas-new-snippet :which-key "create")
     "sl" '(yas-describe-tables :which-key "list")
 
-    "k" '(helm-show-kill-ring :which-key "kill-ring")
-    "g" '(helm-register :which-key "registers")
+    "h" '(:ignore t :which-key "help")
+    "hb" '(counsel-descbinds :which-key "describe keybinds")
+
+    "k" '(counsel-yank-pop :which-key "kill ring")
+    "g" '(counsel-register :which-key "registers")
     "r" '(previous-buffer :which-key "previous buffer")
-    "u" '(helm-resume :which-key "helm resume")
-    "a" '(ace-window :which-key "ace window"))
+    "u" '(ivy-resume :which-key "ivy resume")
+    "SPC" '(ace-window :which-key "ace window"))
 
   (general-define-key
     :prefix "SPC"
@@ -209,6 +209,8 @@
       "t" 'evil-next-line
       "n" 'evil-previous-line))
 
+  (eval-after-load "evil-maps" (define-key evil-motion-state-map "\C-w" nil))
+
   :general
   (:states '(normal visual)
     "t" 'evil-next-line
@@ -220,29 +222,6 @@
     "C-n" 'evil-scroll-up
     "C-t" 'evil-scroll-down
     "U" 'undo-tree-redo))
-
-(use-package helm
-  :config
-  (setq helm-M-x-fuzzy-match t
-        helm-mode-fuzzy-match t
-        helm-completion-in-region-fuzzy-match t
-        helm-recentf-fuzzy-match t)
-  (helm-mode 1)
-
-  :general
-  ("M-x" 'helm-M-x)
-  (:keymaps 'helm-map
-    "TAB" 'helm-execute-persistent-action
-    "C-t" 'helm-next-line
-    "C-n" 'helm-previous-line)
-  (:keymaps '(helm-find-files-map helm-read-file-map)
-    "C-s" 'helm-execute-persistent-action
-    "C-h" 'helm-find-files-up-one-level))
-
-(use-package helm-flx
-  :config
-  (helm-flx-mode t)
-  (setq helm-flx-for-helm-locate t))
 
 (use-package base16-theme
   :config
@@ -262,6 +241,7 @@
    :prefix "m"
     "m" 'evil-avy-goto-char-timer
     "l" 'evil-avy-goto-line
+    "s" 'swiper
     "p" 'avy-pop-mark))
 
 (use-package dtrt-indent
@@ -276,20 +256,6 @@
   (setq projectile-sort-order 'recently-active
         projectile-generic-command "fd . -0"))
 
-(use-package helm-projectile
-  :after helm projectile)
-
-(use-package helm-ag
-  :after helm
-  :general
-  (:states 'normal
-   :keymaps 'helm-ag-edit-map
-    "c" 'helm-ag--edit-commit
-    "q" 'helm-ag--edit-abort)
-
-  (:keymaps 'helm-ag-map
-    "C-e" 'helm-ag-edit))
-
 (use-package key-chord
   :after evil
   :config
@@ -298,6 +264,7 @@
 
 (use-package super-save
   :config
+  (add-to-list 'super-save-triggers 'ace-window)
   (setq auto-save-default nil)
   (super-save-mode +1))
 
@@ -423,12 +390,10 @@
   :config
   (setq shackle-default-alignment 'below
         shackle-default-size 0.3
-        helm-display-function 'pop-to-buffer
         shackle-default-rule '(:select t :align t :other t)
         shackle-rules
           '((compilation-mode :align t :noselect t)
            (neotree-mode :align left)
-           ("\\`\\*helm.*?\\*\\'" :regexp t :align t :size 0.3)
            ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
   (shackle-mode 1))
 
@@ -481,14 +446,6 @@
   :config
   (evil-snipe-override-mode 1))
 
-(use-package flyspell-correct-helm
-  :config
-  (defconst ispell-program-name "aspell")
-  :hook
-  (LaTex . flyspell-mode))
-
-(use-package helm-flycheck)
-
 (use-package evil-replace-with-register
   :general
   (:states 'normal
@@ -499,5 +456,25 @@
   (:keymaps 'dired-mode-map
     "/" 'dired-narrow
     "c" 'find-file))
+
+(use-package highlight-parentheses)
+
+(use-package ivy
+  :config
+  (setq ivy-use-virtual-buffers t
+        enable-recursive-minibuffers t
+        ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  :general
+  (:keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
+    "C-w" 'ivy-backward-kill-word
+    "C-n" 'ivy-previous-line
+    "C-t" 'ivy-next-line
+    "C-s" 'ivy-alt-done))
+
+(use-package counsel
+  :general
+  ("M-x" 'counsel-M-x))
+
+(use-package counsel-projectile)
 
 (provide 'init)
