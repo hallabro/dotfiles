@@ -458,7 +458,9 @@
   :config
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
-        ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+        ivy-re-builders-alist
+          '((counsel-ag . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
   :general
   (:keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
     "C-w" 'ivy-backward-kill-word
@@ -470,6 +472,8 @@
   :general
   ("M-x" 'counsel-M-x))
 
-(use-package counsel-projectile)
+(use-package counsel-projectile
+  :config
+  (setq counsel-projectile-ag-use-gitignore-only nil))
 
 (provide 'init)
