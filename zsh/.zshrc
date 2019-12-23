@@ -7,7 +7,7 @@ export LESS="$LESS -FRXK"
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
 ZSH_THEME="hallabro"
-plugins=(git fd)
+plugins=(gitfast fd)
 alias alias="true"
 source $ZSH/oh-my-zsh.sh
 unalias "alias" # hackish way of disabling all bundled aliases
