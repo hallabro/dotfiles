@@ -6,11 +6,11 @@ Dotfiles containing configuration for:
 * [aerc](https://aerc-mail.org/)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [compton](https://github.com/chjj/compton)
-* [dunst](https://github.com/dunst-project/dunst)
 * [dracut](https://fedoraproject.org/wiki/Dracut)
+* [dunst](https://github.com/dunst-project/dunst)
+* [git](https://git-scm.com/)
 * [GNU Emacs](https://www.gnu.org/software/emacs/)
 * [GNU Less](https://www.gnu.org/software/less/)
-* [git](https://git-scm.com/)
 * [mpv](https://mpv.io/)
 * [OpenSSH](https://www.openssh.com/)
 * [parcellite](http://parcellite.sourceforge.net/)
@@ -18,7 +18,7 @@ Dotfiles containing configuration for:
 * [rofi-pass](https://github.com/carnager/rofi-pass)
 * [rofi](https://github.com/davatorium/rofi)
 * [sxhkd](https://github.com/baskerville/sxhkd)
-* [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
+* [xst](https://github.com/gnotclub/xst)
 * [zsh](https://www.zsh.org/)
 
 

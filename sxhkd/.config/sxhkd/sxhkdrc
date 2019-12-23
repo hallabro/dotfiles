@@ -1,6 +1,6 @@
 # terminal emulator
 super + Return
-	urxvt
+	xst
 
 # program launcher
 super + BackSpace
