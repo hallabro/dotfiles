@@ -8,10 +8,11 @@ EMERGE_DEFAULT_OPTS="--keep-going=y --quiet-build=y --jobs 2"
 FEATURES="ccache pid-sandbox ipc-sandbox"
 GENTOO_MIRRORS="http://mirror.mdfnet.se/gentoo"
 GRUB_PLATFORMS="efi-64"
+INSTALL_MASK="/usr/share/bash-completion /usr/share/fish /usr/share/applications TODO"
+LLVM_TARGETS="X86"
 PKGDIR="${PORTDIR}/packages"
 PORTAGE_GPG_KEY="08639DB0399CC35F071CACD279D1969B01017657"
 PORTDIR="/usr/portage"
 RUBY_TARGETS="ruby25"
-USE="alsa gtk3 mmx sse sse2 sse3 threads truetype vim-syntax xft zsh-completion \
+USE="alsa gtk3 mmx sse sse2 sse3 threads truetype xft zsh-completion \
     -ipv6 -acl -introspection -dvd -dvdnav -encode -multiarch -gnome -nls -smartcard -vala"
-LLVM_TARGETS="X86"
