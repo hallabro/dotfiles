@@ -7,7 +7,7 @@ export LESS="$LESS -FRXK"
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
 ZSH_THEME="hallabro"
-plugins=(git fd)
+plugins=(gitfast fd)
 alias alias="true"
 source $ZSH/oh-my-zsh.sh
 unalias "alias" # hackish way of disabling all bundled aliases
@@ -36,7 +36,12 @@ export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+bindkey '^E' kill-word
 bindkey '^F' fzf-file-widget
+bindkey '^H' backward-word
+bindkey '^J' down-line-or-history
+bindkey '^K' up-line-or-history
+bindkey '^L' forward-word
 bindkey '^P' copy-prev-shell-word
 
 _fzf_compgen_path() {
