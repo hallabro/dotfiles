@@ -465,6 +465,7 @@
         enable-recursive-minibuffers t
         ivy-re-builders-alist
           '((counsel-ag . ivy--regex-plus)
+            (swiper . ivy--regex-plus)
             (t . ivy--regex-fuzzy)))
   :general
   (:keymaps '(ivy-minibuffer-map ivy-switch-buffer-map)
@@ -476,6 +477,13 @@
 (use-package counsel
   :general
   ("M-x" 'counsel-M-x))
+
+(use-package swiper
+  :config
+  (setq swiper-action-recenter t)
+  :general
+  (:states 'normal
+    "/" 'swiper))
 
 (use-package counsel-projectile
   :config
