@@ -93,7 +93,6 @@ ssh:
 
 .PHONY : zsh
 zsh:
-	$(call createmaybe,${HOME}/.oh-my-zsh)
 	$(call stow,$@,${HOME})
 
 .PHONY : less
