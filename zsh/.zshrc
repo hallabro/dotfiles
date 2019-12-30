@@ -9,7 +9,7 @@ source ~/.zplug/init.zsh
 
 zplug "plugins/git-fast", from:oh-my-zsh
 zplug "aperezdc/zsh-fzy"
-zplug "~/dotfiles", from:local, as:theme, use:"zsh/.zsh_theme"
+zplug "$HOME", from:local, as:theme, use:".zsh_theme"
 
 export HISTFILE=~/.zsh_history
 export HISTORY_IGNORE="(ls*|mpv*|pwd|(go)?pass*|un(zip|rar)*|rm(dir)?*)"
