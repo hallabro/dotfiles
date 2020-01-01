@@ -22,6 +22,10 @@ function mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
+function mkmv() {
+    mkdir -p "$2" && mv "$1" "$2"
+}
+
 function _source_if_exists() {
     [ -r "$1" ] && source $1
 }
