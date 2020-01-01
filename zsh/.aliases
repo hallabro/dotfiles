@@ -23,7 +23,7 @@ function mkcd() {
 }
 
 function mkmv() {
-    mkdir -p "$2" && mv "$1" "$2"
+    mkdir -p "${@: -1:1}" && mv "$@"
 }
 
 function _source_if_exists() {
@@ -34,3 +34,4 @@ function dx() {
     docker exec $@
 }
 compdef _docker dx="_docker_complete_running_containers"
+
