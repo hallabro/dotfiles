@@ -3,7 +3,6 @@ hallabro/dotfiles
 
 Dotfiles containing configuration for:
 
-* [aerc](https://aerc-mail.org/)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [compton](https://github.com/chjj/compton)
 * [dracut](https://fedoraproject.org/wiki/Dracut)
