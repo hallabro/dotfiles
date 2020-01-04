@@ -35,6 +35,7 @@ zstyle ':completion:*' menu select
 zstyle ':plugin:history-search-multi-word' next-line-key "^J"
 zstyle ':plugin:history-search-multi-word' previous-line-key "^K"
 zstyle ':history-search-multi-word' page-size 6
+zstyle ":plugin:history-search-multi-word" synhl "no"
 
 bindkey '^F' fzy-file-widget
 bindkey '^E' kill-word
