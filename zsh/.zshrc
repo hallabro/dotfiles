@@ -9,6 +9,8 @@ source ~/.zplug/init.zsh
 
 zplug "plugins/git-fast", from:oh-my-zsh
 zplug "aperezdc/zsh-fzy"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "hallabro/history-search-multi-word"
 zplug "$HOME", from:local, as:theme, use:".zsh_theme"
 
 export HISTFILE=~/.zsh_history
@@ -29,9 +31,12 @@ _source_if_exists ~/.zcolors
 [ -f ~/.zdircolors ] && eval `dircolors ~/.zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 zstyle :fzy:file command fd --type f
+zstyle ':completion:*' menu select
+zstyle ':plugin:history-search-multi-word' next-line-key "^J"
+zstyle ':plugin:history-search-multi-word' previous-line-key "^K"
+zstyle ':history-search-multi-word' page-size 6
 
 bindkey '^F' fzy-file-widget
-bindkey '^R' fzy-history-widget
 bindkey '^E' kill-word
 bindkey '^H' backward-word
 bindkey '^J' down-line-or-history
