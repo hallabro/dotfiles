@@ -10,7 +10,6 @@ source ~/.zplug/init.zsh
 zplug "plugins/git-fast", from:oh-my-zsh
 zplug "aperezdc/zsh-fzy"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "hallabro/history-search-multi-word"
 zplug "$HOME", from:local, as:theme, use:".zsh_theme"
 
 export HISTFILE=~/.zsh_history
@@ -30,14 +29,17 @@ setopt EXTENDEDGLOB
 _source_if_exists ~/.zcolors
 [ -f ~/.zdircolors ] && eval `dircolors ~/.zdircolors` && zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-zstyle :fzy:file command fd --type f
 zstyle ':completion:*' menu select
-zstyle ':plugin:history-search-multi-word' next-line-key "^J"
-zstyle ':plugin:history-search-multi-word' previous-line-key "^K"
-zstyle ':history-search-multi-word' page-size 6
-zstyle ":plugin:history-search-multi-word" synhl "no"
 
-bindkey '^F' fzy-file-widget
+_source_if_exists "/usr/share/zsh/site-functions/_fzf"
+_source_if_exists "/usr/share/zsh/site-contrib/fzf.zsh"
+
+export FZF_BIND_OPTS="--bind ctrl-k:up,ctrl-j:down"
+export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+bindkey '^F' fzf-file-widget
 bindkey '^E' kill-word
 bindkey '^H' backward-word
 bindkey '^J' down-line-or-history
