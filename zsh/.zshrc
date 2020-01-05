@@ -8,7 +8,6 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}'
 source ~/.zplug/init.zsh
 
 zplug "plugins/git-fast", from:oh-my-zsh
-zplug "aperezdc/zsh-fzy"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "$HOME", from:local, as:theme, use:".zsh_theme"
 
