@@ -475,6 +475,9 @@
     "C-s" 'ivy-alt-done))
 
 (use-package counsel
+  :config
+  (setq counsel-ag-command "ag --nocolor --nogroup --hidden %s"
+        counsel-ag-base-command "ag --nocolor --nogroup --hidden %s")
   :general
   ("M-x" 'counsel-M-x))
 

@@ -48,10 +48,6 @@ emacs:
 	$(call createmaybe,${HOME}/.emacs.d)
 	$(call stow,$@,${HOME})
 
-.PHONY : urxvt
-urxvt:
-	$(call stow,$@,${HOME})
-
 .PHONY : git
 git:
 	$(call stow,$@,${HOME})
@@ -77,11 +73,6 @@ rofi-pass: rofi configexists
 mpv: configexists
 	$(call stow,$@,${HOME})
 
-.PHONY : aerc
-aerc: configexists
-	$(call createmaybe,${HOME}/.config/aerc)
-	$(call stow,$@,${HOME})
-
 .PHONY : parcellite
 parcellite: configexists
 	$(call stow,$@,${HOME})
@@ -93,7 +84,6 @@ ssh:
 
 .PHONY : zsh
 zsh:
-	$(call createmaybe,${HOME}/.oh-my-zsh)
 	$(call stow,$@,${HOME})
 
 .PHONY : less
@@ -148,10 +138,10 @@ portage:
 	$(call sudo_stow,$@,${PORTAGE})
 
 .PHONY : base
-base: sxhkd ranger ssh emacs git less zsh aerc
+base: sxhkd ranger ssh emacs git less zsh
 
 .PHONY : x11
-x11: urxvt bspwm parcellite rofi rofi-pass dunst mpv compton gtk
+x11: bspwm parcellite rofi rofi-pass dunst mpv compton gtk
 
 .PHONY : desktop
 desktop: base x11 x11_desktop portage_desktop
