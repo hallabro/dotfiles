@@ -25,6 +25,5 @@ Management
 ==========
 
 The dotfiles are managed with [GNU
-=======
 Make](https://www.gnu.org/software/make/) (See [Makefile](Makefile))
 or manually with [GNU Stow](https://www.gnu.org/software/stow/).
