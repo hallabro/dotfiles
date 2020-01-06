@@ -264,7 +264,7 @@
 
 (use-package super-save
   :config
-  (add-to-list 'super-save-triggers 'ace-window)
+  (add-to-list 'super-save-triggers 'ace-window 'ivy-switch-buffer)
   (setq auto-save-default nil)
   (super-save-mode +1))
 
