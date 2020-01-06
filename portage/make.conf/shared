@@ -14,5 +14,6 @@ PKGDIR="${PORTDIR}/packages"
 PORTAGE_GPG_KEY="08639DB0399CC35F071CACD279D1969B01017657"
 PORTDIR="/usr/portage"
 RUBY_TARGETS="ruby25"
+SIGNED_OFF_BY="Robin Hallabro-Kokko <robin@hallabro.nu>"
 USE="alsa gtk3 mmx sse sse2 sse3 threads truetype xft zsh-completion \
     -ipv6 -acl -introspection -dvd -dvdnav -encode -multiarch -gnome -nls -smartcard -vala"
