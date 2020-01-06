@@ -21,6 +21,7 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
+setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDEDGLOB
 
@@ -41,8 +42,8 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 bindkey '^F' fzf-file-widget
 bindkey '^E' kill-word
 bindkey '^H' backward-word
-bindkey '^J' down-line-or-history
-bindkey '^K' up-line-or-history
+bindkey '^T' down-line-or-history
+bindkey '^N' up-line-or-history
 bindkey '^L' forward-word
 bindkey '^P' copy-prev-shell-word
 
