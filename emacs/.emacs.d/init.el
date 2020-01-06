@@ -121,6 +121,7 @@
 
     "f" '(:ignore t :which-key "files")
     "fd" '(dired-jump :which-key "dired")
+    "fD" '((lambda () (interactive) (dired-jump False "~/")) :which-key "dired (home)")
     "ff" '(counsel-file-jump :which-key "find")
     "fr" '(counsel-recentf :which-key "recent")
 
