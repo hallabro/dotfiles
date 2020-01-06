@@ -265,7 +265,7 @@
 
 (use-package super-save
   :config
-  (add-to-list 'super-save-triggers 'ace-window)
+  (add-to-list 'super-save-triggers 'ace-window 'ivy-switch-buffer)
   (setq auto-save-default nil)
   (super-save-mode +1))
 
@@ -466,6 +466,7 @@
         enable-recursive-minibuffers t
         ivy-re-builders-alist
           '((counsel-ag . ivy--regex-plus)
+            (counsel-projectile-find-file . ivy--regex-plus)
             (swiper . ivy--regex-plus)
             (t . ivy--regex-fuzzy)))
   :general
