@@ -461,6 +461,7 @@
         enable-recursive-minibuffers t
         ivy-re-builders-alist
           '((counsel-ag . ivy--regex-plus)
+            (counsel-projectile-find-file . ivy--regex-plus)
             (swiper . ivy--regex-plus)
             (t . ivy--regex-fuzzy)))
   :general
