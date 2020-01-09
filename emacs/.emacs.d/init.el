@@ -132,6 +132,7 @@
     "pr" '(projectie-replace :which-key "search and replace")
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
+    "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
 
     "w" '(:ignore t :which-key "windows")
     "wb" '(split-and-focus-vertical :which-key "split below")
