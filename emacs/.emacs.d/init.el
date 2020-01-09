@@ -180,6 +180,13 @@
 
   (general-define-key
     :prefix "SPC"
+    :keymaps 'go-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mi" 'go-import-add)
+
+  (general-define-key
+    :prefix "SPC"
     :keymaps 'snippet-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
