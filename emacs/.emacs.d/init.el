@@ -380,7 +380,8 @@
 
 (use-package flycheck
   :config
-  (setq flycheck-indication-mode nil)
+  (setq flycheck-indication-mode nil
+        flycheck-display-errors-function 'ignore)
   (global-flycheck-mode))
 
 (use-package expand-region
