@@ -125,13 +125,14 @@
     "ff" '(counsel-file-jump :which-key "find")
     "fr" '(counsel-recentf :which-key "recent")
 
-    "p" '(:ignore t :which-key "projects")
+    "p" '(:ignore t :which-key "project")
     "pd" '(projectile-dired :which-key "dired")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
     "ps" '(counsel-projectile-ag :which-key "ag")
     "pr" '(projectie-replace :which-key "search and replace")
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
+    "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
 
     "w" '(:ignore t :which-key "windows")
     "wb" '(split-and-focus-vertical :which-key "split below")
@@ -177,6 +178,13 @@
     "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
     "mi" 'latex-insert-item
     "ml" 'latex-insert-block)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'go-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mi" 'go-import-add)
 
   (general-define-key
     :prefix "SPC"
@@ -493,5 +501,16 @@
 (use-package counsel-projectile
   :config
   (setq counsel-projectile-ag-use-gitignore-only nil))
+
+(use-package solaire-mode
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  (minibuffer-setup . solaire-mode-in-minibuffer)
+  :config
+  (custom-set-faces
+   '(solaire-minibuffer-face ((t (:background "#202020")))))
+
+  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+  (solaire-global-mode +1))
 
 (provide 'init)
