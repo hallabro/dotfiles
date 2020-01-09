@@ -140,10 +140,10 @@
     "wd" '(ace-delete-window :which-key "ace delete")
     "wx" '(delete-window :which-key "close")
 
-    "y" '(:ignore t :which-key "fly")
-    "yn" '(flycheck-next-error :which-key "next")
-    "yp" '(flycheck-previous-error :which-key "previous")
-    "yd" '(ispell-change-dictionary :which-key "set dictionary")
+    "n" '(:ignore t :which-key "spelling")
+    "nd" '(ispell-change-dictionary :which-key "set dictionary")
+
+    "l" '(counsel-flycheck :which-key "list errors")
 
     "s" '(:ignore t :which-key "snippets")
     "si" '(yas-insert-snippet :which-key "insert")
