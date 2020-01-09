@@ -125,7 +125,7 @@
     "ff" '(counsel-file-jump :which-key "find")
     "fr" '(counsel-recentf :which-key "recent")
 
-    "p" '(:ignore t :which-key "projects")
+    "p" '(:ignore t :which-key "project")
     "pd" '(projectile-dired :which-key "dired")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
     "ps" '(counsel-projectile-ag :which-key "ag")
