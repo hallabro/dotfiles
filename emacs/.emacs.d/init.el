@@ -497,4 +497,15 @@
   :config
   (setq counsel-projectile-ag-use-gitignore-only nil))
 
+(use-package solaire-mode
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  (minibuffer-setup . solaire-mode-in-minibuffer)
+  :config
+  (custom-set-faces
+   '(solaire-minibuffer-face ((t (:background "#202020")))))
+
+  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+  (solaire-global-mode +1))
+
 (provide 'init)
