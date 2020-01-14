@@ -1,2 +1,4 @@
 t forw-scroll
 n back-scroll
+j repeat-search
+J reverse-search
