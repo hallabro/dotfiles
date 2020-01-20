@@ -46,6 +46,7 @@ bindkey '^T' down-line-or-history
 bindkey '^N' up-line-or-history
 stty ixoff -ixon && bindkey '^S' forward-word
 bindkey '^P' copy-prev-shell-word
+bindkey '^[[P' delete-char
 bindkey '^[[4~' end-of-line
 bindkey '^[[H' beginning-of-line
 
