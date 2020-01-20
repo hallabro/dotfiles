@@ -46,6 +46,7 @@ bindkey '^J' down-line-or-history
 bindkey '^K' up-line-or-history
 bindkey '^L' forward-word
 bindkey '^P' copy-prev-shell-word
+bindkey '^[[P' delete-char
 bindkey '^[[4~' end-of-line
 bindkey '^[[H' beginning-of-line
 
