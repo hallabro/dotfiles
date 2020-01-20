@@ -1,3 +1,4 @@
+alias ..='cd ..'
 alias e=emacs
 alias emacs='emacsclient -c'
 alias et='emacs -t'
