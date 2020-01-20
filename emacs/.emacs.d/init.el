@@ -345,6 +345,7 @@
   (TeX-PDF-mode t)
   (setq-default TeX-master nil)
   (setq TeX-auto-save t
+        TeX-engine 'luatex
         TeX-parse-self t))
 
 (defun mupdf-reload (file)
