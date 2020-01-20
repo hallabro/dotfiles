@@ -24,6 +24,13 @@
 		 (not (y-or-n-p (format "Delete repository %S? " repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir t)))))
+
 (setq auto-save-file-name-transforms `((".*", temporary-file-directory t))
       backup-directory-alist `((".*" ., temporary-file-directory))
       byte-compile-warnings nil
@@ -343,6 +350,7 @@
   (TeX-PDF-mode t)
   (setq-default TeX-master nil)
   (setq TeX-auto-save t
+        TeX-engine 'luatex
         TeX-parse-self t))
 
 (defun mupdf-reload (file)
@@ -513,5 +521,9 @@
 
   (add-hook 'after-revert-hook #'turn-on-solaire-mode)
   (solaire-global-mode +1))
+
+(use-package beacon
+  :config
+  (beacon-mode 1))
 
 (provide 'init)
