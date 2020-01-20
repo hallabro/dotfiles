@@ -517,4 +517,8 @@
   (add-hook 'after-revert-hook #'turn-on-solaire-mode)
   (solaire-global-mode +1))
 
+(use-package beacon
+  :config
+  (beacon-mode 1))
+
 (provide 'init)
