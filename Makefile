@@ -44,7 +44,7 @@ dunst: configexists
 	$(call stow,$@,${HOME})
 
 .PHONY : emacs
-emacs: 
+emacs:
 	$(call createmaybe,${HOME}/.emacs.d)
 	$(call stow,$@,${HOME})
 
@@ -131,7 +131,7 @@ portage_fileserver: portage
 .PHONY : portage
 portage:
 	$(call sudo_createmaybe,${PORTAGE}/make.conf)
-	$(call sudo_createmaybe,${PORTAGE}/package.keywords)
+	$(call sudo_createmaybe,${PORTAGE}/package.accept_keywords)
 	$(call sudo_createmaybe,${PORTAGE}/package.license)
 	$(call sudo_createmaybe,${PORTAGE}/package.use)
 	$(call sudo_createmaybe,${PORTAGE}/repos.conf)
