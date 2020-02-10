@@ -24,6 +24,13 @@
 		 (not (y-or-n-p (format "Delete repository %S? " repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir t)))))
+
 (setq auto-save-file-name-transforms `((".*", temporary-file-directory t))
       backup-directory-alist `((".*" ., temporary-file-directory))
       byte-compile-warnings nil
@@ -121,16 +128,18 @@
 
     "f" '(:ignore t :which-key "files")
     "fd" '(dired-jump :which-key "dired")
+    "fD" '((lambda () (interactive) (dired-jump nil "~/")) :which-key "dired (home)")
     "ff" '(counsel-file-jump :which-key "find")
     "fr" '(counsel-recentf :which-key "recent")
 
-    "p" '(:ignore t :which-key "projects")
+    "p" '(:ignore t :which-key "project")
     "pd" '(projectile-dired :which-key "dired")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
     "ps" '(counsel-projectile-ag :which-key "ag")
     "pr" '(projectie-replace :which-key "search and replace")
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
+    "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
 
     "w" '(:ignore t :which-key "windows")
     "wb" '(split-and-focus-vertical :which-key "split below")
@@ -138,10 +147,10 @@
     "wd" '(ace-delete-window :which-key "ace delete")
     "wx" '(delete-window :which-key "close")
 
-    "y" '(:ignore t :which-key "fly")
-    "yn" '(flycheck-next-error :which-key "next")
-    "yp" '(flycheck-previous-error :which-key "previous")
-    "yd" '(ispell-change-dictionary :which-key "set dictionary")
+    "n" '(:ignore t :which-key "spelling")
+    "nd" '(ispell-change-dictionary :which-key "set dictionary")
+
+    "l" '(counsel-flycheck :which-key "list errors")
 
     "s" '(:ignore t :which-key "snippets")
     "si" '(yas-insert-snippet :which-key "insert")
@@ -176,6 +185,13 @@
     "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
     "mi" 'latex-insert-item
     "ml" 'latex-insert-block)
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'go-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mi" 'go-import-add)
 
   (general-define-key
     :prefix "SPC"
@@ -263,7 +279,7 @@
 
 (use-package super-save
   :config
-  (add-to-list 'super-save-triggers 'ace-window)
+  (add-to-list 'super-save-triggers 'ace-window 'ivy-switch-buffer)
   (setq auto-save-default nil)
   (super-save-mode +1))
 
@@ -279,7 +295,7 @@
     ("\\.md\\'" . markdown-mode)
     ("\\.markdown\\'" . markdown-mode))
   :init
-  (setq markdown-command "multimarkdown"))
+  (setq markdown-command "markdown_py"))
 
 (use-package evil-surround
   :after evil
@@ -329,6 +345,7 @@
   (TeX-PDF-mode t)
   (setq-default TeX-master nil)
   (setq TeX-auto-save t
+        TeX-engine 'luatex
         TeX-parse-self t))
 
 (defun mupdf-reload (file)
@@ -371,7 +388,8 @@
 
 (use-package flycheck
   :config
-  (setq flycheck-indication-mode nil)
+  (setq flycheck-indication-mode nil
+        flycheck-display-errors-function 'ignore)
   (global-flycheck-mode))
 
 (use-package expand-region
@@ -460,6 +478,7 @@
         enable-recursive-minibuffers t
         ivy-re-builders-alist
           '((counsel-ag . ivy--regex-plus)
+            (counsel-projectile-find-file . ivy--regex-plus)
             (swiper . ivy--regex-plus)
             (t . ivy--regex-fuzzy)))
   :general
@@ -486,5 +505,20 @@
 (use-package counsel-projectile
   :config
   (setq counsel-projectile-ag-use-gitignore-only nil))
+
+(use-package solaire-mode
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  (minibuffer-setup . solaire-mode-in-minibuffer)
+  :config
+  (custom-set-faces
+   '(solaire-minibuffer-face ((t (:background "#202020")))))
+
+  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+  (solaire-global-mode +1))
+
+(use-package beacon
+  :config
+  (beacon-mode 1))
 
 (provide 'init)
