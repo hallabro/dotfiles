@@ -1,4 +1,5 @@
 alias ..='cd ..'
+alias dx='docker-compose exec'
 alias e=emacs
 alias emacs='emacsclient -c'
 alias et='emacs -t'
@@ -16,6 +17,8 @@ alias s='sudo'
 alias shutdown='openrc-shutdown -p now'
 alias sudo='sudo '
 
+compdef _docker-compose dx='docker-compose exec'
+
 function esudo() {
     e /sudo::"$1"
 }
@@ -31,9 +34,3 @@ function mkmv() {
 function _source_if_exists() {
     [ -r "$1" ] && source $1
 }
-
-function dx() {
-    docker exec $@
-}
-compdef _docker dx="_docker_complete_running_containers"
-
