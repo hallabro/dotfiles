@@ -296,7 +296,7 @@
     ("\\.md\\'" . markdown-mode)
     ("\\.markdown\\'" . markdown-mode))
   :init
-  (setq markdown-command "markdown_py"))
+  (setq markdown-command "markdown_py -x tables"))
 
 (use-package evil-surround
   :after evil
