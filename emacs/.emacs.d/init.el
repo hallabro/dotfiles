@@ -136,7 +136,7 @@
     "pd" '(projectile-dired :which-key "dired")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
     "ps" '(counsel-projectile-ag :which-key "ag")
-    "pr" '(projectie-replace :which-key "search and replace")
+    "pr" '(projectile-replace :which-key "replace")
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
     "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
