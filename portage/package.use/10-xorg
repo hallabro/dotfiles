@@ -1,1 +1,2 @@
 x11-base/xorg-server suid
+media-libs/libglvnd X
