@@ -1,0 +1,2 @@
+app-editors/emacs -gtk -X
+app-emacs/emacs-common-gentoo -X
