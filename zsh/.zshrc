@@ -35,7 +35,7 @@ _source_if_exists "/usr/share/zsh/site-functions/_fzf"
 _source_if_exists "/usr/share/zsh/site-contrib/fzf.zsh"
 
 export FZF_BIND_OPTS="--bind ctrl-k:up,ctrl-j:down"
-export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 10"
+export FZF_DEFAULT_OPTS="$FZF_BIND_OPTS --height 7"
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
