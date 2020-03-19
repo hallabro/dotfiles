@@ -110,7 +110,7 @@
   (general-define-key
     :prefix "SPC"
     :keymaps 'override
-    :states 'normal
+    :states '(normal visual)
     "b" '(:ignore t :which-key "buffers")
     "bl" '(ivy-switch-buffer :which-key "list")
     "ba" '(save-buffer :which-key "save")
@@ -163,6 +163,7 @@
 
     "h" '(:ignore t :which-key "help")
     "hb" '(counsel-descbinds :which-key "describe keybinds")
+    "hv" '(describe-variable :which-key "describe variable")
 
     "k" '(counsel-yank-pop :which-key "kill ring")
     "g" '(counsel-register :which-key "registers")
@@ -417,8 +418,9 @@
         shackle-default-rule '(:select t :align t :other t)
         shackle-rules
           '((compilation-mode :align t :noselect t)
-           (neotree-mode :align left)
-           ("*Flycheck errors*" :regexp t :align t :size 0.3 :select t)))
+           ("*Flycheck errors*" :align t :size 0.3 :select t)
+           ("*Warning*" :ignore t)
+           ("*Warnings*" :ignore t)))
   (shackle-mode 1))
 
 (use-package git-commit)
