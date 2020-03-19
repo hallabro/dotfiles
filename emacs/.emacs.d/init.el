@@ -390,10 +390,8 @@
   (add-hook 'go-mode-hook 'lsp-deferred))
 
 (use-package web-mode
-  :config
-  (setq web-mode-enable-comment-annotation t)
-  :mode
-  "\\.vue\\'")
+  :config (setq web-mode-enable-comment-annotation t)
+  :mode "\\.vue\\'")
 
 (use-package flycheck
   :config
@@ -502,20 +500,14 @@
   :config
   (counsel-mode 1)
   (setq counsel-ag-command "ag --nocolor --nogroup --hidden %s"
-        counsel-ag-base-command "ag --nocolor --nogroup --hidden %s")
-  :general
-  ("M-x" 'counsel-M-x))
+        counsel-ag-base-command "ag --nocolor --nogroup --hidden %s"))
 
 (use-package swiper
-  :config
-  (setq swiper-action-recenter t)
-  :general
-  (:states 'normal
-    "/" 'swiper))
+  :config (setq swiper-action-recenter t)
+  :general (:states 'normal "/" 'swiper))
 
 (use-package counsel-projectile
-  :config
-  (setq counsel-projectile-ag-use-gitignore-only nil))
+  :config (setq counsel-projectile-ag-use-gitignore-only nil))
 
 (use-package solaire-mode
   :hook
@@ -530,18 +522,14 @@
 
 (use-package org-projectile
   :config
-  (progn
-    (setq org-projectile-projects-file
-          "~/projects/notes/TODO.org")
-    (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
-    (push (org-projectile-project-todo-entry) org-capture-templates)))
+  (progn (setq org-projectile-projects-file "~/projects/notes/TODO.org")
+         (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+         (push (org-projectile-project-todo-entry) org-capture-templates)))
 
 (use-package beacon
-  :config
-  (beacon-mode 1))
+  :config (beacon-mode 1))
 
 (use-package flyspell
-  :config
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
