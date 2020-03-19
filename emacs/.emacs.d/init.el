@@ -48,16 +48,9 @@
       version-control t
       x-stretch-cursor t)
 
-(custom-set-faces
- '(default ((t (:family "Terminus"
-                :foundry "xos4"
-                :slant normal
-                :weight normal
-                :height 90
-                :width normal)))))
-
 (setq-default show-trailing-whitespace t
               sp-escape-quotes-after-insert nil
+              ispell-dictionary "en"
               indent-tabs-mode nil
               tab-width 4
               auto-fill-function 'do-auto-fill
@@ -160,6 +153,7 @@
 
     "n" '(:ignore t :which-key "spelling")
     "nd" '(ispell-change-dictionary :which-key "set dictionary")
+    "ns" '(ispell :which-key "spell check")
 
     "l" '(counsel-flycheck :which-key "list errors")
 
@@ -511,6 +505,7 @@
 
 (use-package counsel
   :config
+  (counsel-mode 1)
   (setq counsel-ag-command "ag --nocolor --nogroup --hidden %s"
         counsel-ag-base-command "ag --nocolor --nogroup --hidden %s")
   :general
@@ -549,5 +544,11 @@
 (use-package beacon
   :config
   (beacon-mode 1))
+
+(use-package flyspell
+  :config
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
 
 (provide 'init)
