@@ -48,6 +48,14 @@
       version-control t
       x-stretch-cursor t)
 
+(custom-set-faces
+ '(default ((t (:family "Terminus"
+                :foundry "xos4"
+                :slant normal
+                :weight normal
+                :height 90
+                :width normal)))))
+
 (setq-default show-trailing-whitespace t
               sp-escape-quotes-after-insert nil
               indent-tabs-mode nil
@@ -117,6 +125,7 @@
     "bS" '(save-some-buffers t :which-key "save all")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
     "bu" '(sudo-edit :which-key "sudo edit")
+    "bF" '(text-scale-adjust :which-key "adjust font size")
     "bf" '(auto-fill-mode :which-key "auto-fill")
 
     "e" '(:ignore t :which-key "emacs")
@@ -140,6 +149,8 @@
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
     "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
+    "pc" '(org-capture :which-key "capture")
+    "po" '(org-projectile-project-todo-completing-read :which-key "org read")
 
     "w" '(:ignore t :which-key "windows")
     "wb" '(split-and-focus-vertical :which-key "split below")
@@ -171,10 +182,12 @@
     :keymaps 'org-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
-    "mt" 'org-todo
-    "mi" 'org-clock-in
-    "mo" 'org-clock-out
-    "md" 'org-update-all-dblocks)
+    "mn" '(org-insert-todo-heading-respect-content :which-key "insert todo")
+    "mt" '(org-todo :which-key "rotate status")
+    "mi" '(org-clock-in :which-key "clock in")
+    "mo" '(org-clock-out :which-key "clock out")
+    "mp" '(org-open-at-point :which-key "open at point")
+    "md" '(org-update-all-dblock :which-key "update dynamic blocks"))
 
   (general-define-key
     :prefix "SPC"
@@ -378,7 +391,9 @@
         yas-also-indent-empty-lines t))
 
 (use-package go-mode
-  :mode "\\.go\\'")
+  :mode "\\.go\\'"
+  :config
+  (add-hook 'go-mode-hook 'lsp-deferred))
 
 (use-package web-mode
   :config
@@ -474,6 +489,7 @@
 
 (use-package ivy
   :config
+  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
         ivy-re-builders-alist
@@ -516,6 +532,14 @@
 
   (add-hook 'after-revert-hook #'turn-on-solaire-mode)
   (solaire-global-mode +1))
+
+(use-package org-projectile
+  :config
+  (progn
+    (setq org-projectile-projects-file
+          "~/projects/notes/TODO.org")
+    (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+    (push (org-projectile-project-todo-entry) org-capture-templates)))
 
 (use-package beacon
   :config
