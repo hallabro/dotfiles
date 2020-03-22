@@ -137,7 +137,10 @@
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "kill")
     "bu" '(sudo-edit :which-key "sudo")
     "bF" '(text-scale-adjust :which-key "adjust font size")
-    "bf" '(auto-fill-mode :which-key "auto-fill")
+
+    "t" '(:ignore t :which-key "toggle")
+    "ta" '(auto-fill-mode :which-key "auto-fill")
+    "tw" '(whitespace-mode :which-key "whitespace visibility")
 
     "q" '(:ignore t :which-key "quit")
     "qr" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload configuration")
@@ -194,19 +197,19 @@
     :prefix "SPC"
     :keymaps 'org-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "org-mode")
+    "m" '(:ignore t :which-key "major")
     "mi" '(org-insert-todo-heading-respect-content :which-key "insert todo")
-    "mt" '(org-todo :which-key "rotate status")
+    "ms" '(org-todo :which-key "rotate status")
     "mc" '(org-clock-in :which-key "clock in")
     "mC" '(org-clock-out :which-key "clock out")
     "mf" '(org-open-at-point :which-key "follow link")
-    "md" '(org-update-all-dblock :which-key "update dynamic blocks"))
+    "md" '(org-update-all-dblocks :which-key "update dynamic blocks"))
 
   (general-define-key
     :prefix "SPC"
     :keymaps 'LaTeX-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "latex-mode")
+    "m" '(:ignore t :which-key "major")
     "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
     "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
     "mi" '(latex-insert-item :which-key "insert new item")
@@ -216,7 +219,7 @@
     :prefix "SPC"
     :keymaps 'go-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "go-mode")
+    "m" '(:ignore t :which-key "major")
     "mf" '(gofmt :which-key "format")
     "mi" '(go-import-add :which-key "import package"))
 
@@ -224,7 +227,7 @@
     :prefix "SPC"
     :keymaps 'snippet-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "snippet-mode")
+    "m" '(:ignore t :which-key "major")
     "ms" '(yas-load-snippet-buffer-and-close :which-key "save and load snippet"))
 
   (general-define-key
@@ -490,7 +493,7 @@
 (use-package evil-replace-with-register
   :general
   (:states 'normal
-     "mr" 'evil-replace-with-register))
+     "mr" '(evil-replace-with-register :which-key "replace with register"))
 
 (use-package dired-narrow
   :general
