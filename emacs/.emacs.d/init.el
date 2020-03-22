@@ -68,7 +68,26 @@
 (recentf-mode 1)
 (show-paren-mode 1)
 (global-auto-revert-mode t)
-(fringe-mode 0)
+(fringe-mode '(2 . 0))
+
+(setq mouse-yank-at-point t)
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 2
+      window-divider-default-right-width 2)
+(window-divider-mode 1)
+(setq-default left-margin-width 1
+              right-margin-width 1)
+(setq use-dialog-box nil)
+(when (bound-and-true-p tooltip-mode)
+  (tooltip-mode -1))
+(setq x-gtk-use-system-tooltips nil)
+(setq split-width-threshold 160
+      split-height-threshold nil)
+(setq echo-keystrokes 0.02)
+(setq-default display-line-numbers-width 3)
+(add-hook 'conf-mode-hook #'display-line-numbers-mode)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (add-hook 'prog-mode-hook (lambda () (auto-fill-mode 1)))
 (add-to-list 'recentf-exclude "/vendor/")
@@ -111,32 +130,31 @@
     :prefix "SPC"
     :keymaps 'override
     :states '(normal visual)
-    "b" '(:ignore t :which-key "buffers")
+    "b" '(:ignore t :which-key "buffer")
     "bl" '(ivy-switch-buffer :which-key "list")
-    "ba" '(save-buffer :which-key "save")
+    "bs" '(save-buffer :which-key "save")
     "bS" '(save-some-buffers t :which-key "save all")
-    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "close")
-    "bu" '(sudo-edit :which-key "sudo edit")
+    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "kill")
+    "bu" '(sudo-edit :which-key "sudo")
     "bF" '(text-scale-adjust :which-key "adjust font size")
     "bf" '(auto-fill-mode :which-key "auto-fill")
 
-    "e" '(:ignore t :which-key "emacs")
-    "er" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload")
-    "el" '(list-packages :which-key "list packages")
-    "ep" '(straight-x-clean-unused-repos :which-key "prune unused packages")
-    "eu" '(straight-pull-all :which-key "update packages")
-    "ee" '(save-buffers-kill-terminal :which-key "save and exit")
+    "q" '(:ignore t :which-key "quit")
+    "qr" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload configuration")
+    "qp" '(straight-x-clean-unused-repos :which-key "prune unused packages")
+    "qu" '(straight-pull-all :which-key "update packages")
+    "qe" '(save-buffers-kill-terminal :which-key "save and exit")
 
-    "f" '(:ignore t :which-key "files")
-    "fd" '(dired-jump :which-key "dired")
-    "fD" '((lambda () (interactive) (dired-jump nil "~/")) :which-key "dired (home)")
+    "f" '(:ignore t :which-key "file")
+    "fd" '(dired-jump :which-key "browse")
+    "fD" '((lambda () (interactive) (dired-jump nil "~/")) :which-key "browse home")
     "ff" '(counsel-file-jump :which-key "find")
     "fr" '(counsel-recentf :which-key "recent")
 
     "p" '(:ignore t :which-key "project")
-    "pd" '(projectile-dired :which-key "dired")
+    "pd" '(projectile-dired :which-key "browse")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
-    "ps" '(counsel-projectile-ag :which-key "ag")
+    "ps" '(counsel-projectile-ag :which-key "search")
     "pr" '(projectile-replace :which-key "replace")
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
@@ -144,25 +162,26 @@
     "pc" '(org-capture :which-key "capture")
     "po" '(org-projectile-project-todo-completing-read :which-key "org read")
 
-    "w" '(:ignore t :which-key "windows")
+    "w" '(:ignore t :which-key "window")
     "wb" '(split-and-focus-vertical :which-key "split below")
     "wr" '(split-and-focus-horizontal :which-key "split right")
-    "wd" '(ace-delete-window :which-key "ace delete")
-    "wx" '(delete-window :which-key "close")
+    "wo" '(ace-delete-window :which-key "kill other")
+    "wc" '(delete-window :which-key "kill current")
 
-    "n" '(:ignore t :which-key "spelling")
-    "nd" '(ispell-change-dictionary :which-key "set dictionary")
-    "ns" '(ispell :which-key "spell check")
+    "e" '(:ignore t :which-key "errors")
+    "ed" '(ispell-change-dictionary :which-key "set spell check dictionary")
+    "el" '(counsel-flycheck :which-key "list")
+    "en" '(next-error :which-key "next")
+    "ep" '(previous-error :which-key "previous")
+    "es" '(ispell :which-key "spell check")
 
-    "l" '(counsel-flycheck :which-key "list errors")
-
-    "s" '(:ignore t :which-key "snippets")
+    "s" '(:ignore t :which-key "snippet")
     "si" '(yas-insert-snippet :which-key "insert")
     "sc" '(yas-new-snippet :which-key "create")
     "sl" '(yas-describe-tables :which-key "list")
 
     "h" '(:ignore t :which-key "help")
-    "hb" '(counsel-descbinds :which-key "describe keybinds")
+    "hb" '(counsel-descbinds :which-key "describe keybind")
     "hv" '(describe-variable :which-key "describe variable")
 
     "k" '(counsel-yank-pop :which-key "kill ring")
@@ -175,37 +194,38 @@
     :prefix "SPC"
     :keymaps 'org-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "major")
-    "mn" '(org-insert-todo-heading-respect-content :which-key "insert todo")
+    "m" '(:ignore t :which-key "org-mode")
+    "mi" '(org-insert-todo-heading-respect-content :which-key "insert todo")
     "mt" '(org-todo :which-key "rotate status")
-    "mi" '(org-clock-in :which-key "clock in")
-    "mo" '(org-clock-out :which-key "clock out")
-    "mp" '(org-open-at-point :which-key "open at point")
+    "mc" '(org-clock-in :which-key "clock in")
+    "mC" '(org-clock-out :which-key "clock out")
+    "mf" '(org-open-at-point :which-key "follow link")
     "md" '(org-update-all-dblock :which-key "update dynamic blocks"))
 
   (general-define-key
     :prefix "SPC"
     :keymaps 'LaTeX-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "major")
+    "m" '(:ignore t :which-key "latex-mode")
     "mb" '((lambda () (interactive) (save-buffer) (TeX-command "LaTeX" 'TeX-master-file)) :which-key "build")
     "mv" '((lambda () (interactive) (save-buffer) (TeX-command-run-all ())) :which-key "build and view")
-    "mi" 'latex-insert-item
-    "ml" 'latex-insert-block)
+    "mi" '(latex-insert-item :which-key "insert new item")
+    "ml" '(latex-insert-block :which-key "insert new block"))
 
   (general-define-key
     :prefix "SPC"
     :keymaps 'go-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "major")
-    "mi" 'go-import-add)
+    "m" '(:ignore t :which-key "go-mode")
+    "mf" '(gofmt :which-key "format")
+    "mi" '(go-import-add :which-key "import package"))
 
   (general-define-key
     :prefix "SPC"
     :keymaps 'snippet-mode-map
     :states 'normal
-    "m" '(:ignore t :which-key "major")
-    "ms" 'yas-load-snippet-buffer-and-close)
+    "m" '(:ignore t :which-key "snippet-mode")
+    "ms" '(yas-load-snippet-buffer-and-close :which-key "save and load snippet"))
 
   (general-define-key
     :states 'motion
@@ -246,11 +266,6 @@
     "C-t" 'evil-scroll-down
     "U" 'undo-tree-redo))
 
-(use-package base16-theme
-  :config
-  (defconst base16-theme-256-color-source "colors")
-  (load-theme 'base16-chalk t))
-
 (use-package avy
   :config
   (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?c ?p ?k ?m)
@@ -262,10 +277,9 @@
   :general
   (:states '(motion normal operator visual)
    :prefix "m"
-    "m" 'evil-avy-goto-char-timer
-    "l" 'evil-avy-goto-line
-    "s" 'swiper
-    "p" 'avy-pop-mark))
+    "m" '(evil-avy-goto-char-timer :which-key "char timer")
+    "l" '(evil-avy-goto-line :which-key "line")
+    "p" 'avy-pop-mark :which-key "previous mark"))
 
 (use-package dtrt-indent
   :config
@@ -448,13 +462,19 @@
   :config
   (setq which-key-idle-delay 0.4
         which-key-separator " "
-        which-key-prefix-prefix nil
-        which-key-allow-evil-operators t)
+        which-key-prefix-prefix nil)
+        ;;which-key-allow-evil-operators t)
   (which-key-mode))
 
 (use-package smartparens
   :config
   (require 'smartparens-config)
+  ;; Overlays are too distracting and not terribly helpful. show-parens does
+  ;; this for us already (and is faster), so...
+  (setq sp-highlight-pair-overlay nil
+        sp-highlight-wrap-overlay nil
+        sp-highlight-wrap-tag-overlay nil)
+  (setq sp-max-pair-length 4)
   (sp-pair "(" nil :unless '(sp-point-before-word-p))
   (sp-pair "[" nil :unless '(sp-point-before-word-p))
   (sp-pair "{" nil :unless '(sp-point-before-word-p))
@@ -488,7 +508,12 @@
 (use-package ivy
   :config
   (ivy-mode 1)
+  (projectile-completion-system 'ivy)
+  (ivy-count-format "(%d/%d) ")
   (setq ivy-use-virtual-buffers t
+        ;; Don't use ^ as initial input
+        ivy-initial-inputs-alist nil
+        ivy-display-style 'fancy
         enable-recursive-minibuffers t
         ivy-re-builders-alist
           '((counsel-ag . ivy--regex-plus)
@@ -501,6 +526,19 @@
     "C-n" 'ivy-previous-line
     "C-t" 'ivy-next-line
     "C-s" 'ivy-alt-done))
+
+(use-package ivy-rich
+  :after ivy
+  :config
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  (add-hook 'minibuffer-setup-hook #'(lambda () (setq show-trailing-whitespace nil)))
+  (ivy-rich-mode 1))
+
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (setq ivy-prescient-sort-commands '(:not ivy-resumse))
+  (ivy-prescient-mode 1))
 
 (use-package counsel
   :config
@@ -515,17 +553,6 @@
 (use-package counsel-projectile
   :config (setq counsel-projectile-ag-use-gitignore-only nil))
 
-(use-package solaire-mode
-  :hook
-  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-  (minibuffer-setup . solaire-mode-in-minibuffer)
-  :config
-  (custom-set-faces
-   '(solaire-minibuffer-face ((t (:background "#202020")))))
-
-  (add-hook 'after-revert-hook #'turn-on-solaire-mode)
-  (solaire-global-mode +1))
-
 (use-package org-projectile
   :config
   (progn (setq org-projectile-projects-file "~/projects/notes/TODO.org")
@@ -539,5 +566,32 @@
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
+
+(use-package undo-tree
+  :config
+  (setq undo-tree-visualizer-diff t
+        undo-tree-auto-save-history t
+        undo-tree-enable-undo-in-region t
+        ;; Increase undo-limits by a factor of ten to avoid emacs prematurely
+        ;; truncating the undo history and corrupting the tree. See
+        ;; https://github.com/syl20bnr/spacemacs/issues/12110
+        undo-limit 800000
+        undo-strong-limit 12000000
+        undo-outer-limit 120000000
+        undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+
+(use-package diff-hl
+  :config (global-diff-hl-mode 1))
+
+(use-package doom-themes
+  :config
+  (load-theme 'doom-dracula t))
+
+(use-package paren
+  :config
+  (setq show-paren-delay 0.1
+        show-paren-highlight-openparen t
+        show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t))
 
 (provide 'init)
