@@ -290,10 +290,20 @@
   (prog-mode . dtrt-indent-mode))
 
 (use-package projectile
+  :custom
+  ;; exclude vendor/ from being searched
+  projectile-git-command "git ls-files -zco --exclude-standard -- . ':!:vendor/*'"
   :config
   (projectile-mode 1)
   (setq projectile-sort-order 'recently-active
-        projectile-generic-command "fd . -0"))
+        projectile-generic-command "fd . -0")
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'markdown-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mp" '(markdown-preview :which-key "preview")))
 
 (use-package key-chord
   :after evil
@@ -439,6 +449,8 @@
 (use-package git-modes)
 
 (use-package lsp-mode
+  :config
+  (add-to-list 'lsp-file-watch-ignored "vendor")
   :hook
   (c++-mode . lsp)
   (js2-mode . lsp))
@@ -493,7 +505,7 @@
 (use-package evil-replace-with-register
   :general
   (:states 'normal
-     "mr" '(evil-replace-with-register :which-key "replace with register"))
+     "mr" '(evil-replace-with-register :which-key "replace with register")))
 
 (use-package dired-narrow
   :general
@@ -591,5 +603,7 @@
         show-paren-highlight-openparen t
         show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t))
+
+(use-package terraform-mode)
 
 (provide 'init)
