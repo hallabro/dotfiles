@@ -11,11 +11,10 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
 (setq straight-use-package-by-default t
-      use-package-always-demand t)
-
-(straight-use-package 'git)
+      use-package-always-ensure t)
+(straight-use-package 'use-package)
+(setq use-package-always-demand t)
 
  (defun straight-x-clean-unused-repos ()
    (interactive)
@@ -124,6 +123,13 @@
   (split-window-horizontally)
   (other-window 1))
 
+(defun toggle-auto-fill ()
+  "Toggles auto-fill mode and whitespace-mode"
+  (interactive)
+  (auto-fill-mode)
+  (whitespace-mode (if whitespace-mode -1 +1))
+  (message "auto-fill and whitespace modes turned %s" (if whitespace-mode "on" "off")))
+
 (use-package general
   :config
   (general-define-key
@@ -136,14 +142,13 @@
     "bS" '(save-some-buffers t :which-key "save all")
     "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "kill")
     "bu" '(sudo-edit :which-key "sudo")
-    "bF" '(text-scale-adjust :which-key "adjust font size")
 
     "t" '(:ignore t :which-key "toggle")
-    "ta" '(auto-fill-mode :which-key "auto-fill")
-    "tw" '(whitespace-mode :which-key "whitespace visibility")
+    "ta" '(toggle-auto-fill :which-key "auto-fill")
+    "tp" '(presentation-mode :which-key "presentation")
 
     "q" '(:ignore t :which-key "quit")
-    "qr" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "reload configuration")
+    "qr" '((lambda () (interactive) (save-buffer) (load-file "~/.emacs.d/init.el")) :which-key "reload configuration")
     "qp" '(straight-x-clean-unused-repos :which-key "prune unused packages")
     "qu" '(straight-pull-all :which-key "update packages")
     "qe" '(save-buffers-kill-terminal :which-key "save and exit")
@@ -221,7 +226,8 @@
     :states 'normal
     "m" '(:ignore t :which-key "major")
     "mf" '(gofmt :which-key "format")
-    "mi" '(go-import-add :which-key "import package"))
+    "mi" '(go-import-add :which-key "import package")
+    "mr" '(go-remove-unused-imports :which-key "remove unused imports"))
 
   (general-define-key
     :prefix "SPC"
@@ -280,9 +286,10 @@
   :general
   (:states '(motion normal operator visual)
    :prefix "m"
-    "m" '(evil-avy-goto-char-timer :which-key "char timer")
+    "t" '(evil-avy-goto-char-timer :which-key "char timer")
+    "c" '(evil-avy-goto-char-2 :which-key "char 2")
     "l" '(evil-avy-goto-line :which-key "line")
-    "p" 'avy-pop-mark :which-key "previous mark"))
+    "p" '(avy-pop-mark :which-key "previous mark")))
 
 (use-package dtrt-indent
   :config
@@ -309,8 +316,8 @@
 (use-package key-chord
   :after evil
   :config
-  (key-chord-mode 1)
-  (key-chord-define evil-insert-state-map "hh" 'evil-normal-state))
+  (let ((inhibit-message t)(key-chord-mode 1)))
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
 
 (use-package super-save
   :config
@@ -413,7 +420,8 @@
 (use-package yasnippet
   :config
   (yas-global-mode 1)
-  (setq yas-indent-line 'auto
+  (setq yas-verbosity 1
+        yas-indent-line 'auto
         yas-also-indent-empty-lines t))
 
 (use-package go-mode
@@ -429,6 +437,7 @@
   :config
   (setq flycheck-indication-mode nil
         flycheck-display-errors-function 'ignore)
+
   (global-flycheck-mode))
 
 (use-package expand-region
@@ -477,8 +486,9 @@
   :config
   (setq which-key-idle-delay 0.4
         which-key-separator " "
-        which-key-prefix-prefix nil)
-        ;;which-key-allow-evil-operators t)
+        which-key-prefix-prefix nil
+        which-key-allow-evil-operators t)
+  (which-key-setup-minibuffer)
   (which-key-mode))
 
 (use-package smartparens
@@ -510,7 +520,7 @@
 (use-package evil-replace-with-register
   :general
   (:states 'normal
-     "mr" '(evil-replace-with-register :which-key "replace with register")))
+     "R" '(evil-replace-with-register :which-key "replace with register")))
 
 (use-package dired-narrow
   :general
@@ -598,9 +608,8 @@
 (use-package diff-hl
   :config (global-diff-hl-mode 1))
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-dracula t))
+(use-package base16-theme
+  :config (load-theme 'base16-chalk))
 
 (use-package paren
   :config
@@ -610,5 +619,13 @@
         show-paren-when-point-in-periphery t))
 
 (use-package terraform-mode)
+
+(use-package presentation
+  :config
+  (add-hook 'presentation-mode-hook (lambda () (command-log-mode) (clm/toggle-command-log-buffer)))
+  :custom
+  presentation-default-text-scale 4)
+
+(use-package command-log-mode)
 
 (provide 'init)
