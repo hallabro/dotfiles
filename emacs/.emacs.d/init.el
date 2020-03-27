@@ -288,7 +288,8 @@
     "t" '(evil-avy-goto-char-timer :which-key "char timer")
     "c" '(evil-avy-goto-char-2 :which-key "char 2")
     "l" '(evil-avy-goto-line :which-key "line")
-    "p" '(avy-pop-mark :which-key "previous mark")))
+    "d" '(lsp-find-definition :which-key "definition")
+    "h" '(pop-global-mark :which-key "pop global mark")))
 
 (use-package dtrt-indent
   :config
@@ -460,9 +461,19 @@
 (use-package lsp-mode
   :config
   (add-to-list 'lsp-file-watch-ignored "vendor")
+  :custom
+  lsp-inhibit-message t
   :hook
   (c++-mode . lsp)
   (js2-mode . lsp))
+
+(use-package lsp-ui
+  :config
+  (general-unbind '(normal motion) "j")
+  (setq lsp-ui-peek-show-directory nil)
+  :general
+  (:states 'normal
+   "j" 'lsp-ui-peek-find-references))
 
 (use-package company-lsp
   :after lsp-mode
