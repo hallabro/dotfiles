@@ -469,11 +469,7 @@
 
 (use-package lsp-ui
   :config
-  (general-unbind '(normal motion) "j")
-  (setq lsp-ui-peek-show-directory nil)
-  :general
-  (:states 'normal
-   "j" 'lsp-ui-peek-find-references))
+  (setq lsp-ui-peek-show-directory nil))
 
 (use-package company-lsp
   :after lsp-mode
