@@ -20,7 +20,7 @@
    (interactive)
    (dolist (repo (straight--directory-files (straight--repos-dir)))
      (unless (or (straight--checkhash repo straight--repo-cache)
-		 (not (y-or-n-p (format "Delete repository %S? " repo))))
+                (not (y-or-n-p (format "Delete repository %S? " repo))))
        (delete-directory (straight--repos-dir repo) 'recursive 'trash))))
 
 (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
@@ -36,6 +36,7 @@
       create-lockfiles nil
       custom-file "~/.emacs.d/custom.el"
       delete-old-versions -1
+      gdb-many-windows t
       inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-screen t
@@ -124,7 +125,7 @@
   (other-window 1))
 
 (defun toggle-auto-fill ()
-  "Toggles auto-fill mode and whitespace-mode"
+  "Toggles auto-fill mode and whitespace-mode."
   (interactive)
   (auto-fill-mode)
   (whitespace-mode (if whitespace-mode -1 +1))
@@ -140,7 +141,7 @@
     "bl" '(ivy-switch-buffer :which-key "list")
     "bs" '(save-buffer :which-key "save")
     "bS" '(save-some-buffers t :which-key "save all")
-    "bd" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "kill")
+    "bk" '((lambda () (interactive) (kill-buffer (current-buffer))) :which-key "kill")
     "bu" '(sudo-edit :which-key "sudo")
 
     "t" '(:ignore t :which-key "toggle")
@@ -151,7 +152,7 @@
     "qr" '((lambda () (interactive) (save-buffer) (load-file "~/.emacs.d/init.el")) :which-key "reload configuration")
     "qp" '(straight-x-clean-unused-repos :which-key "prune unused packages")
     "qu" '(straight-pull-all :which-key "update packages")
-    "qe" '(save-buffers-kill-terminal :which-key "save and exit")
+    "qq" '(save-buffers-kill-terminal :which-key "save and exit")
 
     "f" '(:ignore t :which-key "file")
     "fd" '(dired-jump :which-key "browse")
@@ -160,6 +161,7 @@
     "fr" '(counsel-recentf :which-key "recent")
 
     "p" '(:ignore t :which-key "project")
+    "pk" '(projectile-kill-buffers :which-key "kill buffers")
     "pd" '(projectile-dired :which-key "browse")
     "pw" '(counsel-projectile-switch-project :which-key "switch")
     "ps" '(counsel-projectile-ag :which-key "search")
@@ -173,11 +175,11 @@
     "w" '(:ignore t :which-key "window")
     "wb" '(split-and-focus-vertical :which-key "split below")
     "wr" '(split-and-focus-horizontal :which-key "split right")
-    "wo" '(ace-delete-window :which-key "kill other")
-    "wc" '(delete-window :which-key "kill current")
+    "wK" '(ace-delete-window :which-key "kill other")
+    "wk" '(delete-window :which-key "kill current")
 
     "e" '(:ignore t :which-key "errors")
-    "ed" '(ispell-change-dictionary :which-key "set spell check dictionary")
+    "ed" '(ispell-change-dictionary :which-key "spell check dictionary")
     "el" '(counsel-flycheck :which-key "list")
     "en" '(next-error :which-key "next")
     "ep" '(previous-error :which-key "previous")
@@ -191,6 +193,7 @@
     "h" '(:ignore t :which-key "help")
     "hb" '(counsel-descbinds :which-key "describe keybind")
     "hv" '(describe-variable :which-key "describe variable")
+    "hc" '(apropos-command :which-key "describe command")
 
     "k" '(counsel-yank-pop :which-key "kill ring")
     "g" '(counsel-register :which-key "registers")
@@ -247,10 +250,21 @@
   (evil-mode t)
   (evil-select-search-module 'evil-search-module 'evil-search)
 
-  (advice-add 'evil-ex-search-next :after
-    (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
-  (advice-add 'evil-ex-search-previous :after
-    (lambda (&rest x) (evil-scroll-line-to-center (line-number-at-pos))))
+  ;; stolen from  jD91mZM2 / dotfiles
+  ;; Disable search highlights after short duration
+  (defvar my/stop-hl-timer-last nil)
+  (defun my/stop-hl-timer (_)
+    (when my/stop-hl-timer-last
+      (cancel-timer my/stop-hl-timer-last))
+    (setq my/stop-hl-timer-last
+          (run-at-time 1 nil (lambda () (evil-ex-nohighlight)))))
+  (advice-add 'evil-ex-search-activate-highlight :after 'my/stop-hl-timer)
+
+  (let ((after-fn (lambda (&rest _) (recenter nil))))
+    (advice-add 'evil-ex-search-next :after after-fn)
+    (advice-add 'evil-ex-search-previous :after after-fn)
+    (advice-add 'evil-scroll-up :after after-fn)
+    (advice-add 'evil-scroll-down :after after-fn))
 
   (with-eval-after-load 'dired
     (general-def
@@ -273,7 +287,13 @@
     "N" 'evil-ex-search-previous
     "C-k" 'evil-scroll-up
     "C-j" 'evil-scroll-down
-    "U" 'undo-tree-redo))
+    "C-s" 'evil-jump-backward
+    "C-d" 'evil-jump-forward
+    "U" 'undo-tree-redo)
+  (:states 'motion
+    "C-f" nil)
+  ("C-r" nil
+   "C-f" nil))
 
 (use-package avy
   :config
@@ -288,7 +308,6 @@
     "t" '(evil-avy-goto-char-timer :which-key "char timer")
     "c" '(evil-avy-goto-char-2 :which-key "char 2")
     "l" '(evil-avy-goto-line :which-key "line")
-    "d" '(lsp-find-definition :which-key "definition")
     "h" '(pop-global-mark :which-key "pop global mark")))
 
 (use-package dtrt-indent
@@ -302,9 +321,10 @@
   ;; exclude vendor/ from being searched
   projectile-git-command "git ls-files -zco --exclude-standard -- . ':!:vendor/*'"
   :config
-  (projectile-mode 1)
   (setq projectile-sort-order 'recently-active
-        projectile-generic-command "fd . -0")
+        projectile-generic-command "fd . -0"
+        projectile-completion-system 'ivy)
+  (projectile-mode 1)
 
   (general-define-key
     :prefix "SPC"
@@ -391,7 +411,7 @@
         TeX-parse-self t))
 
 (defun mupdf-reload (file)
-  "Sends SIGHUP to mupdf, reloading the output."
+  "Sends SIGHUP to mupdf, reverting FILE and reloading output."
   (interactive)
   (TeX-revert-document-buffer file)
   (call-process-shell-command "pkill -HUP mupdf || true"))
@@ -423,6 +443,7 @@
 (use-package go-mode
   :mode "\\.go\\'"
   :config
+  (add-to-list 'exec-path "~/projects/go/bin")
   (add-hook 'go-mode-hook 'lsp-deferred))
 
 (use-package web-mode
@@ -462,10 +483,14 @@
   :config
   (add-to-list 'lsp-file-watch-ignored "vendor")
   :custom
+  lsp-auto-guess-root t
   lsp-inhibit-message t
   :hook
   (c++-mode . lsp)
-  (js2-mode . lsp))
+  (js2-mode . lsp)
+  :general
+  (:states 'normal
+    "C-e" '(lsp-find-definition :which-key "definition")))
 
 (use-package lsp-ui
   :config
@@ -535,9 +560,8 @@
 (use-package ivy
   :config
   (ivy-mode 1)
-  (projectile-completion-system 'ivy)
-  (ivy-count-format "(%d/%d) ")
-  (setq ivy-use-virtual-buffers t
+  (setq ivy-count-format "(%d/%d) "
+        ivy-use-virtual-buffers t
         ;; Don't use ^ as initial input
         ivy-initial-inputs-alist nil
         ivy-display-style 'fancy
@@ -564,7 +588,7 @@
 (use-package ivy-prescient
   :after counsel
   :config
-  (setq ivy-prescient-sort-commands '(:not ivy-resumse))
+  (setq ivy-prescient-sort-commands '(:not ivy-resume swiper counsel-recentf counsel-flycheck ))
   (ivy-prescient-mode 1))
 
 (use-package counsel
@@ -605,7 +629,10 @@
         undo-limit 800000
         undo-strong-limit 12000000
         undo-outer-limit 120000000
-        undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+        undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+  :general
+  (:states '(normal visual)
+            "C-r" nil))
 
 (use-package diff-hl
   :config (global-diff-hl-mode 1))
