@@ -48,6 +48,14 @@
       version-control t
       x-stretch-cursor t)
 
+(custom-set-faces
+ '(default ((t (:family "Terminus"
+                :foundry "xos4"
+                :slant normal
+                :weight normal
+                :height 90
+                :width normal)))))
+
 (setq-default show-trailing-whitespace t
               sp-escape-quotes-after-insert nil
               ispell-dictionary "en"
@@ -69,6 +77,9 @@
 (show-paren-mode 1)
 (global-auto-revert-mode t)
 (fringe-mode '(2 . 0))
+
+(setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+(electric-pair-mode 1)
 
 (setq mouse-yank-at-point t)
 (setq window-divider-default-places t
@@ -169,8 +180,12 @@
     "pf" '(counsel-projectile-find-file :which-key "find file")
     "pD" '(projectile-discover-projects-in-directory :which-key "discover")
     "pb" '(counsel-projectile-switch-to-buffer :which-key "buffers")
-    "pc" '(org-capture :which-key "capture")
     "po" '(org-projectile-project-todo-completing-read :which-key "org read")
+
+    "o" '(:ignore t :which-key "org")
+    "oc" '(org-capture :which-key "capture")
+    "oj" '(org-journal-new-entry :which-key "journal")
+    "oa" '(org-agenda :which-key "agenda")
 
     "w" '(:ignore t :which-key "window")
     "wb" '(split-and-focus-vertical :which-key "split below")
@@ -242,7 +257,14 @@
   (general-define-key
     :states 'motion
     :prefix "d"
-    "" '(:ignore t :which-key "evil-inner")))
+    "" '(:ignore t :which-key "evil-inner"))
+
+  (general-define-key
+    :prefix "SPC"
+    :keymaps 'org-journal-mode-map
+    :states 'normal
+    "m" '(:ignore t :which-key "major")
+    "mq" '(org-journal-save-entry-and-exit :which-key "save and quit")))
 
 (use-package evil
   :after general
@@ -304,13 +326,15 @@
   (general-unbind '(normal motion) "m")
 
   :general
+  (:states 'normal
+           "<backspace>" 'evil-avy-goto-char-2)
   (:states '(motion normal operator visual)
    :prefix "m"
     "t" '(evil-avy-goto-char-timer :which-key "char timer")
     "c" '(evil-avy-goto-char-2 :which-key "char 2")
     "l" '(evil-avy-goto-line :which-key "line")
     "d" '(lsp-find-definition :which-key "definition")
-    "h" '(pop-global-mark :which-key "pop global mark")))
+    "h" '(counsel-evil-marks :which-key "evil marks")))
 
 (use-package dtrt-indent
   :config
@@ -333,7 +357,8 @@
     :keymaps 'markdown-mode-map
     :states 'normal
     "m" '(:ignore t :which-key "major")
-    "mp" '(markdown-preview :which-key "preview")))
+    "mp" '(markdown-preview :which-key "preview")
+    "ma" '(markdown-table-align :which-key "align tables")))
 
 (use-package key-chord
   :after evil
@@ -602,7 +627,9 @@
 (use-package ivy-prescient
   :after counsel
   :config
-  (setq ivy-prescient-sort-commands '(:not ivy-resume swiper counsel-recentf counsel-flycheck ))
+  (setq ivy-prescient-sort-commands '(:not ivy-resume swiper counsel-recentf
+                                           counsel-flycheck counsel-evil-marks
+                                           ivy-switch-buffer counsel-ag))
   (ivy-prescient-mode 1))
 
 (use-package counsel
@@ -670,5 +697,20 @@
   presentation-default-text-scale 4)
 
 (use-package command-log-mode)
+
+(use-package groovy-mode)
+
+(use-package org-journal
+  :init
+  (defun org-journal-save-entry-and-exit()
+    "Simple convenience function.
+  Saves the buffer of the current day's entry and kills the window
+  Similar to org-capture like behavior"
+    (interactive)
+    (save-buffer)
+    (kill-buffer-and-window))
+  :custom
+  (org-journal-dir "~/projects/notes/journal")
+  (org-journal-date-format "%Y-%m-%d"))
 
 (provide 'init)
