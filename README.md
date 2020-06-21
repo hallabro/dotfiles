@@ -12,7 +12,6 @@ Dotfiles containing configuration for:
 * [git](https://git-scm.com/)
 * [mpv](https://mpv.io/)
 * [OpenSSH](https://www.openssh.com/)
-* [parcellite](http://parcellite.sourceforge.net/)
 * [ranger](https://github.com/ranger/ranger)
 * [rofi-pass](https://github.com/carnager/rofi-pass)
 * [rofi](https://github.com/davatorium/rofi)
