@@ -1,6 +1,18 @@
-st.font: xos4 Terminus:size=9:antialias=false:autohint=false
-st.termname: xterm-256color
-st.borderpx: 8
+URxvt*font: xft:xos4 Terminus:size=9
+URxvt*scrollBar: false
+URxvt*externalBorder: 0
+URxvt*internalBorder: 6px
+URxvt*perl-ext-common: default,clipboard,keyboard-select,matcher
+URxvt*keysym.Shift-Control-V: perl:clipboard:paste
+URxvt*keysym.M-s: perl:keyboard-select:search
+URxvt.keysym.M-k: perl:keyboard-select:activate
+URxvt*iso14755: False
+URxvt*url-launcher: firefox
+URxvt*matcher.button: 1
+URxvt*keysym.Control-k: \033[A
+URxvt*keysym.Control-j: \033[B
+URxvt*keysym.Control-h: \033[1;5D
+URxvt*keysym.Control-l: \033[1;5C
 
 Xft.antialias: true
 Xft.rgba: rgb
@@ -24,32 +36,32 @@ Xft.hintstyle: hintfull
 #define base0E #e1a3ee
 #define base0F #deaf8f
 
-st.foreground:   base05
-st.background:   base00
-st.cursorColor:  base05
+*foreground:   base05
+*background:   base00
+*cursorColor:  base05
 
-st.color0:       base00
-st.color1:       base08
-st.color2:       base0B
-st.color3:       base0A
-st.color4:       base0D
-st.color5:       base0E
-st.color6:       base0C
-st.color7:       base05
-st.color8:       base03
-st.color9:       base08
-st.color10:      base0B
-st.color11:      base0A
-st.color12:      base0D
-st.color13:      base0E
-st.color14:      base0C
-st.color15:      base07
+*color0:       base00
+*color1:       base08
+*color2:       base0B
+*color3:       base0A
+*color4:       base0D
+*color5:       base0E
+*color6:       base0C
+*color7:       base05
+*color8:       base03
+*color9:       base08
+*color10:      base0B
+*color11:      base0A
+*color12:      base0D
+*color13:      base0E
+*color14:      base0C
+*color15:      base07
 
 ! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
 ! use 'shell' template to set these if necessary
-st.color16:      base09
-st.color17:      base0F
-st.color18:      base01
-st.color19:      base02
-st.color20:      base04
-st.color21:      base06
+*color16:      base09
+*color17:      base0F
+*color18:      base01
+*color19:      base02
+*color20:      base04
+*color21:      base06
