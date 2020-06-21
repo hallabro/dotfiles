@@ -1,4 +1,4 @@
-URxvt*font: xft:xos4 Terminus:size=9
+URxvt*font: xft:Hack:size=9
 URxvt*scrollBar: false
 URxvt*externalBorder: 0
 URxvt*internalBorder: 6px
