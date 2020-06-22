@@ -36,7 +36,7 @@ configexists:
 	$(call createmaybe,${HOME}/.config)
 
 .PHONY : bspwm
-bspwm: configexists
+bspwm: configexists sxhkd
 	$(call stow,$@,${HOME})
 
 .PHONY : dunst
@@ -73,10 +73,6 @@ rofi-pass: rofi configexists
 mpv: configexists
 	$(call stow,$@,${HOME})
 
-.PHONY : parcellite
-parcellite: configexists
-	$(call stow,$@,${HOME})
-
 .PHONY : ssh
 ssh:
 	$(call createmaybe,${HOME}/.ssh)
@@ -85,6 +81,8 @@ ssh:
 .PHONY : zsh
 zsh:
 	$(call stow,$@,${HOME})
+	curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+	zplug install
 
 .PHONY : less
 less:
@@ -141,7 +139,7 @@ portage:
 base: sxhkd ranger ssh emacs git less zsh
 
 .PHONY : x11
-x11: bspwm parcellite rofi rofi-pass dunst mpv compton gtk
+x11: bspwm rofi rofi-pass dunst mpv compton gtk
 
 .PHONY : desktop
 desktop: base x11 x11_desktop portage_desktop
