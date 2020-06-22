@@ -1,7 +1,7 @@
 [user]
 	email = robin@hallabro-kokko.se
 	name = Robin Hallabro-Kokko
-	signingkey = 8D3565510C9F37D434ED7613E930260B49F03C71
+	signingkey = 08639DB0399CC35F071CACD279D1969B01017657
 [core]
 	excludesfile = ~/.gitignore
 [commit]
