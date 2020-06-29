@@ -5,7 +5,7 @@ export EDITOR="emacsclient -t"
 export LESS="$LESS -FRXK"
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
-source ~/.zplug/init.zsh
+source /usr/share/zplug/init.zsh
 
 zplug "plugins/git-fast", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"

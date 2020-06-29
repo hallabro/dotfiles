@@ -4,5 +4,5 @@ if [[ -x "$(command -v gnome-keyring-daemon)" ]]; then
 fi
 
 if [[ $TTY = "/dev/tty1" && ! $DISPLAY ]]; then
-    exec startx
+    exec sway
 fi

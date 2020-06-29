@@ -1,7 +1,7 @@
 rofi.theme: base16-chalk
-rofi.lines: 6
-rofi.width: 25
-rofi.kb-remove-to-eol:
+rofi.lines: 8
+rofi.width: 34
+rofi.kb-remove-to-eol: Control+X
 rofi.kb-accept-entry: Return,KP_Enter
 rofi.kb-row-up: Control+k
 rofi.kb-row-down: Control+j

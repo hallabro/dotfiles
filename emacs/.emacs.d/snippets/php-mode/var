@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: phpdoc var
-# key: var
-# --
-/**
-* @var ${1:$$(yas-choose-value '("int" "float" "string" "\\DateTime"))}
-*/

@@ -1,6 +1,0 @@
-# hack to workaround concatenating multiple USE="" in make.conf/
-*/* -alsa -gtk3 -gtk -truetype -X vim-syntax
-app-crypt/pinentry -gtk
-media-libs/freetype -X -infinality
-media-fonts/* -X
-sys-boot/grub -fonts -themes
