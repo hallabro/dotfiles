@@ -1,11 +1,14 @@
-export PATH=$PATH:$HOME/.local/bin
-export GOPATH=$HOME/projects/go
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:~/Documents/Projects/go/bin"
+export PATH="$HOME/.cargo/bin/:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+
+export GOPATH=$HOME/Documents/Projects/go
 export PATH=$PATH:$GOPATH/bin
-export EDITOR="emacsclient -t"
+export EDITOR="mate -w"
 export LESS="$LESS -FRXK"
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
-
-source /usr/share/zplug/init.zsh
 
 zplug "plugins/git-fast", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"
@@ -52,3 +55,5 @@ bindkey '^[[H' beginning-of-line
 bindkey '^H' backward-delete-char
 
 zplug load
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

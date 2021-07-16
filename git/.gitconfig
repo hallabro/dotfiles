@@ -1,8 +1,12 @@
 [user]
 	email = robin@hallabro-kokko.se
 	name = Robin Hallabro-Kokko
-	signingkey = 08639DB0399CC35F071CACD279D1969B01017657
+	signingkey = 8D3565510C9F37D434ED7613E930260B49F03C71
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/robinhallabro-kokko/.gitignore
 [commit]
 	gpgsign = yes
+[pull]
+	rebase = false
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
