@@ -15,7 +15,7 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "$HOME", from:local, as:theme, use:".zsh_theme"
 
 export HISTFILE=~/.zsh_history
-export HISTORY_IGNORE="(ls*|mpv*|pwd|(go)?pass*|un(zip|rar)*|rm(dir)?*)"
+export HISTORY_IGNORE="(ls*|mpv*|pwd|(go)?pass*|un(zip|rar)*|rm(dir)?*|*AWS_SECRET_ACCESS_KEY*|*AWS_ACCESS_KEY_ID*|*PASSWORD*|*TOKEN*)"
 export HISTSIZE=1000
 export SAVEHIST=$HISTSIZE
 
